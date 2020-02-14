@@ -1,1 +1,2 @@
 # CabbageScout
+scouting app

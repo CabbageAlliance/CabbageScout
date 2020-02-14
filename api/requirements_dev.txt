@@ -1,0 +1,14 @@
+# Development requirements
+# Do not use this, install from requirements.txt
+
+# Do not add starlette or pydantic:
+#   Get version required by fastapi to avoid conflicts
+fastapi
+
+aiofiles
+ujson
+uvicorn
+git+https://github.com/CabbageAlliance/tba_api
+
+# not on windows, optional deps
+uvloop
