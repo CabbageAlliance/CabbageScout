@@ -1,39 +1,47 @@
-import Head from 'next/head'
-import { AppBar, Container, CssBaseline, Toolbar, Typography } from "@material-ui/core"
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import Head from 'next/head';
+import {AppBar, Container, CssBaseline, Toolbar, Typography} from '@material-ui/core';
+import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import teal from '@material-ui/core/colors/teal';
 
 const theme = createMuiTheme({
-    palette: {
-        primary: teal,
-        secondary: {
-            main: '#ff1744',
-        },
-    },
+	palette: {
+		primary: teal,
+		secondary: {
+			main: '#ff1744'
+		}
+	}
+});
+
+const useStyles = makeStyles({
+	content: {
+		marginTop: 80
+	}
 });
 
 export default function Layout(props) {
-    return (
-        <>
-            <Head>
-                <title>{props.title} - CabbageScout</title>
-            </Head>
+	const classes = useStyles();
 
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
+	return (
+		<>
+			<Head>
+				<title>{props.title} - CabbageScout</title>
+			</Head>
 
-                <AppBar position="relative">
-                    <Toolbar>
-                        <Typography variant="h6">
-                            CabbageScout
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
+			<ThemeProvider theme={theme}>
+				<CssBaseline/>
 
-                <Container maxWidth="sm">
-                    {props.children}
-                </Container>
-            </ThemeProvider>
-        </>
-    )
+				<AppBar position="relative">
+					<Toolbar>
+						<Typography variant="h6">
+							CabbageScout
+						</Typography>
+					</Toolbar>
+				</AppBar>
+
+				<Container maxWidth="sm" className={classes.content}>
+					{props.children}
+				</Container>
+			</ThemeProvider>
+		</>
+	);
 }
