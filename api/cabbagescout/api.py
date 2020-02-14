@@ -21,10 +21,10 @@ class Api:
         parent_app.mount(prefix, self.app)
 
     def get_database(self):
-        pass
+        return self.database
 
     def get_match(self, num: int):
-        pass
+        return self.database.matches[num]
 
-    def set_match(self, match: TeamMatch):
-        pass
+    def set_match(self, num: int, match: TeamMatch):
+        self.database.matches[num] = match
