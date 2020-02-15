@@ -1,5 +1,6 @@
-import Document, {Html, Head, Main, NextScript} from 'next/document';
 import {ServerStyleSheets} from '@material-ui/core';
+import Document, {Head, Html, Main, NextScript} from 'next/document';
+import React from 'react';
 
 /**
  * Custom document that fixes Material UI server-side rendered stylesheets and sets the HTML language attribute to English.
