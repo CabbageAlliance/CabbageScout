@@ -31,6 +31,7 @@ export const Layout = props => {
 		<>
 			<Head>
 				<title>{props.title} - CabbageScout</title>
+				<link rel='stylesheet preconnect' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
 			</Head>
 
 			<ThemeProvider theme={theme}>
