@@ -1,6 +1,5 @@
-import {Grid, Button} from '@material-ui/core';
+import {Button, Grid} from '@material-ui/core';
 import Link from 'next/link';
-
 import Layout from '../components/Layout';
 
 export default function Index() {

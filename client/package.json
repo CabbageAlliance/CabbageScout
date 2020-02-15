@@ -2,7 +2,7 @@
 	"name": "cabbagescout",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "src/pages/index.js",
 	"scripts": {
 		"dev": "next",
 		"build": "next build",
