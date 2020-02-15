@@ -1,18 +1,9 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import Head from 'next/head';
 import propTypes from 'prop-types';
-import {AppBar, Container, CssBaseline, Toolbar, Typography} from '@material-ui/core';
-import {teal} from '@material-ui/core/colors';
-import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
-	palette: {
-		primary: teal,
-		secondary: {
-			main: '#ff1744'
-		}
-	}
-});
+import {AppBar, Container, CssBaseline, Toolbar, Typography, useMediaQuery} from '@material-ui/core';
+import {teal, red} from '@material-ui/core/colors';
+import {createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes} from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
 	content: {
@@ -21,6 +12,20 @@ const useStyles = makeStyles({
 });
 
 export const Layout = props => {
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+	const theme = useMemo(() => {
+		return responsiveFontSizes(
+			createMuiTheme({
+				spacing: 12,
+				palette: {
+					type: prefersDarkMode ? 'dark' : 'light',
+					primary: teal,
+					secondary: red
+				}
+			})
+		);
+	}, [prefersDarkMode]);
 	const classes = useStyles();
 
 	return (
