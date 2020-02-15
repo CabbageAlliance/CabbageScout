@@ -1,7 +1,9 @@
+import React from 'react';
 import Head from 'next/head';
+import propTypes from 'prop-types';
 import {AppBar, Container, CssBaseline, Toolbar, Typography} from '@material-ui/core';
-import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
-import teal from '@material-ui/core/colors/teal';
+import {teal} from '@material-ui/core/colors';
+import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
 	palette: {
@@ -18,7 +20,7 @@ const useStyles = makeStyles({
 	}
 });
 
-export default function Layout(props) {
+export const Layout = props => {
 	const classes = useStyles();
 
 	return (
@@ -28,20 +30,23 @@ export default function Layout(props) {
 			</Head>
 
 			<ThemeProvider theme={theme}>
-				<CssBaseline/>
+				<CssBaseline />
 
-				<AppBar position="relative">
+				<AppBar position='relative'>
 					<Toolbar>
-						<Typography variant="h6">
-							CabbageScout
-						</Typography>
+						<Typography variant='h6'>CabbageScout</Typography>
 					</Toolbar>
 				</AppBar>
 
-				<Container maxWidth="sm" className={classes.content}>
+				<Container maxWidth='sm' className={classes.content}>
 					{props.children}
 				</Container>
 			</ThemeProvider>
 		</>
 	);
-}
+};
+
+Layout.propTypes = {
+	title: propTypes.string.isRequired,
+	children: propTypes.node.isRequired
+};
