@@ -1,15 +1,9 @@
-import React, {useMemo} from 'react';
+import {AppBar, Box, Container, CssBaseline, Toolbar, Typography, useMediaQuery} from '@material-ui/core';
+import {cyan, green} from '@material-ui/core/colors';
+import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 import Head from 'next/head';
 import propTypes from 'prop-types';
-import {AppBar, Container, CssBaseline, Toolbar, Typography, useMediaQuery} from '@material-ui/core';
-import {teal, red} from '@material-ui/core/colors';
-import {createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes} from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-	content: {
-		marginTop: 80
-	}
-});
+import React, {useMemo} from 'react';
 
 export const Layout = props => {
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -19,13 +13,12 @@ export const Layout = props => {
 			createMuiTheme({
 				palette: {
 					type: prefersDarkMode ? 'dark' : 'light',
-					primary: teal,
-					secondary: red
+					primary: {main: green.A200},
+					secondary: {main: cyan[500]}
 				}
 			})
 		);
 	}, [prefersDarkMode]);
-	const classes = useStyles();
 
 	return (
 		<>
@@ -43,9 +36,9 @@ export const Layout = props => {
 					</Toolbar>
 				</AppBar>
 
-				<Container maxWidth='sm' className={classes.content}>
-					{props.children}
-				</Container>
+				<Box mt={5}>
+					<Container>{props.children}</Container>
+				</Box>
 			</ThemeProvider>
 		</>
 	);
