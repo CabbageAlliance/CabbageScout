@@ -17,7 +17,6 @@ export const Layout = props => {
 	const theme = useMemo(() => {
 		return responsiveFontSizes(
 			createMuiTheme({
-				spacing: 12,
 				palette: {
 					type: prefersDarkMode ? 'dark' : 'light',
 					primary: teal,
