@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+		"dev": "next",
     "build": "next build",
     "start": "next start",
-    "test": "xo",
-    "lint": "xo --fix"
+		"preexport": "rm -rf out",
+    "export": "next export",
+    "test": "echo 'Please use `lint` script'; npm run lint",
+    "lint": "xo"
   },
   "repository": {
     "type": "git",
