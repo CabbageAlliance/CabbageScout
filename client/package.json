@@ -1,60 +1,62 @@
 {
-  "name": "cabbagescout",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
+	"name": "cabbagescout",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
 		"dev": "next",
-    "build": "next build",
-    "start": "next start",
+		"build": "next build",
+		"start": "next start",
 		"preexport": "rm -rf out",
-    "export": "next export",
-    "test": "echo 'Please use `lint` script'; npm run lint",
-    "lint": "xo"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CabbageAlliance/CabbageScout.git"
-  },
-  "author": {
+		"export": "next export",
+		"test": "echo 'Please use `lint` script'; npm run lint",
+		"lint": "xo"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CabbageAlliance/CabbageScout.git"
+	},
+	"author": {
 		"name": "Cabbage Alliance",
 		"url": "https://github.com/CabbageAlliance"
 	},
-	"contributors": [{
-		"name": "Jonah Snider",
-		"email": "jonah@jonah.pw",
-		"url": "https://jonah.pw"
-	}],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/CabbageAlliance/CabbageScout/issues"
-  },
-  "homepage": "https://github.com/CabbageAlliance/CabbageScout/blob/master/client/readme.md",
-  "dependencies": {
-    "@material-ui/core": "^4.9.2",
-    "next": "^9.2.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  },
-  "devDependencies": {
-    "eslint-config-xo-react": "^0.23.0",
-    "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "xo": "^0.26.1"
-  },
-  "xo": {
-    "extends": "xo-react",
-    "rules": {
-      "react/react-in-jsx-scope": "off",
-      "unicorn/filename-case": [
-        "error",
-        {
-          "cases": {
-            "kebabCase": true,
-            "pascalCase": true
-          }
-        }
-      ]
-    }
-  }
+	"contributors": [
+		{
+			"name": "Jonah Snider",
+			"email": "jonah@jonah.pw",
+			"url": "https://jonah.pw"
+		}
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/CabbageAlliance/CabbageScout/issues"
+	},
+	"homepage": "https://github.com/CabbageAlliance/CabbageScout/blob/master/client/readme.md",
+	"dependencies": {
+		"@material-ui/core": "^4.9.2",
+		"next": "^9.2.1",
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0"
+	},
+	"devDependencies": {
+		"eslint-config-xo-react": "^0.23.0",
+		"eslint-plugin-react": "^7.18.3",
+		"eslint-plugin-react-hooks": "^2.3.0",
+		"xo": "^0.26.1"
+	},
+	"xo": {
+		"extends": "xo-react",
+		"rules": {
+			"react/react-in-jsx-scope": "off",
+			"unicorn/filename-case": [
+				"error",
+				{
+					"cases": {
+						"kebabCase": true,
+						"pascalCase": true
+					}
+				}
+			]
+		}
+	}
 }
