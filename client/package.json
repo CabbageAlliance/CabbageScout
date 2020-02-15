@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/CabbageAlliance/CabbageScout/issues"
   },
-  "homepage": "https://github.com/CabbageAlliance/CabbageScout#readme",
+  "homepage": "https://github.com/CabbageAlliance/CabbageScout/blob/master/client/readme.md",
   "dependencies": {
     "@material-ui/core": "^4.9.2",
     "next": "^9.2.1",
