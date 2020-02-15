@@ -14,7 +14,15 @@
     "type": "git",
     "url": "git+https://github.com/CabbageAlliance/CabbageScout.git"
   },
-  "author": "",
+  "author": {
+		"name": "Cabbage Alliance",
+		"url": "https://github.com/CabbageAlliance"
+	},
+	"contributors": [{
+		"name": "Jonah Snider",
+		"email": "jonah@jonah.pw",
+		"url": "https://jonah.pw"
+	}],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/CabbageAlliance/CabbageScout/issues"
