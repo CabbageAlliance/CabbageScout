@@ -108,3 +108,6 @@ tmp/
 temp/
 
 # End of https://www.gitignore.io/api/node
+
+# Next.js static export output directory
+out
