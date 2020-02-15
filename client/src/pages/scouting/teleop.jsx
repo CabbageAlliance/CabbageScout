@@ -5,14 +5,14 @@ import React from 'react';
 import {Layout} from '../../components/Layout';
 import {cornerFabStyles} from '../../util/corner-fab';
 
-const Auton = () => {
+const TeleOp = () => {
 	const styles = cornerFabStyles();
 
 	return (
-		<Layout title='Autonomous'>
-			<Link passHref href='/scouting/teleop'>
+		<Layout title='TeleOp'>
+			<Link passHref href='/scouting/endgame'>
 				<Fab variant='extended' color='secondary' aria-label='next' className={styles.fab}>
-					TeleOp
+					End game
 					<KeyboardArrowRight />
 				</Fab>
 			</Link>
@@ -20,4 +20,4 @@ const Auton = () => {
 	);
 };
 
-export default Auton;
+export default TeleOp;
