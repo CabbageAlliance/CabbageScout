@@ -1,4 +1,4 @@
-import {AppBar, Box, Container, CssBaseline, Toolbar, Typography, useMediaQuery} from '@material-ui/core';
+import {AppBar, Box, Container, CssBaseline, Toolbar, Typography, useMediaQuery, colors} from '@material-ui/core';
 import {cyan, green} from '@material-ui/core/colors';
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 import Head from 'next/head';
@@ -13,8 +13,8 @@ export const Layout = props => {
 			createMuiTheme({
 				palette: {
 					type: prefersDarkMode ? 'dark' : 'light',
-					primary: {main: green.A200},
-					secondary: {main: cyan[500]}
+					primary: {main: green.A200, light: '#9fffe0', dark: '#2bbd7e'},
+					secondary: {main: cyan[500], light: '#62efff', dark: '#008ba3'}
 				}
 			})
 		);
