@@ -1,4 +1,7 @@
 {
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": false
+	},
 	"editor.detectIndentation": false,
 	"editor.insertSpaces": false,
 	"editor.tabSize": 2
