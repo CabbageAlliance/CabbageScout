@@ -29,6 +29,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies with Yarn
         run: yarn install
+        working-directory: "./client"
       - name: Next.js build
         run: yarn run build
         working-directory: "./client"
