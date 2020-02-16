@@ -25,7 +25,7 @@ Submitting a pull request is fairly simple, just make sure it focuses on a singl
 
 ### Frontend
 
-
+The [frontend](https://github.com/CabbageAlliance/CabbageScout/tree/master/client) of the project uses custom XO and Prettier configurations. Please run `npm run format` before all commits!
 
 ### Backend
 

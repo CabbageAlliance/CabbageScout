@@ -1,11 +1,11 @@
 import React from 'react';
+import Layout from '../../components/Layout';
 import {Typography} from '@material-ui/core';
-import {Layout} from '../components/Layout';
 
 const Submit = () => {
 	return (
 		<Layout title='Submit'>
-			<Typography variant='h1'>Submit</Typography>
+			<Typography variant='h2'>TODO: make submit page</Typography>
 		</Layout>
 	);
 };

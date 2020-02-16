@@ -1,50 +1,48 @@
-import {AppBar, Box, Container, CssBaseline, Toolbar, Typography, useMediaQuery, colors} from '@material-ui/core';
-import {cyan, green} from '@material-ui/core/colors';
-import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
-import Head from 'next/head';
-import propTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import {AppBar, Box, Container, Toolbar, Button, Typography, makeStyles} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Base from './Base';
+import Link from 'next/link';
 
-export const Layout = props => {
-	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+const useStyles = makeStyles(() => ({
+	spacing: {
+		flexGrow: 1
+	}
+}));
 
-	const theme = useMemo(() => {
-		return responsiveFontSizes(
-			createMuiTheme({
-				palette: {
-					type: prefersDarkMode ? 'dark' : 'light',
-					primary: {main: green.A200, light: '#9fffe0', dark: '#2bbd7e'},
-					secondary: {main: cyan[500], light: '#62efff', dark: '#008ba3'}
-				}
-			})
-		);
-	}, [prefersDarkMode]);
+const Layout = props => {
+	const classes = useStyles();
 
 	return (
-		<>
-			<Head>
-				<title>{props.title} - CabbageScout</title>
-				<link rel='stylesheet preconnect' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
-			</Head>
+		<Base title={props.title}>
+			<AppBar position='relative'>
+				<Toolbar>
+					<Link passHref href='/'>
+						<Typography variant='h6' style={{cursor: 'pointer'}}>
+							CabbageScout
+						</Typography>
+					</Link>
 
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
+					<div className={classes.spacing} />
 
-				<AppBar position='relative'>
-					<Toolbar>
-						<Typography variant='h6'>CabbageScout</Typography>
-					</Toolbar>
-				</AppBar>
+					<Link passHref href='/scout/new'>
+						<Button variant='contained' color='secondary' size='large'>
+							New
+						</Button>
+					</Link>
+				</Toolbar>
+			</AppBar>
 
-				<Box mt={5}>
-					<Container>{props.children}</Container>
-				</Box>
-			</ThemeProvider>
-		</>
+			<Box mt={2.5} mb={2.5}>
+				<Container maxWidth='sm'>{props.children}</Container>
+			</Box>
+		</Base>
 	);
 };
 
 Layout.propTypes = {
-	title: propTypes.string.isRequired,
-	children: propTypes.node.isRequired
+	title: PropTypes.string.isRequired,
+	children: PropTypes.node.isRequired
 };
+
+export default Layout;

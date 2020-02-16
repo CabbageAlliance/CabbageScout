@@ -9,8 +9,8 @@
 		"start": "next start",
 		"preexport": "rm -rf out",
 		"export": "next export",
-		"test": "echo 'Please use `lint` script'; npm run lint",
-		"lint": "xo"
+		"lint": "xo",
+		"format": "xo --fix"
 	},
 	"repository": {
 		"type": "git",
@@ -25,6 +25,11 @@
 			"name": "Jonah Snider",
 			"email": "jonah@jonah.pw",
 			"url": "https://jonah.pw"
+		},
+		{
+			"name": "Kevin Wang",
+			"email": "kev@kevwang.dev",
+			"url": "https://kevwang.dev"
 		}
 	],
 	"license": "MIT",
