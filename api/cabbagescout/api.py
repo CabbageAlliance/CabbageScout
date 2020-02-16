@@ -6,6 +6,8 @@ from .model import Database, TeamMatch, TeamMatchNum
 
 
 class Api:
+    __slots__ = ("database", "app")
+
     def __init__(self, database, parent_app, prefix="/api"):
         self.database = database
         self.app = FastAPI(
