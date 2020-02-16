@@ -37,10 +37,12 @@ const Layout = props => {
 
 	const [drawer, setDrawer] = useState(false);
 
+	const toggleDrawer = open => () => setDrawer({open});
+
 	return (
 		<Base title={props.title}>
-			<Drawer open={drawer} onClose={() => setDrawer(false)}>
-				<List className={classes.drawerList} onClick={() => setDrawer(false)}>
+			<Drawer open={drawer} onClose={toggleDrawer(false)}>
+				<List className={classes.drawerList} onClick={toggleDrawer(false)}>
 					<Link passHref href='/'>
 						<ListItem button>
 							<ListItemIcon>
@@ -53,7 +55,7 @@ const Layout = props => {
 
 				<Divider />
 
-				<List className={classes.drawerList} onClick={() => setDrawer(false)}>
+				<List className={classes.drawerList} onClick={toggleDrawer(false)}>
 					<Link passHref href='/settings'>
 						<ListItem button>
 							<ListItemIcon>
@@ -69,7 +71,7 @@ const Layout = props => {
 				<Toolbar>
 					<Hidden smUp>
 						<Box mr={2}>
-							<IconButton color='inherit' onClick={() => setDrawer(true)}>
+							<IconButton color='inherit' onClick={toggleDrawer(true)}>
 								<MenuButton />
 							</IconButton>
 						</Box>
@@ -101,7 +103,7 @@ const Layout = props => {
 				</Toolbar>
 			</AppBar>
 
-			<Box mt={2.5} mb={2.5}>
+			<Box my={2.5}>
 				<Container maxWidth='sm'>{props.children}</Container>
 			</Box>
 		</Base>
