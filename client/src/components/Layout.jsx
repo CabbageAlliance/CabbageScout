@@ -1,9 +1,25 @@
-import { AppBar, Box, Container, Toolbar, Button, Typography, makeStyles, IconButton, Hidden, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings'
-import MenuButton from '@material-ui/icons/Menu'
-import HomeButton from '@material-ui/icons/Home'
+import {
+	AppBar,
+	Box,
+	Container,
+	Toolbar,
+	Button,
+	Typography,
+	makeStyles,
+	IconButton,
+	Hidden,
+	Drawer,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText,
+	Divider
+} from '@material-ui/core';
+import SettingsIcon from '@material-ui/icons/Settings';
+import MenuButton from '@material-ui/icons/Menu';
+import HomeButton from '@material-ui/icons/Home';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Base from './Base';
 import Link from 'next/link';
 
@@ -12,7 +28,7 @@ const useStyles = makeStyles({
 		flexGrow: 1
 	},
 	drawerList: {
-		width: 200,
+		width: 200
 	}
 });
 
@@ -25,12 +41,12 @@ const Layout = props => {
 		<Base title={props.title}>
 			<Drawer open={drawer} onClose={() => setDrawer(false)}>
 				<List className={classes.drawerList} onClick={() => setDrawer(false)}>
-					<Link passHref href="/">
+					<Link passHref href='/'>
 						<ListItem button>
 							<ListItemIcon>
 								<HomeButton />
 							</ListItemIcon>
-							<ListItemText primary="Home" />
+							<ListItemText primary='Home' />
 						</ListItem>
 					</Link>
 				</List>
@@ -38,12 +54,12 @@ const Layout = props => {
 				<Divider />
 
 				<List className={classes.drawerList} onClick={() => setDrawer(false)}>
-					<Link passHref href="/settings">
+					<Link passHref href='/settings'>
 						<ListItem button>
 							<ListItemIcon>
 								<SettingsIcon />
 							</ListItemIcon>
-							<ListItemText primary="Settings" />
+							<ListItemText primary='Settings' />
 						</ListItem>
 					</Link>
 				</List>
@@ -53,14 +69,14 @@ const Layout = props => {
 				<Toolbar>
 					<Hidden smUp>
 						<Box mr={2}>
-							<IconButton color="inherit" onClick={() => setDrawer(true)}>
+							<IconButton color='inherit' onClick={() => setDrawer(true)}>
 								<MenuButton />
 							</IconButton>
 						</Box>
 					</Hidden>
 
 					<Link passHref href='/'>
-						<Typography variant='h6' style={{ cursor: 'pointer' }}>
+						<Typography variant='h6' style={{cursor: 'pointer'}}>
 							CabbageScout
 						</Typography>
 					</Link>
@@ -75,8 +91,8 @@ const Layout = props => {
 
 					<Hidden xsDown>
 						<Box ml={2}>
-							<Link passHref href="/settings">
-								<IconButton color="inherit">
+							<Link passHref href='/settings'>
+								<IconButton color='inherit'>
 									<SettingsIcon />
 								</IconButton>
 							</Link>
