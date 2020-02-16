@@ -17,8 +17,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.16.0"
-      - name: Install Yarn
-        run: curl -o- -L https://yarnpkg.com/install.sh | bash
       - name: Get yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -33,13 +31,15 @@ jobs:
         run: yarn install
       - name: Next.js build
         run: yarn run build
+        working-directory: "./client"
       - name: Export static site
         run: yarn run export
+        working-directory: "./client"
       - name: Upload static site
         uses: actions/upload-artifact@v1
         with:
           name: static-site
-          path: out
+          path: client/out
   lint:
     name: Lint
 
