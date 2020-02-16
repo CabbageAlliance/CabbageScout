@@ -1,5 +1,5 @@
 from datetime import timedelta
-from typing import Dict
+from typing import Dict, List
 
 from pydantic import BaseModel, Field
 
@@ -34,11 +34,7 @@ class Endgame(BaseModel):
     climb_balanced: bool
 
 
-class TeamMatch(BaseModel):
-    @classmethod
-    def from_teammatchnum(cls, teammatchnum):
-        return cls(**teammatchnum.dict())
-
+class ScoutEntry(BaseModel):
     team: int = Field(..., ge=1, le=9999)
     auto: Auto
     teleop: Teleop
@@ -49,13 +45,8 @@ class TeamMatch(BaseModel):
     received_foul: bool
 
 
-class TeamMatchNum(TeamMatch):
-    @classmethod
-    def from_teammatch(cls, teammatch, num):
-        return cls(**teammatch.dict(), num=num)
-
-    num: int = Field(..., ge=1)
-
-
 class Database(BaseModel):  # lmao, this is temporary, chillax
-    matches: Dict[int, TeamMatchNum] = {}
+    def get_match(self, num: int) -> List[ScoutEntry]:
+        return self.matches[num]
+
+    matches: Dict[int, List[ScoutEntry]] = {}
