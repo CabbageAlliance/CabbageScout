@@ -1,7 +1,7 @@
 from starlette.applications import Starlette
 
 from .api import Api
-from .model import Database
+from .models import Database
 
 
 class WebServer:

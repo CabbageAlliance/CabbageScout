@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 import cabbagescout
 
-from .model import Database, ScoutEntry
+from .models import Database, ScoutEntry
 
 
 class Api:
