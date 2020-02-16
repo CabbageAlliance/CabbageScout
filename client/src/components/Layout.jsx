@@ -1,24 +1,66 @@
-import {AppBar, Box, Container, Toolbar, Button, Typography, makeStyles} from '@material-ui/core';
+import { AppBar, Box, Container, Toolbar, Button, Typography, makeStyles, IconButton, Hidden, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
+import SettingsIcon from '@material-ui/icons/Settings'
+import MenuButton from '@material-ui/icons/Menu'
+import HomeButton from '@material-ui/icons/Home'
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import Base from './Base';
 import Link from 'next/link';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
 	spacing: {
 		flexGrow: 1
+	},
+	drawerList: {
+		width: 200,
 	}
-}));
+});
 
 const Layout = props => {
 	const classes = useStyles();
 
+	const [drawer, setDrawer] = useState(false);
+
 	return (
 		<Base title={props.title}>
+			<Drawer open={drawer} onClose={() => setDrawer(false)}>
+				<List className={classes.drawerList} onClick={() => setDrawer(false)}>
+					<Link passHref href="/">
+						<ListItem button>
+							<ListItemIcon>
+								<HomeButton />
+							</ListItemIcon>
+							<ListItemText primary="Home" />
+						</ListItem>
+					</Link>
+				</List>
+
+				<Divider />
+
+				<List className={classes.drawerList} onClick={() => setDrawer(false)}>
+					<Link passHref href="/settings">
+						<ListItem button>
+							<ListItemIcon>
+								<SettingsIcon />
+							</ListItemIcon>
+							<ListItemText primary="Settings" />
+						</ListItem>
+					</Link>
+				</List>
+			</Drawer>
+
 			<AppBar position='relative'>
 				<Toolbar>
+					<Hidden smUp>
+						<Box mr={2}>
+							<IconButton color="inherit" onClick={() => setDrawer(true)}>
+								<MenuButton />
+							</IconButton>
+						</Box>
+					</Hidden>
+
 					<Link passHref href='/'>
-						<Typography variant='h6' style={{cursor: 'pointer'}}>
+						<Typography variant='h6' style={{ cursor: 'pointer' }}>
 							CabbageScout
 						</Typography>
 					</Link>
@@ -30,6 +72,16 @@ const Layout = props => {
 							New
 						</Button>
 					</Link>
+
+					<Hidden xsDown>
+						<Box ml={2}>
+							<Link passHref href="/settings">
+								<IconButton color="inherit">
+									<SettingsIcon />
+								</IconButton>
+							</Link>
+						</Box>
+					</Hidden>
 				</Toolbar>
 			</AppBar>
 
