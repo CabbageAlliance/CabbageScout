@@ -17,8 +17,7 @@ class ControlPanel(BaseModel):
 
 class Auto(BaseModel):
     crossed_line: bool
-    uppergoal_score: int = Field(..., ge=0)
-    lowergoal_score: int = Field(..., ge=0)
+    power_cells: PowerCells
 
 
 class Teleop(BaseModel):
