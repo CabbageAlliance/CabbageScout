@@ -13,7 +13,7 @@ class Auto(BaseModel):
 class PowerCells(BaseModel):
     uppergoal_score: int = Field(..., ge=0)
     lowergoal_score: int = Field(..., ge=0)
-    uppergoal_misssed: int = Field(..., ge=0)
+    uppergoal_missed: int = Field(..., ge=0)
 
 
 class ControlPanel(BaseModel):
@@ -29,7 +29,7 @@ class Teleop(BaseModel):
 
 class Endgame(BaseModel):
     climb_attempted: bool
-    climb_suceeded: bool
+    climb_succeeded: bool
     climb_time: timedelta
     climb_balanced: bool
 
@@ -46,7 +46,7 @@ class TeamMatch(BaseModel):
     driver_rating: int = Field(..., ge=1, le=5)
     time_dead: timedelta
     comments: str
-    recieved_foul: bool
+    received_foul: bool
 
 
 class TeamMatchNum(TeamMatch):
