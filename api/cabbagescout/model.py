@@ -4,12 +4,6 @@ from typing import Dict
 from pydantic import BaseModel, Field
 
 
-class Auto(BaseModel):
-    crossed_line: bool
-    uppergoal_score: int = Field(..., ge=0)
-    lowergoal_score: int = Field(..., ge=0)
-
-
 class PowerCells(BaseModel):
     uppergoal_score: int = Field(..., ge=0)
     lowergoal_score: int = Field(..., ge=0)
@@ -19,6 +13,12 @@ class PowerCells(BaseModel):
 class ControlPanel(BaseModel):
     rotation_control_time: timedelta
     position_control_time: timedelta
+
+
+class Auto(BaseModel):
+    crossed_line: bool
+    uppergoal_score: int = Field(..., ge=0)
+    lowergoal_score: int = Field(..., ge=0)
 
 
 class Teleop(BaseModel):
