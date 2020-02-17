@@ -20,4 +20,3 @@ uvicorn==0.11.2
 uvloop==0.14.0
 websockets==8.1
 yarl==1.4.2
-git+https://github.com/CabbageAlliance/tba_api@17fd3c3

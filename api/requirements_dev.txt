@@ -8,7 +8,6 @@ fastapi
 aiofiles
 ujson
 uvicorn
-git+https://github.com/CabbageAlliance/tba_api
 
 # not on windows, optional deps
 uvloop
