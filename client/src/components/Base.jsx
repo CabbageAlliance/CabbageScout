@@ -1,25 +1,26 @@
-import {CssBaseline, useMediaQuery} from '@material-ui/core';
+import {CssBaseline} from '@material-ui/core';
 import {cyan, green} from '@material-ui/core/colors';
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {useMemo, useContext} from 'react';
+import DarkModeContext from '../util/DarkModeContext';
 
 // All pages should have this as their root component
 const Base = props => {
-	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
+	const {darkMode} = useContext(DarkModeContext);
 
 	const theme = useMemo(() => {
 		return responsiveFontSizes(
 			createMuiTheme({
 				palette: {
-					type: prefersDarkMode ? 'dark' : 'light',
+					type: darkMode ? 'dark' : 'light',
 					primary: {main: green.A200, light: '#9fffe0', dark: '#2bbd7e'},
 					secondary: {main: cyan[500], light: '#62efff', dark: '#008ba3'}
 				}
 			})
 		);
-	}, [prefersDarkMode]);
+	}, [darkMode]);
 
 	return (
 		<>
