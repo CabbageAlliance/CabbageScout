@@ -6,16 +6,13 @@ const DarkModeContext = createContext();
 const DarkModeProvider = props => {
 	const [darkMode, toggleDarkMode] = useState(false);
 
-	const toggleDarkModeWithStorage = dark => {
-		localStorage.setItem('darkMode', dark);
-		toggleDarkMode(dark);
-	};
+	// Fetch previously toggled setting
+	useEffect(() => toggleDarkMode(localStorage.getItem('darkMode') === 'true'), []);
 
-	useEffect(() => toggleDarkMode(localStorage.getItem('darkMode') === 'true'), [
-		/* Only run at mount */
-	]);
+	// Store toggled setting
+	useEffect(() => localStorage.setItem('darkMode', darkMode), [darkMode]);
 
-	return <DarkModeContext.Provider value={{darkMode, toggleDarkMode: toggleDarkModeWithStorage}}>{props.children}</DarkModeContext.Provider>;
+	return <DarkModeContext.Provider value={{darkMode, toggleDarkMode}}>{props.children}</DarkModeContext.Provider>;
 };
 
 DarkModeProvider.propTypes = {
