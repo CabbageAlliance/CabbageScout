@@ -1,5 +1,6 @@
 import App from 'next/app';
-import { DarkModeProvider } from '../util/DarkModeContext';
+import {DarkModeProvider} from '../util/DarkModeContext';
+import React from 'react';
 
 /**
  * A custom Next.js App component that fixes Material-UI server-side rendered stylesheets.
@@ -16,12 +17,12 @@ export default class CabbageApp extends App {
 	}
 
 	render() {
-		const { Component, pageProps } = this.props;
+		const {Component, pageProps} = this.props;
 
 		return (
 			<DarkModeProvider>
 				<Component {...pageProps} />
 			</DarkModeProvider>
-		)
+		);
 	}
 }
