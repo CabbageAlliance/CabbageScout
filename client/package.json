@@ -67,6 +67,10 @@
 						"pascalCase": true
 					}
 				}
+			],
+			"camelcase": [
+				"error", 
+				{"properties": "never"}
 			]
 		}
 	}

@@ -1,5 +1,6 @@
 import App from 'next/app';
 import {DarkModeProvider} from '../util/DarkModeContext';
+import {ScoutEntryProvider} from '../util/ScoutEntryContext';
 import React from 'react';
 
 /**
@@ -21,7 +22,9 @@ export default class CabbageApp extends App {
 
 		return (
 			<DarkModeProvider>
-				<Component {...pageProps} />
+				<ScoutEntryProvider>
+					<Component {...pageProps} />
+				</ScoutEntryProvider>
 			</DarkModeProvider>
 		);
 	}
