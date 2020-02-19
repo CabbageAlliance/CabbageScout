@@ -37,7 +37,7 @@ const Layout = props => {
 
 	const [drawer, setDrawer] = useState(false);
 
-	const toggleDrawer = open => () => setDrawer({open});
+	const toggleDrawer = open => () => setDrawer(open);
 
 	return (
 		<Base title={props.title}>
