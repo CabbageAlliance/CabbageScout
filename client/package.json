@@ -69,8 +69,10 @@
 				}
 			],
 			"camelcase": [
-				"error", 
-				{"properties": "never"}
+				"error",
+				{
+					"properties": "never"
+				}
 			]
 		}
 	}
