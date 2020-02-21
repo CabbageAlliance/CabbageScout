@@ -4,7 +4,7 @@ from fastapi import FastAPI, Query
 
 import cabbagescout
 
-from .database import Database
+from .abc import Database
 from .schemas import ScoutEntry
 
 

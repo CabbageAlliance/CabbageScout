@@ -4,7 +4,7 @@ import uvicorn
 from uvicorn.loops import uvloop
 
 from cabbagescout.app import WebServer
-from cabbagescout.database import Database
+from cabbagescout.database import PostgresDatabase
 
 
 class Server(uvicorn.Server):
@@ -16,7 +16,9 @@ class Server(uvicorn.Server):
 
 def main():
     uvloop.uvloop_setup()
-    database = Database(uri="postgres://username:password@localhost:5432/cabbage-scout")
+    database = PostgresDatabase(
+        uri="postgres://username:password@localhost:5432/cabbage-scout"
+    )
 
     host = "0.0.0.0"
     port = 8000

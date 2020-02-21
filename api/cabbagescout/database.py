@@ -3,10 +3,11 @@ from typing import List
 
 import asyncpg
 
+from .abc import Database
 from .schemas import ScoutEntry
 
 
-class Database:
+class PostgresDatabase(Database):
     __slots__ = ("_pool", "_uri")
 
     def __init__(self, uri: str):
@@ -57,7 +58,9 @@ class Database:
 
             await con.execute(query, *fields.values())
 
-    async def get_entries(self, match: int, team: int) -> List[ScoutEntry]:
+    async def get_entries(
+        self, match: int = None, team: int = None
+    ) -> List[ScoutEntry]:
         query = """SELECT * FROM scout_entries WHERE match = $1 AND team = $2"""
         _entries = await self._pool.fetch(query, match, team)
         return [ScoutEntry(**data) for data in _entries]
