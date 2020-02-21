@@ -24,7 +24,7 @@ export default class CabbageApp extends App {
 		return (
 			<DarkModeProvider>
 				<Head>
-					<link key='manifest' rel='manifest' href={`/manifest.webmanifest`} />
+					<link key='manifest' rel='manifest' href='/manifest.webmanifest' />
 				</Head>
 				<ScoutEntryProvider>
 					<Component {...pageProps} />
