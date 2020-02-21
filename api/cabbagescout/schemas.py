@@ -1,4 +1,6 @@
+from collections import defaultdict
 from datetime import timedelta
+from itertools import chain
 from typing import Dict, List, NamedTuple
 
 from pydantic import BaseModel, Field, constr
@@ -34,7 +36,7 @@ class ScoutEntry(BaseModel):
         description="Number of shots during autonomous period to the upper goal that missed (did not give any points)",
     )
 
-    # Teleop
+    # Teleop Power Cells
 
     teleop_uppergoal_score: int = Field(
         ...,
@@ -52,35 +54,59 @@ class ScoutEntry(BaseModel):
         description="Number of shots during teleoperated period to the upper goal that missed (did not give any points)",
     )
 
-    # # The control panel data for a team during the tele-operated period
-    # The amount of time spent rotating the control panel for ROTATION CONTROL
-    rotation_control_time: timedelta
-    # The amount of time spent rotating the control panel for POSITION CONTROL
-    position_control_time: timedelta
-    # The amount of time spent playing defense on other teams (not actively scoring)
-    defending_time: timedelta
+    # Teleop Control Panel
 
-    # # # Endgame
+    rotation_control_time: float = Field(
+        ...,
+        ge=0,
+        description="The amount of time (in seconds) spent rotating the control panel for ROTATION CONTROL",
+    )
+    position_control_time: float = Field(
+        ...,
+        ge=0,
+        description="The amount of time (in seconds) spent rotating the control panel for POSITION CONTROL",
+    )
+    defending_time: float = Field(
+        ...,
+        ge=0,
+        description="The amount of time (in seconds) spent playing defense on other teams (not actively scoring)",
+    )
 
-    # The team seemed to make an effort to perform the CLIMB task
-    hang_attempted: bool
-    # The team was awarded points for their attempt at the CLIMB task
-    hang_succeeded: bool
-    # The amount of time spent performing the CLIMB task
-    hang_time: timedelta
-    # The GENERATOR SWITCH was balanced at the end of the endgame period
-    hang_level: bool
+    # Endgame
 
-    # # # Other
+    hang_attempted: bool = Field(
+        ..., description="The team seemed to make an effort to perform the CLIMB task"
+    )
+    hang_succeeded: bool = Field(
+        ...,
+        description="The team was awarded points for their attempt at the CLIMB task",
+    )
+    hang_time: float = Field(
+        ...,
+        ge=0,
+        description="The amount of time (in seconds) spent performing the CLIMB task",
+    )
+    hang_level: bool = Field(
+        ...,
+        description="The GENERATOR SWITCH was balanced at the end of the endgame period",
+    )
 
-    # The "star rating" for the drivers' skills (int in [1, 5])
-    driver_rating: int = Field(..., ge=1, le=5)
-    # The amount of time a robot spent visibly disabled during a match
-    down_time: timedelta
-    # Additional scouter comments (multiline)
-    comments: constr(strip_whitespace=True, max_length=512)
-    # The team received a foul during the match
-    received_foul: bool
+    # Other
+
+    driver_rating: int = Field(
+        ..., ge=1, le=5, description='The "star rating" for the drivers\' skills'
+    )
+    down_time: float = Field(
+        ...,
+        ge=0,
+        description="The amount of time (in seconds) a robot spent visibly disabled during a match",
+    )
+    comments: constr(strip_whitespace=True, max_length=512) = Field(
+        ..., description="Additional scouter comments (multiline)",
+    )
+    received_foul: bool = Field(
+        ..., description="The team received a foul during the match"
+    )
 
 
 class ScoutEntryKey(NamedTuple):
@@ -92,8 +118,28 @@ class ScoutEntryKey(NamedTuple):
     team: int
 
 
-class Database(BaseModel):  # lmao, this is temporary, chillax
-    def get_match(self, num: int) -> List[ScoutEntry]:
-        return self.matches[num]
+class Database:  # lmao, this is temporary, chillax
+    def __init__(self):
+        self.db: Dict[ScoutEntryKey, ScoutEntry] = defaultdict(list)
 
-    matches: Dict[int, List[ScoutEntry]] = {}
+    def get_entries(self, *, match: int = None, team: int = None) -> List[ScoutEntry]:
+        entries = ()
+
+        if match is None:
+            if team is None:
+                entries = self.db.values()
+            else:
+                entries = (self.db[key] for key in self.db.keys() if key.team == team)
+        else:
+            if team is None:
+                entries = (self.db[key] for key in self.db.keys() if key.match == match)
+            else:
+                return self.db[ScoutEntryKey(match=match, team=team)]
+
+        return list(chain.from_iterable(entries))
+
+    def add_entry(self, entry: ScoutEntry):
+        key = ScoutEntryKey.from_scoutentry(entry)
+        self.db[key].append(entry)
+
+        return key

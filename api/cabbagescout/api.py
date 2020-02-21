@@ -1,16 +1,16 @@
 from typing import List
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 
 import cabbagescout
 
-from .schemas import Database, ScoutEntry
+from .schemas import Database, ScoutEntry, ScoutEntryKey
 
 
 class Api:
     __slots__ = ("database", "app")
 
-    def __init__(self, database, parent_app, prefix="/api"):
+    def __init__(self, database: Database, parent_app, prefix="/api"):
         self.database = database
         self.app = FastAPI(
             title="CabbageScout API",
@@ -18,20 +18,22 @@ class Api:
             openapi_prefix=prefix,
         )
 
-        self.app.get("/database", response_model=Database)(self.get_database)
-        self.app.get("/match/{num}", response_model=List[ScoutEntry])(self.get_match)
-        self.app.post("/match/{num}")(self.set_match)
+        self.app.get("/entry", response_model=List[ScoutEntry])(self.get_entries)
+        self.app.post("/entry")(self.set_entry)
 
         parent_app.mount(prefix, self.app)
 
-    async def get_database(self):
-        return self.database
+    async def get_entries(
+        self,
+        *,
+        match: int = Query(
+            None, ge=1, title="The match number of a single event of qualifiers"
+        ),
+        team: int = Query(
+            None, ge=1, le=9999, title="The team number of the scouted team"
+        )
+    ):
+        return self.database.get_entries(match=match, team=team)
 
-    async def get_match(self, num: int):
-        return self.database.matches[num]
-
-    async def set_match(self, num: int, match: ScoutEntry):
-        try:
-            self.database.matches[num].append(match)
-        except KeyError:
-            self.database.matches[num] = [match]
+    async def set_entry(self, entry: ScoutEntry):
+        self.database.add_entry(entry)
