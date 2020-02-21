@@ -35,14 +35,26 @@ class Api:
         parent_app.mount(prefix, self.app)
 
     async def get_entries(self, key: ScoutEntryKey = Depends(EntryKey)):
+        """
+        Returns a list of **ScoutEntry**s filtered by the parameters
+        """
         return self.database.get_entries(key)
 
     async def set_entry(self, entry: ScoutEntry):
+        """
+        Creates a new **ScoutEntry**
+        """
         self.database.add_entry(entry)
 
     async def set_entries(self, entries: List[ScoutEntry]):
+        """
+        Creates several new **ScoutEntry**s
+        """
         for entry in entries:
             self.database.add_entry(entry)
 
     async def get_csv(self, key: ScoutEntryKey = Depends(EntryKey)):
+        """
+        Returns a CSV string of **ScoutEntry**s filtered by the parameters
+        """
         return to_csv(self.database.get_entries(key))
