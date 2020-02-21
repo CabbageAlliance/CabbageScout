@@ -16,9 +16,7 @@ class Server(uvicorn.Server):
 
 def main():
     uvloop.uvloop_setup()
-    database = Database(
-        uri="postgres://username:password@localhost:5432/cabbage-scout"
-    )
+    database = Database(uri="postgres://username:password@localhost:5432/cabbage-scout")
 
     host = "0.0.0.0"
     port = 8000
