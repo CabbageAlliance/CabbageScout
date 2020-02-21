@@ -61,3 +61,22 @@ class Database:
         query = """SELECT * FROM scout_entries WHERE match = $1 AND team = $2"""
         _entries = await self._pool.fetch(query, match, team)
         return [ScoutEntry(**data) for data in _entries]
+
+    async def to_csv(self, delimiter: str = ",") -> str:
+        query = "SELECT * FROM scout_entries"
+        _entries: List[asyncpg.Record] = await self._pool.fetch(query)
+
+        header = delimiter.join(_entries[0].keys()) + "\n"
+        data = "\n".join(
+            delimiter.join(
+                str(v).lower()  # cast to string, lowercase for javascript booleans
+                if not isinstance(v, str)
+                else f'"{v}"'
+                if "," in v  # only surround in quotes if the str contains commas
+                else v
+                for v in e
+            )
+            for e in _entries
+        )
+
+        return header + data

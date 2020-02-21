@@ -20,6 +20,7 @@ class Api:
         )
 
         self.app.get("/entry", response_model=List[ScoutEntry])(self.get_entries)
+        self.app.get("/csv", response_model=str)(self.to_csv)
         self.app.post("/entry")(self.set_entry)
 
         parent_app.mount(prefix, self.app)
@@ -38,3 +39,6 @@ class Api:
 
     async def set_entry(self, entry: ScoutEntry):
         await self.database.add_entry(entry)
+
+    async def to_csv(self):
+        return await self.database.to_csv()
