@@ -102,7 +102,7 @@ class ScoutEntry(BaseModel):
         description="The amount of time (in seconds) a robot spent visibly disabled during a match",
     )
     comments: constr(strip_whitespace=True, max_length=512) = Field(
-        ..., description="Additional scouter comments (multiline)",
+        ..., description="Additional scouter comments (multiline)"
     )
     received_foul: bool = Field(
         ..., description="The team received a foul during the match"
