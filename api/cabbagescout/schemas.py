@@ -1,7 +1,5 @@
-from collections import defaultdict
-from datetime import timedelta
-from itertools import chain
-from typing import Dict, List, NamedTuple
+import json
+from typing import Dict
 
 from pydantic import BaseModel, Field, constr
 
@@ -108,38 +106,5 @@ class ScoutEntry(BaseModel):
         ..., description="The team received a foul during the match"
     )
 
-
-class ScoutEntryKey(NamedTuple):
-    @classmethod
-    def from_scoutentry(cls, entry: ScoutEntry):
-        return cls(match=entry.match, team=entry.team)
-
-    match: int
-    team: int
-
-
-class Database:  # lmao, this is temporary, chillax
-    def __init__(self):
-        self.db: Dict[ScoutEntryKey, ScoutEntry] = defaultdict(list)
-
-    def get_entries(self, *, match: int = None, team: int = None) -> List[ScoutEntry]:
-        entries = ()
-
-        if match is None:
-            if team is None:
-                entries = self.db.values()
-            else:
-                entries = (self.db[key] for key in self.db.keys() if key.team == team)
-        else:
-            if team is None:
-                entries = (self.db[key] for key in self.db.keys() if key.match == match)
-            else:
-                return self.db[ScoutEntryKey(match=match, team=team)]
-
-        return list(chain.from_iterable(entries))
-
-    def add_entry(self, entry: ScoutEntry):
-        key = ScoutEntryKey.from_scoutentry(entry)
-        self.db[key].append(entry)
-
-        return key
+    def json(self, **kwargs) -> Dict:
+        return json.loads(super().json(**kwargs))

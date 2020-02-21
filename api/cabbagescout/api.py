@@ -4,7 +4,8 @@ from fastapi import FastAPI, Query
 
 import cabbagescout
 
-from .schemas import Database, ScoutEntry, ScoutEntryKey
+from .database import Database
+from .schemas import ScoutEntry
 
 
 class Api:
@@ -33,7 +34,7 @@ class Api:
             None, ge=1, le=9999, title="The team number of the scouted team"
         )
     ):
-        return self.database.get_entries(match=match, team=team)
+        return await self.database.get_entries(match=match, team=team)
 
     async def set_entry(self, entry: ScoutEntry):
-        self.database.add_entry(entry)
+        await self.database.add_entry(entry)
