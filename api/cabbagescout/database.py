@@ -51,7 +51,8 @@ class Database:
 
         async with self._pool.acquire() as con:
             query = "INSERT INTO scout_entries ({k}) values ({v})".format(
-                k=", ".join(fields.keys()), v=", ".join(f"${i + 1}" for i in range(len(fields)))
+                k=", ".join(fields.keys()),
+                v=", ".join(f"${i + 1}" for i in range(len(fields))),
             )
 
             await con.execute(query, *fields.values())
