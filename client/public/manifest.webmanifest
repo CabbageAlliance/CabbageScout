@@ -1,0 +1,18 @@
+{
+	"background_color": "#ffffff",
+	"description": "Cabbage Scout FRC scouting app, created by CabbageAlliance",
+	"display": "standalone",
+	"icons": [
+		{
+			"sizes": "128x128",
+			"src": "/cabbij.webp",
+			"type": "image/webp"
+		}
+	],
+	"lang": "en-US",
+	"name": "Cabbage Scout",
+	"orientation": "any",
+	"short_name": "Cabbage Scout",
+	"start_url": "/",
+	"theme_color": "#69f0ae"
+}
