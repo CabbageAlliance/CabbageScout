@@ -39,17 +39,17 @@ class ScoutEntry(BaseModel):
     teleop_uppergoal_score: int = Field(
         ...,
         ge=0,
-        description="Total number of power cells scored in upper goal during teleoperated period, both outer and inner",
+        description="Total number of power cells scored in upper goal during teleop period, both outer and inner",
     )
     teleop_lowergoal_score: int = Field(
         ...,
         ge=0,
-        description="Number of power cells scored in lower goal during teleoperated period",
+        description="Number of power cells scored in lower goal during teleop period",
     )
     teleop_uppergoal_missed: int = Field(
         ...,
         ge=0,
-        description="Number of shots during teleoperated period to the upper goal that missed (did not give any points)",
+        description="Number of shots during teleop period to the upper goal that missed (did not give any points)",
     )
 
     # Teleop Control Panel
