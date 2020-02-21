@@ -1,9 +1,5 @@
-import csv
-import io
-from collections import defaultdict
-from datetime import timedelta
-from itertools import chain
-from typing import Dict, List, NamedTuple, get_type_hints
+import json
+from typing import Dict
 
 from pydantic import BaseModel, Field, constr
 
@@ -104,72 +100,11 @@ class ScoutEntry(BaseModel):
         description="The amount of time (in seconds) a robot spent visibly disabled during a match",
     )
     comments: constr(strip_whitespace=True, max_length=512) = Field(
-        ..., description="Additional scouter comments (multiline)",
+        ..., description="Additional scouter comments (multiline)"
     )
     received_foul: bool = Field(
         ..., description="The team received a foul during the match"
     )
 
-
-class ScoutEntryKey(NamedTuple):
-    @classmethod
-    def from_scoutentry(cls, entry: ScoutEntry):
-        return cls(match=entry.match, team=entry.team)
-
-    match: int
-    team: int
-
-
-class Database:  # lmao, this is temporary, chillax
-    def __init__(self):
-        self.db: Dict[ScoutEntryKey, ScoutEntry] = defaultdict(list)
-
-    def get_entries(self, key: ScoutEntryKey) -> List[ScoutEntry]:
-        entries = ()
-
-        if key.match is None:
-            if key.team is None:
-                entries = self.db.values()
-            else:
-                entries = (
-                    self.db[_key] for _key in self.db.keys() if _key.team == key.team
-                )
-        else:
-            if key.team is None:
-                entries = (
-                    self.db[_key] for _key in self.db.keys() if _key.match == key.match
-                )
-            else:
-                return self.db[key]
-
-        return list(chain.from_iterable(entries))
-
-    def add_entry(self, entry: ScoutEntry):
-        key = ScoutEntryKey.from_scoutentry(entry)
-        self.db[key].append(entry)
-
-        return key
-
-
-def to_csv(entries: List[ScoutEntry]) -> str:
-    DIALECT = csv.excel
-
-    # This gets the name of all the fields
-    # In Python 3.7, dictionaries are guaranteed to hold order
-    # If this were to change, it's possible that the order of the keys will not be constant
-    columns = get_type_hints(ScoutEntry).keys()
-
-    buffer = io.StringIO()
-
-    # Write human readable header, using the generated titles of the fields from pydantic
-
-    schema = ScoutEntry.schema()["properties"]
-
-    writer = csv.writer(buffer, dialect=DIALECT)
-    writer.writerow(schema[column]["title"] for column in columns)
-
-    # Write rows
-    writer = csv.DictWriter(buffer, columns, dialect=DIALECT)
-    writer.writerows(entry.dict() for entry in entries)
-
-    return buffer.getvalue()
+    def json(self, **kwargs) -> Dict:
+        return json.loads(super().json(**kwargs))

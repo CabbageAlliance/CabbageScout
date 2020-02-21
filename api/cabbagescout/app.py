@@ -1,11 +1,10 @@
 from starlette.applications import Starlette
 
 from .api import Api
-from .schemas import Database
 
 
 class WebServer:
-    def __init__(self):
+    def __init__(self, database):
         self.app = Starlette(debug=True)
-        self.database = Database()
+        self.database = database
         self.api = Api(self.database, self.app)
