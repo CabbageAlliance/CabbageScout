@@ -61,7 +61,17 @@ class PostgresDatabase(Database):
     async def get_entries(
         self, match: int = None, team: int = None
     ) -> List[ScoutEntry]:
-        query = """SELECT * FROM scout_entries WHERE match = $1 AND team = $2"""
+        query = "SELECT * FROM scout_entries"
+
+        if match is not None or team is not None:
+            query += " WHERE "
+            if match is not None:
+                query += "match = $1"
+                if team is not None:
+                    query += " AND team = $2"
+            else:
+                query += "team = $1"
+
         _entries = await self._pool.fetch(query, match, team)
         return [ScoutEntry(**data) for data in _entries]
 
