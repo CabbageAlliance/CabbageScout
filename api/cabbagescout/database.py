@@ -79,7 +79,7 @@ class PostgresDatabase(Database):
         query = "SELECT * FROM scout_entries"
         _entries: List[asyncpg.Record] = await self._pool.fetch(query)
 
-        header = delimiter.join(_entries[0].keys()) + "\n"
+        header = delimiter.join(k.replace("_", " ").title() for k in _entries[0].keys())
         data = "\n".join(
             delimiter.join(
                 str(v).lower()  # cast to string, lowercase for javascript booleans
@@ -92,4 +92,4 @@ class PostgresDatabase(Database):
             for e in _entries
         )
 
-        return header + data
+        return f"{header}\n{data}"
