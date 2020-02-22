@@ -3,7 +3,8 @@ import asyncio
 import uvicorn
 from uvicorn.loops import uvloop
 
-from cabbagescout import PostgresDatabase, WebServer
+from cabbagescout.app import WebServer
+from cabbagescout.database import PostgresDatabase
 
 
 class Server(uvicorn.Server):
