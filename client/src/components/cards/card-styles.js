@@ -13,6 +13,7 @@ const useCardStyles = makeStyles({
 	},
 
 	titleContainer: {
+		padding: 10,
 		paddingBottom: 0
 	},
 
