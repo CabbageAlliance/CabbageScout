@@ -130,7 +130,9 @@ class DictDatabase(Database):  # for testing purposes
         super().__init__()
         self.db: DefaultDict[ScoutEntryKey, List[ScoutEntry]] = defaultdict(List)
 
-    def get_entries(self, match: int = None, team: int = None) -> List[ScoutEntry]:
+    async def get_entries(
+        self, match: int = None, team: int = None
+    ) -> List[ScoutEntry]:
         if match is None:
             if team is None:
                 entries = self.db.values()
@@ -144,7 +146,7 @@ class DictDatabase(Database):  # for testing purposes
 
         return list(chain.from_iterable(entries))
 
-    def add_entry(self, entry: ScoutEntry):
+    async def add_entry(self, entry: ScoutEntry):
         key = ScoutEntryKey.from_scoutentry(entry)
         self.db[key].append(entry)
 
