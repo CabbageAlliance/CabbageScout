@@ -39,7 +39,7 @@ const New = () => {
 
 		if (valid) {
 			entryDispatch({
-				type: 'new',
+				type: 'reset',
 				data: {team, match}
 			});
 
