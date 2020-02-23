@@ -18,7 +18,8 @@ const New = () => {
 		setTeam(event.target.value);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = (event) => {
+		event.preventDefault();
 		router.push('/scout/scout');
 	};
 
