@@ -16,25 +16,24 @@ import Link from 'next/link';
 
 const useStyles = makeStyles({
 	root: {
-		display: 'grid',
-		height: '100%'
+		display: 'grid'
 	},
 
 	autoLandscape: {
 		gridTemplateRows: '48% 4% 48%',
 		gridTemplateColumns: '48% 4% 23% 2% 23%',
-		gridTemplateAreas: `'line . up-score . up-miss' 
-												'line . . . .' 
+		gridTemplateAreas: `'line . up-score . up-miss'
+												'line . . . .'
 												'line . low-score low-score low-score'`
 	},
 
 	autoPortrait: {
 		gridTemplateRows: '23% 2% 23% 4% 48%',
 		gridTemplateColumns: '48% 4% 48%',
-		gridTemplateAreas: `'up-score . up-miss' 
-												'. . .' 
-												'low-score low-score low-score' 
-												'. . .' 
+		gridTemplateAreas: `'up-score . up-miss'
+												'. . .'
+												'low-score low-score low-score'
+												'. . .'
 												'line line line'`
 	},
 
@@ -49,10 +48,10 @@ const useStyles = makeStyles({
 	teleopPortrait: {
 		gridTemplateRows: '23% 2% 23% 4% 23% 2% 23%',
 		gridTemplateColumns: '48% 4% 48%',
-		gridTemplateAreas: `'up-score . up-miss' 
-												'. . .' 
-												'low-score low-score low-score' 
-												'. . .' 
+		gridTemplateAreas: `'up-score . up-miss'
+												'. . .'
+												'low-score low-score low-score'
+												'. . .'
 												'rotation . position'
 												'. . .'
 												'down . defense'`
@@ -86,18 +85,18 @@ const Auto = props => {
 		<ScoutLayout
 			section='Auto'
 			navButtons={[
-				<Button key='teleop' endIcon={<NavigateNextIcon />} onClick={props.handleChangeView('teleop')}>
+				<Button key='teleop' variant='outlined' endIcon={<NavigateNextIcon />} onClick={props.handleChangeView('teleop')}>
 					Teleop
 				</Button>
 			]}
 		>
-			<div className={clsx(classes.root, portrait ? classes.autoPortrait : classes.autoLandscape)}>
+			<Box height={1} className={clsx(classes.root, portrait ? classes.autoPortrait : classes.autoLandscape)}>
 				<ToggleCard title='Crossed Initiation Line?' value={entryState.auto_crossed_line} setValue={setValue('auto_crossed_line')} gridArea='line' />
 
 				<CountCard title='Upper Goal Scored' value={entryState.auto_uppergoal_scored} setValue={setValue('auto_uppergoal_scored')} gridArea='up-score' />
 				<CountCard title='Upper Goal Missed' value={entryState.auto_uppergoal_missed} setValue={setValue('auto_uppergoal_missed')} gridArea='up-miss' />
 				<CountCard title='Lower Goal Scored' value={entryState.auto_lowergoal_scored} setValue={setValue('auto_lowergoal_scored')} gridArea='low-score' />
-			</div>
+			</Box>
 		</ScoutLayout>
 	);
 };
@@ -121,12 +120,12 @@ const Teleop = props => {
 				<Button key='auto' startIcon={<NavigateBeforeIcon />} onClick={props.handleChangeView('auto')}>
 					Auto
 				</Button>,
-				<Button key='endgame' endIcon={<NavigateNextIcon />} onClick={props.handleChangeView('endgame')}>
+				<Button key='endgame' variant='outlined' endIcon={<NavigateNextIcon />} onClick={props.handleChangeView('endgame')}>
 					Endgame
 				</Button>
 			]}
 		>
-			<div className={clsx(classes.root, portrait ? classes.teleopPortrait : classes.teleopLandscape)}>
+			<Box height={1} className={clsx(classes.root, portrait ? classes.teleopPortrait : classes.teleopLandscape)}>
 				<CountCard title='Upper Goal Scored' value={entryState.teleop_uppergoal_scored} setValue={setValue('teleop_uppergoal_scored')} gridArea='up-score' />
 				<CountCard title='Upper Goal Missed' value={entryState.teleop_uppergoal_missed} setValue={setValue('teleop_uppergoal_missed')} gridArea='up-miss' />
 				<CountCard title='Lower Goal Scored' value={entryState.teleop_lowergoal_scored} setValue={setValue('teleop_lowergoal_scored')} gridArea='low-score' />
@@ -135,7 +134,7 @@ const Teleop = props => {
 				<TimerCard title='Position Control' gridArea='position' value={entryState.position_control_time * 1000} setValue={setTime('position_control_time')} />
 				<TimerCard title='Down Time' gridArea='down' value={entryState.down_time * 1000} setValue={setTime('down_time')} />
 				<TimerCard title='Defending Time' gridArea='defense' value={entryState.defending_time * 1000} setValue={setTime('defending_time')} />
-			</div>
+			</Box>
 		</ScoutLayout>
 	);
 };
@@ -166,12 +165,12 @@ const Endgame = props => {
 				</Link>
 			]}
 		>
-			<div className={clsx(classes.root, portrait ? classes.endgamePortrait : classes.endgameLandscape)}>
+			<Box height={1} className={clsx(classes.root, portrait ? classes.endgamePortrait : classes.endgameLandscape)}>
 				<TimerCard title='Climb Time' gridArea='time' value={entryState.hang_time * 1000} setValue={setTime('hang_time')} />
 
 				<ToggleCard title='Hang Successful?' value={entryState.hang_suceeded} setValue={setValue('hang_suceeded')} gridArea='success' />
 				<ToggleCard title='Hang Level?' value={entryState.hang_level} setValue={setValue('hang_level')} gridArea='level' />
-			</div>
+			</Box>
 		</ScoutLayout>
 	);
 };

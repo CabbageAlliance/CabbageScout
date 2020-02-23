@@ -3,23 +3,18 @@ import useCardStyles from './card-styles';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+function formatTime(time) {
+	return `${(time / 1000).toFixed(2).padStart('XX.XX'.length, '0')}s`;
+}
+
 const TimerCard = props => {
 	const cardClasses = useCardStyles();
 
-	const pad = num => num.toString().padStart(2, '0');
-
-	const formatTime = (time, compact) => {
-		const tmp = Math.floor(time / 10);
-
-		const ms = tmp % 100;
-		const sec = (tmp - ms) / 100;
-
-		if (compact) return `${pad(sec)}:${pad(ms)}`;
-		return `${pad(sec)}s ${pad(ms)}ms`;
-	};
-
+	/** @type {[boolean, Function]} */
 	const [open, setOpen] = useState(false);
+	/** @type {[number, Function]} */
 	const [time, setTime] = useState(0);
+	/** @type {[NodeJS.Timeout, Function]} */
 	const [timerID, setID] = useState();
 
 	const handleStart = () => {
@@ -52,7 +47,7 @@ const TimerCard = props => {
 							</Typography>
 						</CardContent>
 						<div className={cardClasses.content}>
-							<Typography variant='h2'>{formatTime(props.value, true)}</Typography>
+							<Typography variant='h2'>{formatTime(props.value)}</Typography>
 						</div>
 					</CardActionArea>
 				</Card>
@@ -62,13 +57,13 @@ const TimerCard = props => {
 				<DialogTitle>{props.title}</DialogTitle>
 				<DialogContent>
 					<Box textAlign='center'>
-						<Typography variant='h2'>{formatTime(time, false)}</Typography>
-						{props.value > 0 && <Typography variant='body1'>Total time: {formatTime(time + props.value, false)}</Typography>}
+						<Typography variant='h2'>{formatTime(time)}</Typography>
+						{props.value > 0 && <Typography variant='body1'>Total time: {formatTime(time + props.value)}</Typography>}
 					</Box>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleCancel}>Cancel</Button>
-					<Button color='primary' onClick={handleDone}>
+					<Button variant='contained' onClick={handleDone}>
 						Done
 					</Button>
 				</DialogActions>

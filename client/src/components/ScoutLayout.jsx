@@ -26,8 +26,6 @@ const useStyles = makeStyles({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',
-		width: '100%',
-		height: '100vh',
 		alignItems: 'flex-start'
 	},
 
@@ -73,16 +71,18 @@ const ScoutLayout = props => {
 	const handleExit = () => router.push('/');
 
 	return (
-		<div className={classes.root}>
+		<Box width={1} height='100vh' className={classes.root}>
 			<Dialog open={openExit} onClose={handleToggleExit(false)}>
 				<DialogTitle>Are you sure you want to leave?</DialogTitle>
 				<DialogContent>
-					<DialogContentText>Your scouting progress will not be saved.</DialogContentText>
+					<DialogContentText>
+						You changes will be deleted.
+					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleToggleExit(false)}>Cancel</Button>
-					<Button color='secondary' onClick={handleExit}>
-						Confirm
+					<Button onClick={handleExit}>Leave</Button>
+					<Button variant='contained' onClick={handleToggleExit(false)}>
+						Go back
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -123,7 +123,7 @@ const ScoutLayout = props => {
 					</Grid>
 				</Grid>
 			</Paper>
-		</div>
+		</Box>
 	);
 };
 

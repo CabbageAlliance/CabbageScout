@@ -29,8 +29,8 @@ const CountCard = props => {
 					</Typography>
 				</CardContent>
 				<div className={clsx(cardClasses.content, classes.content)}>
-					<Box visibility={props.value > 0 ? 'visible' : 'hidden'}>
-						<IconButton onClick={handleSubtract}>
+					<Box >
+						<IconButton disabled={props.value <= 0} onClick={handleSubtract}>
 							<RemoveIcon />
 						</IconButton>
 					</Box>
