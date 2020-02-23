@@ -1,26 +1,24 @@
-import React, {useContext, useState, useEffect} from 'react';
 import {
-	Button,
-	Grid,
-	Paper,
-	Container,
-	makeStyles,
 	Box,
-	Typography,
-	Hidden,
+	Button,
+	Container,
 	Dialog,
-	DialogTitle,
+	DialogActions,
 	DialogContent,
 	DialogContentText,
-	DialogActions
+	DialogTitle,
+	Grid,
+	Hidden,
+	makeStyles,
+	Paper,
+	Typography
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
-
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
-import ScoutEntryContext from '../util/ScoutEntryContext';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
+import React, {useContext, useEffect, useState} from 'react';
 import DarkModeContext from '../util/DarkModeContext';
-import {useRouter} from 'next/router';
+import ScoutEntryContext from '../util/ScoutEntryContext';
 
 const useStyles = makeStyles({
 	root: {
@@ -68,9 +66,6 @@ const ScoutLayout = props => {
 	const [openExit, setOpenExit] = useState(false);
 	const handleToggleExit = open => () => setOpenExit(open);
 
-	const router = useRouter();
-	const handleExit = () => router.push('/');
-
 	return (
 		<Box width={1} height='100vh' className={classes.root}>
 			<Dialog open={openExit} onClose={handleToggleExit(false)}>
@@ -79,7 +74,9 @@ const ScoutLayout = props => {
 					<DialogContentText>You changes will be deleted.</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleExit}>Leave</Button>
+					<Link passHref href='/'>
+						<Button>Leave</Button>
+					</Link>
 					<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
 						Keep scouting
 					</Button>
