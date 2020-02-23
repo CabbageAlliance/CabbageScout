@@ -13,7 +13,7 @@ import {
 	Paper,
 	Typography
 } from '@material-ui/core';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {ExitToApp} from '@material-ui/icons';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
@@ -104,7 +104,7 @@ const ScoutLayout = props => {
 				<Grid container direction='row' alignItems='center'>
 					<Grid item sm={3} xs={6}>
 						<Box p={1}>
-							<Button startIcon={<ExitToAppIcon />} onClick={handleToggleExit(true)}>
+							<Button startIcon={<ExitToApp />} onClick={handleToggleExit(true)}>
 								Exit
 							</Button>
 						</Box>
