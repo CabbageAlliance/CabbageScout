@@ -14,9 +14,9 @@ const Settings = () => {
 				<FormControlLabel control={<Switch checked={darkMode} onChange={handleDarkMode} />} label='Dark Mode' />
 			</form>
 			<Typography>
-				{process.env.commit ? (
+				{process.env.gitCommit ? (
 					<>
-						Build <code>{process.env.commit}</code>
+						Build <code>{process.env.gitCommit}</code>
 					</>
 				) : (
 					<>Development build</>
