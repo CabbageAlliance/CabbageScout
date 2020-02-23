@@ -1,4 +1,4 @@
-import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button} from '@material-ui/core';
+import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button, Grid} from '@material-ui/core';
 import useCardStyles from './card-styles';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -63,10 +63,16 @@ const TimerCard = props => {
 					</Box>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCancel}>Cancel</Button>
-					<Button variant='contained' color='secondary' onClick={handleDone}>
-						Done
-					</Button>
+					<Grid container direction='row' justify='space-between' alignItems='flex-start'>
+						<Grid item>
+							<Button onClick={handleCancel}>Cancel</Button>
+						</Grid>
+						<Grid item>
+							<Button variant='contained' color='secondary' onClick={handleDone}>
+								Done
+							</Button>
+						</Grid>
+					</Grid>
 				</DialogActions>
 			</Dialog>
 		</>

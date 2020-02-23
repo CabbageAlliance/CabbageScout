@@ -74,12 +74,18 @@ const ScoutLayout = props => {
 					<DialogContentText>You changes will be deleted.</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Link passHref href='/'>
-						<Button>Leave</Button>
-					</Link>
-					<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
-						Keep scouting
-					</Button>
+					<Grid container direction='row' justify='space-between' alignItems='flex-start'>
+						<Grid item>
+							<Link passHref href='/'>
+								<Button>Leave</Button>
+							</Link>
+						</Grid>
+						<Grid item>
+							<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
+								Keep scouting
+							</Button>
+						</Grid>
+					</Grid>
 				</DialogActions>
 			</Dialog>
 
