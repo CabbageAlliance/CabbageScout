@@ -29,7 +29,7 @@ const CountCard = props => {
 					</Typography>
 				</CardContent>
 				<div className={clsx(cardClasses.content, classes.content)}>
-					<Box >
+					<Box>
 						<IconButton disabled={props.value <= 0} onClick={handleSubtract}>
 							<RemoveIcon />
 						</IconButton>

@@ -7,7 +7,7 @@ const Home = () => {
 	return (
 		<Layout title='Home'>
 			<Link passHref href='/scout/new'>
-				<Button variant='contained' color='secondary' fullWidth size='large'>
+				<Button fullWidth variant='contained' color='secondary' size='large'>
 					Start scouting
 				</Button>
 			</Link>

@@ -76,9 +76,7 @@ const ScoutLayout = props => {
 			<Dialog open={openExit} onClose={handleToggleExit(false)}>
 				<DialogTitle>Are you sure you want to leave?</DialogTitle>
 				<DialogContent>
-					<DialogContentText>
-						You changes will be deleted.
-					</DialogContentText>
+					<DialogContentText>You changes will be deleted.</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleExit}>Leave</Button>
