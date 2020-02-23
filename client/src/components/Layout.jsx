@@ -67,7 +67,7 @@ const Layout = props => {
 				</List>
 			</Drawer>
 
-			<AppBar position='relative'>
+			<AppBar position='sticky'>
 				<Toolbar>
 					<Hidden smUp>
 						<Box mr={2}>
