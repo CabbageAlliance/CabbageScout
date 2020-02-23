@@ -25,7 +25,7 @@ const ToggleCard = props => {
 							{props.title}
 						</Typography>
 					</CardContent>
-					<div className={clsx(cardClasses.content, {[classes.disabledContent]: props.disabled})}>
+					<Box height={1} className={clsx(cardClasses.content, {[classes.disabledContent]: props.disabled})}>
 						{props.value ? (
 							<Typography variant='h1' color='primary'>
 								YES
@@ -35,7 +35,7 @@ const ToggleCard = props => {
 								NO
 							</Typography>
 						)}
-					</div>
+					</Box>
 				</CardActionArea>
 			</Card>
 		</Box>
