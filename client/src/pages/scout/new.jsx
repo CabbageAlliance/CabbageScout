@@ -8,12 +8,12 @@ const inputSettings = {min: 1, step: 1, pattern: '^\\d+$'};
 const New = () => {
 	const router = useRouter();
 
-	const [match, setMatch] = useState(null);
+	const [match, setMatch] = useState('');
 	const handleMatchChange = event => {
 		setMatch(event.target.value);
 	};
 
-	const [team, setTeam] = useState(null);
+	const [team, setTeam] = useState('');
 	const handleTeamChange = event => {
 		setTeam(event.target.value);
 	};
