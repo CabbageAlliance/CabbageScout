@@ -1,50 +1,25 @@
-import React, {useState, useContext} from 'react';
-import Layout from '../../components/Layout';
-import {Box, TextField, Typography, Button} from '@material-ui/core';
+import {Box, Button, TextField, Typography} from '@material-ui/core';
 import {useRouter} from 'next/router';
-import ScoutEntryContext from '../../util/ScoutEntryContext';
+import React, {useState} from 'react';
+import Layout from '../../components/Layout';
+
+const inputSettings = {min: 0, step: 1};
 
 const New = () => {
 	const router = useRouter();
-	const {entryDispatch} = useContext(ScoutEntryContext);
 
-	const nonDigitRegex = /\D/g;
-
-	const [match, setMatch] = useState('');
+	const [match, setMatch] = useState(null);
 	const handleMatchChange = event => {
-		setMatch(event.target.value.replace(nonDigitRegex, ''));
-		setMatchError(false);
+		setMatch(event.target.value);
 	};
 
-	const [team, setTeam] = useState('');
+	const [team, setTeam] = useState(null);
 	const handleTeamChange = event => {
-		setTeam(event.target.value.replace(nonDigitRegex, ''));
-		setTeamError(false);
+		setTeam(event.target.value);
 	};
-
-	const [matchError, setMatchError] = useState(false);
-	const [teamError, setTeamError] = useState(false);
 
 	const handleSubmit = () => {
-		let valid = true;
-		if (!match || nonDigitRegex.test(match)) {
-			setMatchError(true);
-			valid = false;
-		}
-
-		if (!team || nonDigitRegex.test(team)) {
-			setTeamError(true);
-			valid = false;
-		}
-
-		if (valid) {
-			entryDispatch({
-				type: 'reset',
-				data: {team, match}
-			});
-
-			router.push('/scout/scout');
-		}
+		router.push('/scout/scout');
 	};
 
 	return (
@@ -52,10 +27,19 @@ const New = () => {
 			<form autoComplete='off'>
 				<Typography variant='h3'>New Entry</Typography>
 				<Box mt={2}>
-					<TextField id='match' variant='outlined' label='Match' type='text' value={match} error={matchError} onChange={handleMatchChange} />
+					<TextField id='match' variant='outlined' label='Match' type='number' required inputProps={inputSettings} value={match} onChange={handleMatchChange} />
 				</Box>
 				<Box mt={2}>
-					<TextField id='team-number' variant='outlined' label='Team Number' type='text' value={team} error={teamError} onChange={handleTeamChange} />
+					<TextField
+						id='team-number'
+						variant='outlined'
+						label='Team Number'
+						type='number'
+						required
+						inputProps={{...inputSettings, max: 5000}}
+						value={team}
+						onChange={handleTeamChange}
+					/>
 				</Box>
 				<Box mt={2}>
 					<Button variant='contained' color='secondary' size='large' onClick={handleSubmit}>
