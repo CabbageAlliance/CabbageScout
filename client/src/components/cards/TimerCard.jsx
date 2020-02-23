@@ -1,4 +1,4 @@
-import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button, Grid} from '@material-ui/core';
+import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button} from '@material-ui/core';
 import useCardStyles from './card-styles';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
