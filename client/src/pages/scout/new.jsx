@@ -53,7 +53,7 @@ const New = () => {
 					/>
 				</Box>
 				<Box mt={2}>
-					<Button variant='contained' color='secondary' size='large' type='submit' onClick={handleSubmit}>
+					<Button variant='contained' color='secondary' size='large' type='submit' onSubmit={handleSubmit}>
 						Start
 					</Button>
 				</Box>
