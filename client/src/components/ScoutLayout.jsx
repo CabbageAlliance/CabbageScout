@@ -44,7 +44,7 @@ const useStyles = makeStyles({
 		maxHeight: 500
 	},
 
-	bottomBar: {
+	bar: {
 		width: '100%',
 		backgroundColor: props => props.barColor
 	}
@@ -86,13 +86,24 @@ const ScoutLayout = props => {
 				</DialogActions>
 			</Dialog>
 
+			<Hidden smUp>
+				<Paper square elevation={4} className={classes.bar}>
+					<Box textAlign='center'>
+						<Typography variant='h6'>{props.section}</Typography>
+						<Typography variant='body2'>
+							Team {entryState.team}, Match {entryState.match}
+						</Typography>
+					</Box>
+				</Paper>
+			</Hidden>
+
 			<Container maxWidth='md' className={classes.contentContainer}>
 				<Box height='100%' width='100%' maxHeight={portrait ? null : 500}>
 					{props.children}
 				</Box>
 			</Container>
 
-			<Paper square elevation={4} className={classes.bottomBar}>
+			<Paper square elevation={4} className={classes.bar}>
 				<Grid container direction='row' alignItems='center'>
 					<Grid item sm={3} xs={6}>
 						<Box p={1}>
