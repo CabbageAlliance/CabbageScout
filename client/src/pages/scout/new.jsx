@@ -28,7 +28,7 @@ const New = () => {
 	useEffect(() => setSubmitReady(match && validMatch && team && validTeam), [match, validMatch, team, validTeam]);
 
 	const handleSubmit = event => {
-		event.preventDefault()
+		event.preventDefault();
 
 		entryDispatch({
 			type: 'reset',
@@ -48,7 +48,7 @@ const New = () => {
 						id='match'
 						variant='outlined'
 						label='Match'
-						type="number"
+						type='number'
 						value={match}
 						error={!validMatch}
 						onKeyUp={handleMatchChange} // This fixes some edge cases
