@@ -14,7 +14,7 @@ const Settings = () => {
 				<FormControlLabel control={<Switch checked={darkMode} onChange={handleDarkMode} />} label='Dark Mode' />
 			</form>
 			<Typography>
-				{process.env.NETLIFY ? (
+				{process.env.COMMIT_REF ? (
 					<>
 						Build <code>{process.env.COMMIT_REF}</code>
 					</>
