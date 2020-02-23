@@ -57,14 +57,16 @@ const TimerCard = props => {
 			<Dialog open={open}>
 				<DialogTitle>{props.title}</DialogTitle>
 				<DialogContent>
-					<Box textAlign='center'>
-						<Typography variant='h2'>{formatTime(time)}</Typography>
-						{props.value > 0 && <Typography variant='body1'>Total time: {formatTime(time + props.value)}</Typography>}
+					<Box textAlign='center' m={2}>
+						<Typography variant='h1'>{formatTime(time)}</Typography>
+						{props.value > 0 && <Typography variant='h5'>Total time: {formatTime(time + props.value)}</Typography>}
 					</Box>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCancel}>Cancel</Button>
-					<Button variant='contained' color='secondary' onClick={handleDone}>
+					<Button fullWidth onClick={handleCancel}>
+						Cancel
+					</Button>
+					<Button fullWidth variant='contained' color='secondary' onClick={handleDone}>
 						Done
 					</Button>
 				</DialogActions>
