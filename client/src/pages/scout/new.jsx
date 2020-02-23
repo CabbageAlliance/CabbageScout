@@ -53,6 +53,7 @@ const New = () => {
 						error={!validMatch}
 						onKeyUp={handleMatchChange} // This fixes some edge cases
 						onChange={handleMatchChange}
+						autoFocus
 					/>
 				</Box>
 				<Box mt={2}>
