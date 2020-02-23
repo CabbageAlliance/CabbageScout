@@ -9,7 +9,11 @@ const Submit = () => {
 	return (
 		<Layout title='Submit'>
 			<Typography variant='h2'>TODO: make submit page</Typography>
-			<p>{JSON.stringify(entryState)}</p>
+			<Typography>
+				<pre>
+					<code>{JSON.stringify(entryState, undefined, 2)}</code>
+				</pre>
+			</Typography>
 		</Layout>
 	);
 };
