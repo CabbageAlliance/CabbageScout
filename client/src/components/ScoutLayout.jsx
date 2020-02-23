@@ -80,7 +80,7 @@ const ScoutLayout = props => {
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleExit}>Leave</Button>
-					<Button variant='contained' onClick={handleToggleExit(false)}>
+					<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
 						Keep scouting
 					</Button>
 				</DialogActions>

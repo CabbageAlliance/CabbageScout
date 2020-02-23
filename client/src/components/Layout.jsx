@@ -86,7 +86,7 @@ const Layout = props => {
 					<div className={classes.spacing} />
 
 					<Link passHref href='/scout/new'>
-						<Button variant='outlined' size='large'>
+						<Button variant='contained' color='secondary' size='large'>
 							New
 						</Button>
 					</Link>

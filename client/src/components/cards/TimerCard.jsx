@@ -64,7 +64,7 @@ const TimerCard = props => {
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleCancel}>Cancel</Button>
-					<Button variant='contained' onClick={handleDone}>
+					<Button variant='contained' color='secondary' onClick={handleDone}>
 						Done
 					</Button>
 				</DialogActions>
