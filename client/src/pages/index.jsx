@@ -1,11 +1,16 @@
+import Link from 'next/link';
 import React from 'react';
 import Layout from '../components/Layout';
-import {Typography} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 
 const Home = () => {
 	return (
 		<Layout title='Home'>
-			<Typography variant='h5'>Click the &quot;New&quot; button to start scouting!</Typography>
+			<Link passHref href='/scout/new'>
+				<Button variant='contained' color='secondary' fullWidth size='large'>
+					Start scouting
+				</Button>
+			</Link>
 		</Layout>
 	);
 };
