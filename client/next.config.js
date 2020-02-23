@@ -2,8 +2,9 @@
 
 const withPlugins = require('next-compose-plugins');
 const withOffline = require('next-offline');
+const withSourceMaps = require('@zeit/next-source-maps');
 
-module.exports = withPlugins([[withOffline]], {
+module.exports = withPlugins([[withSourceMaps], [withOffline]], {
 	devIndicators: {
 		autoPrerender: false
 	},
