@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import Layout from '../components/Layout';
-import {FormControlLabel, Switch} from '@material-ui/core';
+import {FormControlLabel, Switch, Typography} from '@material-ui/core';
 import DarkModeContext from '../util/DarkModeContext';
 
 const Settings = () => {
@@ -13,6 +13,15 @@ const Settings = () => {
 			<form>
 				<FormControlLabel control={<Switch checked={darkMode} onChange={handleDarkMode} />} label='Dark Mode' />
 			</form>
+			<Typography>
+				{process.env.NETLIFY ? (
+					<>
+						Build <code>{process.env.COMMIT_REF}</code>
+					</>
+				) : (
+					<>Development build</>
+				)}
+			</Typography>
 		</Layout>
 	);
 };
