@@ -28,7 +28,7 @@ const initialState = {
 	hang_time: 0,
 	hang_level: false,
 
-	driver_rating: 0, // 1-5
+	driver_rating: 3, // 1-5
 	comments: '', // Max 512 chars
 	received_foul: false
 };
