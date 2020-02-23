@@ -34,7 +34,8 @@ const useStyles = makeStyles({
 		marginTop: 20,
 		marginBottom: 20,
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
+		height: '100%'
 	},
 
 	contentGrid: {
