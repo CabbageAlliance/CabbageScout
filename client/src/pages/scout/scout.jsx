@@ -151,6 +151,11 @@ const Endgame = props => {
 	const setTime = field => value => entryDispatch({type: 'input', data: {[field]: value / 1000}});
 	const setValue = field => value => entryDispatch({type: 'input', data: {[field]: value}});
 
+	const setHangSuccess = success => {
+		entryDispatch({type: 'input', data: {hang_suceeded: success}});
+		if (!success) entryDispatch({type: 'input', data: {hang_level: false}});
+	};
+
 	return (
 		<ScoutLayout
 			section='Endgame'
@@ -168,8 +173,14 @@ const Endgame = props => {
 			<Box height={1} className={clsx(classes.root, portrait ? classes.endgamePortrait : classes.endgameLandscape)}>
 				<TimerCard title='Climb Time' gridArea='time' value={entryState.hang_time * 1000} setValue={setTime('hang_time')} />
 
-				<ToggleCard title='Hang Successful?' value={entryState.hang_suceeded} setValue={setValue('hang_suceeded')} gridArea='success' />
-				<ToggleCard title='Hang Level?' value={entryState.hang_level} setValue={setValue('hang_level')} gridArea='level' />
+				<ToggleCard
+					title='Hang Successful?'
+					disabled={entryState.hang_time === 0}
+					value={entryState.hang_suceeded}
+					setValue={setHangSuccess}
+					gridArea='success'
+				/>
+				<ToggleCard title='Hang Level?' disabled={!entryState.hang_suceeded} value={entryState.hang_level} setValue={setValue('hang_level')} gridArea='level' />
 			</Box>
 		</ScoutLayout>
 	);
