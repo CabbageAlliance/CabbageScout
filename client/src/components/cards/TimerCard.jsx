@@ -2,6 +2,7 @@ import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardC
 import useCardStyles from './card-styles';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+import clsx from 'clsx';
 
 function formatTime(time) {
 	return `${(time / 1000).toFixed(2).padStart('XX.XX'.length, '0')}s`;
@@ -39,15 +40,15 @@ const TimerCard = props => {
 	return (
 		<>
 			<Box gridArea={props.gridArea}>
-				<Card className={cardClasses.root}>
-					<CardActionArea className={cardClasses.root} onClick={handleStart}>
+				<Card className={clsx(cardClasses.root, {[cardClasses.disabledRoot]: props.disabled})}>
+					<CardActionArea disabled={props.disabled} className={cardClasses.root} onClick={handleStart}>
 						<CardContent className={cardClasses.titleContainer}>
 							<Typography variant='h5' className={cardClasses.title}>
 								{props.title}
 							</Typography>
 						</CardContent>
 						<div className={cardClasses.content}>
-							<Typography variant='h2'>{formatTime(props.value)}</Typography>
+							<Typography variant='h4'>{formatTime(props.value)}</Typography>
 						</div>
 					</CardActionArea>
 				</Card>
@@ -76,7 +77,8 @@ TimerCard.propTypes = {
 	title: PropTypes.string.isRequired,
 	gridArea: PropTypes.string.isRequired,
 	value: PropTypes.number.isRequired, // In ms
-	setValue: PropTypes.func.isRequired
+	setValue: PropTypes.func.isRequired,
+	disabled: PropTypes.bool
 };
 
 export default TimerCard;

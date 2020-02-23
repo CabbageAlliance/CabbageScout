@@ -22,20 +22,18 @@ const CountCard = props => {
 
 	return (
 		<Box gridArea={props.gridArea}>
-			<Card className={cardClasses.root}>
+			<Card className={clsx(cardClasses.root, {[cardClasses.disabledRoot]: props.disabled})}>
 				<CardContent className={cardClasses.titleContainer}>
 					<Typography variant='h5' className={cardClasses.title}>
 						{props.title}
 					</Typography>
 				</CardContent>
 				<div className={clsx(cardClasses.content, classes.content)}>
-					<Box>
-						<IconButton disabled={props.value <= 0} onClick={handleSubtract}>
-							<RemoveIcon />
-						</IconButton>
-					</Box>
+					<IconButton disabled={props.value <= 0 || props.disabled} onClick={handleSubtract}>
+						<RemoveIcon />
+					</IconButton>
 					<Typography variant='h4'>{props.value}</Typography>
-					<IconButton onClick={handleAdd}>
+					<IconButton disabled={props.disabled} onClick={handleAdd}>
 						<AddIcon />
 					</IconButton>
 				</div>
@@ -48,7 +46,8 @@ CountCard.propTypes = {
 	title: PropTypes.string.isRequired,
 	gridArea: PropTypes.string.isRequired,
 	value: PropTypes.number.isRequired,
-	setValue: PropTypes.func.isRequired
+	setValue: PropTypes.func.isRequired,
+	disabled: PropTypes.bool
 };
 
 export default CountCard;

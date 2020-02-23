@@ -76,7 +76,8 @@
 				{
 					"properties": "never"
 				}
-			]
+			],
+			"react/boolean-prop-naming": "off"
 		}
 	}
 }
