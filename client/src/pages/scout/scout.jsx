@@ -146,7 +146,7 @@ const Endgame = props => {
 	const portrait = useOrientation();
 	const {entryState, entryDispatch} = useContext(ScoutEntryContext);
 
-	const setTime = field => value => entryDispatch({type: 'input', data: {[field]: value / 1000}});
+	const setHangTime = value => entryDispatch({type: 'input', data: {hang_time: value / 1000, hang_attempted: true}});
 	const setValue = field => value => entryDispatch({type: 'input', data: {[field]: value}});
 
 	const setHangSuccess = success => {
@@ -169,11 +169,11 @@ const Endgame = props => {
 			]}
 		>
 			<Box height={1} className={clsx(classes.root, portrait ? classes.endgamePortrait : classes.endgameLandscape)}>
-				<TimerCard title='Climb Time' gridArea='time' value={entryState.hang_time * 1000} setValue={setTime('hang_time')} />
+				<TimerCard title='Climb Time' gridArea='time' value={entryState.hang_time * 1000} setValue={setHangTime} />
 
 				<ToggleCard
 					title='Hang Successful?'
-					disabled={entryState.hang_time === 0}
+					disabled={!entryState.hang_attempted}
 					value={entryState.hang_suceeded}
 					setValue={setHangSuccess}
 					gridArea='success'
