@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 import React, {useState} from 'react';
 import Layout from '../../components/Layout';
 
-const inputSettings = {min: 0, step: 1, pattern: '^\d+$'};
+const inputSettings = {min: 1, step: 1, pattern: '^\\d+$'};
 
 const New = () => {
 	const router = useRouter();
@@ -47,7 +47,7 @@ const New = () => {
 						variant='outlined'
 						label='Team Number'
 						type='number'
-						inputProps={{...inputSettings, max: 5000}}
+						inputProps={{...inputSettings, max: 9999}}
 						value={team}
 						onChange={handleTeamChange}
 					/>
