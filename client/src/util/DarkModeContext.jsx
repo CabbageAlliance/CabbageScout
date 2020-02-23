@@ -1,6 +1,6 @@
-import React, {createContext, useState, useEffect} from 'react';
+import {cyan, green} from '@material-ui/core/colors';
 import PropTypes from 'prop-types';
-import {cyan, green, lightGreen} from '@material-ui/core/colors';
+import React, {createContext, useEffect, useState} from 'react';
 
 const DarkModeContext = createContext();
 
@@ -13,10 +13,10 @@ const lightTheme = {
 };
 
 const darkTheme = {
+	...lightTheme,
 	palette: {
-		type: 'dark',
-		primary: {main: lightGreen[800], light: '#60ad5e', dark: '#005005'},
-		secondary: {main: cyan[700], light: '#56c8d8', dark: '#006978'}
+		...lightTheme.palette,
+		type: 'dark'
 	}
 };
 

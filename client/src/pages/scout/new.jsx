@@ -45,15 +45,15 @@ const New = () => {
 				<Box mt={2}>
 					<TextField
 						fullWidth
+						autoFocus
 						id='match'
 						variant='outlined'
 						label='Match'
 						type='number'
 						value={match}
-						error={!validMatch}
-						onKeyUp={handleMatchChange} // This fixes some edge cases
+						error={!validMatch} // This fixes some edge cases
+						onKeyUp={handleMatchChange}
 						onChange={handleMatchChange}
-						autoFocus
 					/>
 				</Box>
 				<Box mt={2}>

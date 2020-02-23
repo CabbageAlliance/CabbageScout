@@ -43,8 +43,7 @@ const useStyles = makeStyles({
 	},
 
 	bar: {
-		width: '100%',
-		backgroundColor: props => props.barColor
+		width: '100%'
 	}
 });
 
