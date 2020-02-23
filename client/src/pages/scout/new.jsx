@@ -27,7 +27,17 @@ const New = () => {
 			<form autoComplete='off'>
 				<Typography variant='h3'>New Entry</Typography>
 				<Box mt={2}>
-					<TextField id='match' variant='outlined' label='Match' type='number' required inputProps={inputSettings} value={match} onChange={handleMatchChange} />
+					<TextField
+						id='match'
+						variant='outlined'
+						label='Match'
+						type='number'
+						required
+						inputProps={inputSettings}
+						value={match}
+						onChange={handleMatchChange}
+						fullWidth
+					/>
 				</Box>
 				<Box mt={2}>
 					<TextField
@@ -39,6 +49,7 @@ const New = () => {
 						inputProps={{...inputSettings, max: 5000}}
 						value={team}
 						onChange={handleTeamChange}
+						fullWidth
 					/>
 				</Box>
 				<Box mt={2}>
