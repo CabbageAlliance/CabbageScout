@@ -3,8 +3,6 @@ import Layout from '../components/Layout';
 import {FormControlLabel, Switch, Typography} from '@material-ui/core';
 import DarkModeContext from '../util/DarkModeContext';
 
-const commit = process.env.COMMIT_REF;
-
 const Settings = () => {
 	const {darkMode, toggleDarkMode} = useContext(DarkModeContext);
 
@@ -16,9 +14,9 @@ const Settings = () => {
 				<FormControlLabel control={<Switch checked={darkMode} onChange={handleDarkMode} />} label='Dark Mode' />
 			</form>
 			<Typography>
-				{commit ? (
+				{process.env.commit ? (
 					<>
-						Build <code>{commit}</code>
+						Build <code>{process.env.commit}</code>
 					</>
 				) : (
 					<>Development build</>

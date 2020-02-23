@@ -6,5 +6,8 @@ const withOffline = require('next-offline');
 module.exports = withPlugins([[withOffline]], {
 	devIndicators: {
 		autoPrerender: false
+	},
+	env: {
+		gitCommit: process.env.COMMIT_REF
 	}
 });
