@@ -1,4 +1,4 @@
-import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button} from '@material-ui/core';
+import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button, Grid} from '@material-ui/core';
 import useCardStyles from './card-styles';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -40,7 +40,7 @@ const TimerCard = props => {
 	return (
 		<>
 			<Box gridArea={props.gridArea}>
-				<Card className={clsx(cardClasses.root, {[cardClasses.disabledRoot]: props.disabled})}>
+				<Card className={clsx(cardClasses.root, {[cardClasses.disabledRoot]: props.disabled})} elevation={2}>
 					<CardActionArea disabled={props.disabled} className={cardClasses.root} onClick={handleStart}>
 						<CardContent className={cardClasses.titleContainer}>
 							<Typography variant='h5' className={cardClasses.title}>

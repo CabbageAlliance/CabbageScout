@@ -1,18 +1,16 @@
-import React, {useContext, useState} from 'react';
-import {Button, makeStyles, Box} from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import PropTypes from 'prop-types';
-
-import ScoutEntryContext from '../../util/ScoutEntryContext';
-import ScoutLayout from '../../components/ScoutLayout';
-import Base from '../../components/Base';
-import useOrientation from '../../util/orientation';
-import ToggleCard from '../../components/cards/ToggleCard';
+import {Box, Button, makeStyles} from '@material-ui/core';
+import {NavigateBefore, NavigateNext, Check} from '@material-ui/icons';
 import clsx from 'clsx';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
+import React, {useContext, useState} from 'react';
+import Base from '../../components/Base';
 import CountCard from '../../components/cards/CountCard';
 import TimerCard from '../../components/cards/TimerCard';
-import Link from 'next/link';
+import ToggleCard from '../../components/cards/ToggleCard';
+import ScoutLayout from '../../components/ScoutLayout';
+import useOrientation from '../../util/orientation';
+import ScoutEntryContext from '../../util/ScoutEntryContext';
 
 const useStyles = makeStyles({
 	root: {
@@ -85,7 +83,7 @@ const Auto = props => {
 		<ScoutLayout
 			section='Auto'
 			navButtons={[
-				<Button key='teleop' variant='outlined' endIcon={<NavigateNextIcon />} onClick={props.handleChangeView('teleop')}>
+				<Button key='teleop' variant='outlined' endIcon={<NavigateNext />} onClick={props.handleChangeView('teleop')}>
 					Teleop
 				</Button>
 			]}
@@ -117,10 +115,10 @@ const Teleop = props => {
 		<ScoutLayout
 			section='Teleop'
 			navButtons={[
-				<Button key='auto' startIcon={<NavigateBeforeIcon />} onClick={props.handleChangeView('auto')}>
+				<Button key='auto' startIcon={<NavigateBefore />} onClick={props.handleChangeView('auto')}>
 					Auto
 				</Button>,
-				<Button key='endgame' variant='outlined' endIcon={<NavigateNextIcon />} onClick={props.handleChangeView('endgame')}>
+				<Button key='endgame' variant='outlined' endIcon={<NavigateNext />} onClick={props.handleChangeView('endgame')}>
 					Endgame
 				</Button>
 			]}
@@ -160,11 +158,11 @@ const Endgame = props => {
 		<ScoutLayout
 			section='Endgame'
 			navButtons={[
-				<Button key='teleop' startIcon={<NavigateBeforeIcon />} onClick={props.handleChangeView('teleop')}>
+				<Button key='teleop' startIcon={<NavigateBefore />} onClick={props.handleChangeView('teleop')}>
 					Teleop
 				</Button>,
 				<Link key='finish' passHref href='/scout/submit'>
-					<Button variant='contained' color='primary'>
+					<Button disableElevation variant='contained' endIcon={<Check />} color='primary'>
 						Finish
 					</Button>
 				</Link>

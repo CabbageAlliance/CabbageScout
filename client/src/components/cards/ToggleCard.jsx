@@ -18,14 +18,14 @@ const ToggleCard = props => {
 
 	return (
 		<Box gridArea={props.gridArea}>
-			<Card className={clsx(cardClasses.root, {[cardClasses.disabledRoot]: props.disabled})}>
+			<Card className={clsx(cardClasses.root, {[cardClasses.disabledRoot]: props.disabled})} elevation={2}>
 				<CardActionArea disabled={props.disabled} className={cardClasses.root} onClick={handleChange}>
 					<CardContent className={cardClasses.titleContainer}>
 						<Typography variant='h5' className={cardClasses.title}>
 							{props.title}
 						</Typography>
 					</CardContent>
-					<div className={clsx(cardClasses.content, {[classes.disabledContent]: props.disabled})}>
+					<Box height={1} className={clsx(cardClasses.content, {[classes.disabledContent]: props.disabled})}>
 						{props.value ? (
 							<Typography variant='h1' color='primary'>
 								YES
@@ -35,7 +35,7 @@ const ToggleCard = props => {
 								NO
 							</Typography>
 						)}
-					</div>
+					</Box>
 				</CardActionArea>
 			</Card>
 		</Box>

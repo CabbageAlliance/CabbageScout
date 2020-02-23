@@ -1,26 +1,24 @@
-import React, {useContext, useState, useEffect} from 'react';
 import {
-	Button,
-	Grid,
-	Paper,
-	Container,
-	makeStyles,
 	Box,
-	Typography,
-	Hidden,
+	Button,
+	Container,
 	Dialog,
-	DialogTitle,
+	DialogActions,
 	DialogContent,
 	DialogContentText,
-	DialogActions
+	DialogTitle,
+	Grid,
+	Hidden,
+	makeStyles,
+	Paper,
+	Typography
 } from '@material-ui/core';
+import {ExitToApp} from '@material-ui/icons';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
-
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
-import ScoutEntryContext from '../util/ScoutEntryContext';
+import React, {useContext, useEffect, useState} from 'react';
 import DarkModeContext from '../util/DarkModeContext';
-import {useRouter} from 'next/router';
+import ScoutEntryContext from '../util/ScoutEntryContext';
 
 const useStyles = makeStyles({
 	root: {
@@ -45,8 +43,7 @@ const useStyles = makeStyles({
 	},
 
 	bar: {
-		width: '100%',
-		backgroundColor: props => props.barColor
+		width: '100%'
 	}
 });
 
@@ -68,9 +65,6 @@ const ScoutLayout = props => {
 	const [openExit, setOpenExit] = useState(false);
 	const handleToggleExit = open => () => setOpenExit(open);
 
-	const router = useRouter();
-	const handleExit = () => router.push('/');
-
 	return (
 		<Box width={1} height='100vh' className={classes.root}>
 			<Dialog open={openExit} onClose={handleToggleExit(false)}>
@@ -79,10 +73,18 @@ const ScoutLayout = props => {
 					<DialogContentText>You changes will be deleted.</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleExit}>Leave</Button>
-					<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
-						Keep scouting
-					</Button>
+					<Grid container direction='row' justify='space-between' alignItems='flex-start'>
+						<Grid item>
+							<Link passHref href='/'>
+								<Button>Leave</Button>
+							</Link>
+						</Grid>
+						<Grid item>
+							<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
+								Keep scouting
+							</Button>
+						</Grid>
+					</Grid>
 				</DialogActions>
 			</Dialog>
 
@@ -107,7 +109,7 @@ const ScoutLayout = props => {
 				<Grid container direction='row' alignItems='center'>
 					<Grid item sm={3} xs={6}>
 						<Box p={1}>
-							<Button startIcon={<ExitToAppIcon />} onClick={handleToggleExit(true)}>
+							<Button startIcon={<ExitToApp />} onClick={handleToggleExit(true)}>
 								Exit
 							</Button>
 						</Box>
