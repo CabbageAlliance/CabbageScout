@@ -1,5 +1,5 @@
-import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button} from '@material-ui/core';
-import useCardStyles from './card-styles';
+import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button, makeStyles} from '@material-ui/core';
+import {ClickableGridCard} from './grid-card';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import clsx from 'clsx';
@@ -9,8 +9,6 @@ function formatTime(time) {
 }
 
 const TimerCard = props => {
-	const cardClasses = useCardStyles();
-
 	/** @type {[boolean, Function]} */
 	const [open, setOpen] = useState(false);
 	/** @type {[number, Function]} */
@@ -39,20 +37,14 @@ const TimerCard = props => {
 
 	return (
 		<>
-			<Box gridArea={props.gridArea}>
-				<Card className={clsx(cardClasses.root, {[cardClasses.disabledRoot]: props.disabled})} elevation={2}>
-					<CardActionArea disabled={props.disabled} className={cardClasses.root} onClick={handleStart}>
-						<CardContent className={cardClasses.titleContainer}>
-							<Typography variant='h5' className={cardClasses.title}>
-								{props.title}
-							</Typography>
-						</CardContent>
-						<div className={cardClasses.content}>
-							<Typography variant='h4'>{formatTime(props.value)}</Typography>
-						</div>
-					</CardActionArea>
-				</Card>
-			</Box>
+			<ClickableGridCard
+				title={props.title}
+				disabled={props.disabled}
+				onClick={handleStart}
+				gridArea={props.gridArea}
+			>
+				<Typography variant='h4'>{formatTime(props.value)}</Typography>
+			</ClickableGridCard>
 
 			<Dialog open={open}>
 				<DialogTitle>{props.title}</DialogTitle>
