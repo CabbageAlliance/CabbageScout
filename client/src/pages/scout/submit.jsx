@@ -7,6 +7,7 @@ import DarkModeContext from '../../util/DarkModeContext';
 import Layout from '../../components/Layout';
 
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 
 const useStyles = makeStyles({
 	bar: {
@@ -263,10 +264,18 @@ const Submit = () => {
 
 				<Divider />
 
-				<Box mt={2}>
+				<Box mt={2} display='flex' flexDirection='row' justifyContent='flex-start'>
 					<Button variant='contained' color='secondary' size='large' type='submit' onClick={handleSubmit}>
 						Submit
 					</Button>
+
+					<Box ml={1} />
+
+					<Link passHref href='/'>
+						<Button>
+							Cancel
+						</Button>
+					</Link>
 				</Box>
 			</form>
 		</Layout>
