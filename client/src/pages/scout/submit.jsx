@@ -272,9 +272,7 @@ const Submit = () => {
 					<Box ml={1} />
 
 					<Link passHref href='/'>
-						<Button>
-							Cancel
-						</Button>
+						<Button>Cancel</Button>
 					</Link>
 				</Box>
 			</form>

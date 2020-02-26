@@ -16,7 +16,7 @@ import {
 import {ExitToApp} from '@material-ui/icons';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import DarkModeContext from '../util/DarkModeContext';
 import ScoutEntryContext from '../util/ScoutEntryContext';
 import useOrientation from '../util/orientation';
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
 });
 
 const ScoutLayout = props => {
-	const portrait = useOrientation()
+	const portrait = useOrientation();
 	const {darkMode} = useContext(DarkModeContext);
 
 	const {entryState} = useContext(ScoutEntryContext);

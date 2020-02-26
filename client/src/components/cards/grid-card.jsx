@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 		},
 		[theme.breakpoints.up('md')]: {
 			fontSize: 18
-		},
+		}
 	},
 
 	titleContainer: {
