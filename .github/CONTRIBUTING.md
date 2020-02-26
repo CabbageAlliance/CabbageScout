@@ -25,7 +25,7 @@ Submitting a pull request is fairly simple, just make sure it focuses on a singl
 
 ### Frontend
 
-The [frontend](https://github.com/CabbageAlliance/CabbageScout/tree/master/client) of the project uses custom XO and Prettier configurations. Make sure that your code is formatted correctly by running `npm run lint` before all commits. You can automatically format and refactor your code with `npm run lint -- --fix` or `npm run style`.
+The [frontend](https://github.com/CabbageAlliance/CabbageScout/tree/master/client) of the project uses custom XO and Prettier configurations. Check [client/readme.md](../client/readme.md) for linting and styling instructions.
 
 ### Backend
 
