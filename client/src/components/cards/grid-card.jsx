@@ -18,7 +18,15 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	title: {
-		fontSize: 15
+		[theme.breakpoints.down('xs')]: {
+			fontSize: 14
+		},
+		[theme.breakpoints.only('sm')]: {
+			fontSize: 15
+		},
+		[theme.breakpoints.up('md')]: {
+			fontSize: 18
+		},
 	},
 
 	titleContainer: {

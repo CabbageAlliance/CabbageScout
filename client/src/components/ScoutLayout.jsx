@@ -19,12 +19,18 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 import DarkModeContext from '../util/DarkModeContext';
 import ScoutEntryContext from '../util/ScoutEntryContext';
+import useOrientation from '../util/orientation';
+import clsx from 'clsx';
 
 const useStyles = makeStyles({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'flex-start'
+	},
+
+	lightBg: {
+		backgroundColor: '#f4f4f4'
 	},
 
 	contentContainer: {
@@ -48,14 +54,8 @@ const useStyles = makeStyles({
 });
 
 const ScoutLayout = props => {
-	// Code for changing the layout depending on if it's portrait or landscape
-	const [portrait, setOrientation] = useState(false);
-	useEffect(() => {
-		const updateOrientation = () => setOrientation(window.innerHeight > window.innerWidth);
-		updateOrientation();
-		window.addEventListener('resize', updateOrientation);
-		return () => window.removeEventListener('resize', updateOrientation);
-	});
+	const portrait = useOrientation()
+	const {darkMode} = useContext(DarkModeContext);
 
 	const {entryState} = useContext(ScoutEntryContext);
 
@@ -66,7 +66,7 @@ const ScoutLayout = props => {
 	const handleToggleExit = open => () => setOpenExit(open);
 
 	return (
-		<Box width={1} height='100vh' className={classes.root}>
+		<Box width={1} height='100vh' className={clsx(classes.root, {[classes.lightBg]: !darkMode})}>
 			<Dialog open={openExit} onClose={handleToggleExit(false)}>
 				<DialogTitle>Are you sure you want to leave?</DialogTitle>
 				<DialogContent>
