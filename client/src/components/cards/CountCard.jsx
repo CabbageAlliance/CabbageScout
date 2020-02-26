@@ -1,5 +1,4 @@
-import {makeStyles, IconButton, Typography, Box, Card, CardContent} from '@material-ui/core';
-import clsx from 'clsx';
+import {IconButton, Typography, Box} from '@material-ui/core';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
@@ -11,18 +10,14 @@ const CountCard = props => {
 	const handleAdd = () => props.setValue(props.value + 1);
 
 	return (
-		<GridCard
-			title={props.title}
-			disabled={props.disabled}
-			gridArea={props.gridArea}
-		>
+		<GridCard title={props.title} disabled={props.disabled} gridArea={props.gridArea}>
 			<Box display='flex' flexDirection='row' justifyContent='space-evenly' width='100%' height='100%' alignItems='center'>
 				<IconButton disabled={props.value <= 0 || props.disabled} onClick={handleSubtract}>
-				<RemoveIcon />
+					<RemoveIcon />
 				</IconButton>
 				<Typography variant='h4'>{props.value}</Typography>
 				<IconButton disabled={props.disabled} onClick={handleAdd}>
-				<AddIcon />
+					<AddIcon />
 				</IconButton>
 			</Box>
 		</GridCard>

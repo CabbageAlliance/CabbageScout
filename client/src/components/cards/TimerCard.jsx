@@ -1,8 +1,7 @@
-import {Box, Card, CardActionArea, DialogTitle, Typography, DialogActions, CardContent, Dialog, DialogContent, Button, makeStyles} from '@material-ui/core';
+import {Box, DialogTitle, Typography, DialogActions, Dialog, DialogContent, Button} from '@material-ui/core';
 import {ClickableGridCard} from './grid-card';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-import clsx from 'clsx';
 
 function formatTime(time) {
 	return `${(time / 1000).toFixed(2).padStart('XX.XX'.length, '0')}s`;
@@ -37,12 +36,7 @@ const TimerCard = props => {
 
 	return (
 		<>
-			<ClickableGridCard
-				title={props.title}
-				disabled={props.disabled}
-				onClick={handleStart}
-				gridArea={props.gridArea}
-			>
+			<ClickableGridCard title={props.title} disabled={props.disabled} gridArea={props.gridArea} onClick={handleStart}>
 				<Typography variant='h4'>{formatTime(props.value)}</Typography>
 			</ClickableGridCard>
 

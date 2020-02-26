@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {Card, CardContent, Typography, Box, CardActionArea, makeStyles} from '@material-ui/core';
+import {Typography, makeStyles} from '@material-ui/core';
 import {ClickableGridCard} from './grid-card';
 import React from 'react';
 import clsx from 'clsx';
@@ -16,12 +16,7 @@ const ToggleCard = props => {
 	const handleChange = () => props.setValue(!props.value);
 
 	return (
-		<ClickableGridCard
-			title={props.title}
-			disabled={props.disabled}
-			onClick={handleChange}
-			gridArea={props.gridArea}
-		>
+		<ClickableGridCard title={props.title} disabled={props.disabled} gridArea={props.gridArea} onClick={handleChange}>
 			<div className={clsx({[classes.disabledContent]: props.disabled})}>
 				{props.value ? (
 					<Typography variant='h1' color='primary'>
