@@ -4,7 +4,17 @@ import React, {useState, useEffect, useContext} from 'react';
 import Layout from '../../components/Layout';
 import ScoutEntryContext from '../../util/ScoutEntryContext';
 
-const checkValidNumber = num => num && num > 0 && num % 1 === 0 && num < 10000;
+const min = 0;
+const max = 10000;
+
+/**
+ * Make sure a number is an integer between the min and max values.
+ * @param {number} num Value to validate
+ * @returns {boolean} Whether or not the value provided was a valid number
+ */
+function checkValidNumber(num) {
+	return Number.isSafeInteger(num) && min < num && num < max;
+}
 
 const New = () => {
 	const router = useRouter();
@@ -14,14 +24,14 @@ const New = () => {
 	const [validMatch, setValidMatch] = useState(true);
 	const handleMatchChange = event => {
 		setMatch(event.target.value);
-		setValidMatch(checkValidNumber(event.target.value));
+		setValidMatch(checkValidNumber(parseFloat(event.target.value)));
 	};
 
 	const [team, setTeam] = useState('');
 	const [validTeam, setValidTeam] = useState(true);
 	const handleTeamChange = event => {
 		setTeam(event.target.value);
-		setValidTeam(checkValidNumber(event.target.value));
+		setValidTeam(checkValidNumber(parseFloat(event.target.value)));
 	};
 
 	const [submitReady, setSubmitReady] = useState(false);
