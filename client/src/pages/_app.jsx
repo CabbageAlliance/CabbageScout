@@ -1,8 +1,7 @@
 import App from 'next/app';
+import React from 'react';
 import {DarkModeProvider} from '../util/DarkModeContext';
 import {ScoutEntryProvider} from '../util/ScoutEntryContext';
-import React from 'react';
-import Head from 'next/head';
 
 /**
  * A custom Next.js App component that fixes Material-UI server-side rendered stylesheets.
@@ -23,9 +22,6 @@ export default class CabbageApp extends App {
 
 		return (
 			<DarkModeProvider>
-				<Head>
-					<link key='manifest' rel='manifest' href='/manifest.webmanifest' />
-				</Head>
 				<ScoutEntryProvider>
 					<Component {...pageProps} />
 				</ScoutEntryProvider>

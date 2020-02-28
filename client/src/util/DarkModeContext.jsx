@@ -29,7 +29,9 @@ const DarkModeProvider = props => {
 	// Store toggled setting
 	useEffect(() => localStorage.setItem('darkMode', darkMode), [darkMode]);
 
-	return <DarkModeContext.Provider value={{darkMode, theme: darkMode ? darkTheme : lightTheme, toggleDarkMode}}>{props.children}</DarkModeContext.Provider>;
+	const theme = darkMode ? darkTheme : lightTheme;
+
+	return <DarkModeContext.Provider value={{darkMode, theme, toggleDarkMode}}>{props.children}</DarkModeContext.Provider>;
 };
 
 DarkModeProvider.propTypes = {

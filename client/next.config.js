@@ -9,6 +9,7 @@ module.exports = withPlugins([[withSourceMaps], [withOffline]], {
 		autoPrerender: false
 	},
 	env: {
-		gitCommit: process.env.COMMIT_REF
+		gitCommit: process.env.COMMIT_REF,
+		url: process.env.URL || 'http://localhost:3000'
 	}
 });

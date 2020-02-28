@@ -4,6 +4,7 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import React, {useMemo, useContext} from 'react';
 import DarkModeContext from '../util/DarkModeContext';
+import {Seo} from './seo';
 
 // All pages should have this as their root component
 const Base = props => {
@@ -15,8 +16,8 @@ const Base = props => {
 
 	return (
 		<>
+			<Seo pageTitle={props.title} theme={theme} />
 			<Head>
-				<title>{props.title} - CabbageScout</title>
 				<link rel='stylesheet preconnect' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
 			</Head>
 
