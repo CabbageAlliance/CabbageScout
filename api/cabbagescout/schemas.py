@@ -1,11 +1,7 @@
 import json
-from collections import defaultdict
-from itertools import chain
-from typing import DefaultDict, Dict, List, NamedTuple
+from typing import Dict, NamedTuple
 
 from pydantic import BaseModel, Field, constr
-
-from .abc import Database
 
 
 class ScoutEntry(BaseModel):
@@ -121,37 +117,3 @@ class ScoutEntryKey(NamedTuple):
 
     match: int
     team: int
-
-
-class DictDatabase(Database):  # for testing purposes
-    __slots__ = "db"
-
-    def __init__(self):
-        super().__init__()
-        self.db: DefaultDict[ScoutEntryKey, List[ScoutEntry]] = defaultdict(List)
-
-    async def get_entries(
-        self, match: int = None, team: int = None
-    ) -> List[ScoutEntry]:
-        if match is None:
-            if team is None:
-                entries = self.db.values()
-            else:
-                entries = (self.db[key] for key in self.db.keys() if key.team == team)
-        else:
-            if team is None:
-                entries = (self.db[key] for key in self.db.keys() if key.match == match)
-            else:
-                return self.db[ScoutEntryKey(match=match, team=team)]
-
-        return list(chain.from_iterable(entries))
-
-    async def add_entry(self, entry: ScoutEntry):
-        key = ScoutEntryKey.from_scoutentry(entry)
-        self.db[key].append(entry)
-
-        return key
-
-    async def to_csv(self, delimiter: str = ",") -> str:
-        # TODO: implement
-        return await super().to_csv()
