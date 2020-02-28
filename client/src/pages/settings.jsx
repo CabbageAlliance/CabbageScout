@@ -13,7 +13,6 @@ const Settings = () => {
 			<form>
 				<FormControlLabel control={<Switch checked={darkMode} onChange={handleDarkMode} />} label='Dark Mode' />
 			</form>
-			{/* eslint-disable no-undef */}
 			<Typography>
 				{process.env.gitCommit ? (
 					<>
@@ -23,7 +22,6 @@ const Settings = () => {
 					<>Development build</>
 				)}
 			</Typography>
-			{/* eslint-enable no-undef */}
 		</Layout>
 	);
 };
