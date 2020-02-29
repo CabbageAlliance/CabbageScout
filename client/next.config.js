@@ -10,6 +10,10 @@ module.exports = withPlugins([[withSourceMaps], [withOffline]], {
 	},
 	env: {
 		gitCommit: process.env.COMMIT_REF,
-		url: process.env.URL || '/'
+		// This should be left blank since most usage looks like:
+		// ${url}/icons/icon-144x144.png
+		// Which results with
+		// /icons/icon-144x144.png
+		url: process.env.URL || ''
 	}
 });
