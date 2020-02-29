@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 import uvicorn
 from uvicorn.loops import uvloop
@@ -16,9 +17,7 @@ class Server(uvicorn.Server):
 
 def main():
     uvloop.uvloop_setup()
-    database = PostgresDatabase(
-        uri="postgres://username:password@localhost:5432/cabbage-scout"
-    )
+    database = PostgresDatabase(uri=os.environ["POSTGRES_URI"])
 
     host = "0.0.0.0"
     port = 8000
