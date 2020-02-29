@@ -1,7 +1,7 @@
 from asyncio import get_event_loop
 from collections import defaultdict
 from itertools import chain
-from typing import List, DefaultDict
+from typing import DefaultDict, List
 
 import asyncpg
 
