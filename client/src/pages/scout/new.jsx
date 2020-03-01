@@ -71,7 +71,6 @@ const New = () => {
 				</Box>
 				<Box mt={2}>
 					<TeamPicker
-						onInputChange={handleTeamChange}
 						textFieldProps={{
 							id: 'team-number',
 							type: 'text',
@@ -80,6 +79,7 @@ const New = () => {
 							error: !validTeam,
 							helperText: !validTeam && 'Please provide a valid team number'
 						}}
+						onInputChange={handleTeamChange}
 					/>
 				</Box>
 				<Box mt={2}>
