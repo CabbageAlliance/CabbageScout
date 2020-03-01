@@ -60,6 +60,7 @@
 	},
 	"xo": {
 		"extends": [
+			"xo/esnext",
 			"xo/browser",
 			"xo-react"
 		],
