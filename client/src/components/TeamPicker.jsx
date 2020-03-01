@@ -74,7 +74,7 @@ const TeamPicker = props => {
 			)}
 			renderOption={option => (
 				<Grid container direction='row' justify='flex-start' alignItems='flex-start' spacing={2}>
-					<Grid item >
+					<Grid item>
 						<Typography>{option.name}</Typography>
 					</Grid>
 					<Grid item>
