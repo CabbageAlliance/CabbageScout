@@ -24,12 +24,12 @@ class PostgresDatabase(Database):
                     team int,
 
                     auto_crossed_line bool DEFAULT false,
-                    auto_uppergoal_score int DEFAULT 0,
-                    auto_lowergoal_score int DEFAULT 0,
+                    auto_uppergoal_scored int DEFAULT 0,
+                    auto_lowergoal_scored int DEFAULT 0,
                     auto_uppergoal_missed int DEFAULT 0,
 
-                    teleop_lowergoal_score int DEFAULT 0,
-                    teleop_uppergoal_score int DEFAULT 0,
+                    teleop_lowergoal_scored int DEFAULT 0,
+                    teleop_uppergoal_scored int DEFAULT 0,
                     teleop_uppergoal_missed int DEFAULT 0,
                     rotation_control_time float8 DEFAULT 0,
                     position_control_time float8 DEFAULT 0,
