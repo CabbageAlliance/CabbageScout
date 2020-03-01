@@ -4,7 +4,7 @@ asyncpg==0.20.1
 attrs==19.3.0
 chardet==3.0.4
 Click==7.0
-fastapi==0.49.0
+fastapi==0.50.0
 h11==0.9.0
 httptools==0.1.1
 idna==2.9
