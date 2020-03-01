@@ -73,11 +73,11 @@ services:
       - cabbage-frontend
       - cabbage-backend
   # Autoupdate images
-  watchtower:
-    image: v2tec/watchtower
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  # watchtower:
+  #   image: v2tec/watchtower
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   cabbage-database-data:
     external: true
