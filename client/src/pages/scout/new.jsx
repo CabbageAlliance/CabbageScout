@@ -1,7 +1,8 @@
 import {Box, Button, TextField, Typography} from '@material-ui/core';
 import {useRouter} from 'next/router';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Layout from '../../components/Layout';
+import TeamPicker from '../../components/TeamPicker';
 import ScoutEntryContext from '../../util/ScoutEntryContext';
 
 const min = 0;
@@ -29,9 +30,9 @@ const New = () => {
 
 	const [team, setTeam] = useState('');
 	const [validTeam, setValidTeam] = useState(true);
-	const handleTeamChange = event => {
-		setTeam(event.target.value);
-		setValidTeam(checkValidNumber(parseFloat(event.target.value)));
+	const handleTeamChange = (event, value) => {
+		setTeam(value);
+		setValidTeam(checkValidNumber(parseFloat(value)));
 	};
 
 	const [submitReady, setSubmitReady] = useState(false);
@@ -59,24 +60,19 @@ const New = () => {
 						id='match'
 						variant='outlined'
 						label='Match'
-						type='number'
+						type='text'
+						inputMode='numeric'
+						pattern='[0-9]+'
 						value={match}
+						helperText={!validMatch && 'Please provide a valid match number'}
 						error={!validMatch} // This fixes some edge cases
-						onKeyUp={handleMatchChange}
 						onChange={handleMatchChange}
 					/>
 				</Box>
 				<Box mt={2}>
-					<TextField
-						fullWidth
-						id='team-number'
-						variant='outlined'
-						label='Team Number'
-						type='number'
-						value={team}
-						error={!validTeam}
-						onKeyUp={handleTeamChange}
-						onChange={handleTeamChange}
+					<TeamPicker
+						onInputChange={handleTeamChange}
+						textFieldProps={{id: 'team-number', type: 'text', inputMode: 'numeric', pattern: '[0-9]+', error: !validTeam, helperText: !validTeam && 'Please provide a valid team number'}}
 					/>
 				</Box>
 				<Box mt={2}>
