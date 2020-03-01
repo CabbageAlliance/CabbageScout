@@ -40,7 +40,7 @@
 	"dependencies": {
 		"@material-ui/core": "^4.9.2",
 		"@material-ui/icons": "^4.9.1",
-		"@material-ui/lab": "^4.0.0-alpha.44",
+		"@material-ui/lab": "^4.0.0-alpha.45",
 		"@zeit/next-source-maps": "^0.0.3",
 		"clsx": "^1.1.0",
 		"next": "^9.2.1",
