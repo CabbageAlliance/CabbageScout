@@ -1,13 +1,31 @@
 import React, {useContext, useState, useReducer, useEffect} from 'react';
-import {Typography, makeStyles, Slider, Box, Checkbox, FormControlLabel, TextField, Divider, Collapse, Button} from '@material-ui/core';
+import {
+	Typography,
+	makeStyles,
+	Slider,
+	Box,
+	Checkbox,
+	FormControlLabel,
+	TextField,
+	Divider,
+	Collapse,
+	Button,
+	DialogTitle,
+	DialogContent,
+	DialogActions,
+	Grid,
+	Dialog,
+	DialogContentText
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import {useRouter} from 'next/router';
+import Link from 'next/link';
+
 import ScoutEntryContext from '../../util/ScoutEntryContext';
 import DarkModeContext from '../../util/DarkModeContext';
 import Layout from '../../components/Layout';
-
-import {useRouter} from 'next/router';
-import Link from 'next/link';
+import Alert from '../../components/Alert';
 
 const useStyles = makeStyles({
 	bar: {
@@ -60,6 +78,12 @@ const Submit = () => {
 	const {entryState} = useContext(ScoutEntryContext);
 	const [entryCopy, copyDispatch] = useReducer(reducer, entryState);
 
+	const [openExit, setOpenExit] = useState(false);
+	const handleToggleExit = open => () => setOpenExit(open);
+
+	const [submitError, setSubmitError] = useState(false);
+	const handleToggleError = open => () => setSubmitError(open);
+
 	// Sometimes we get the state before it loads from localstorage
 	useEffect(() => copyDispatch(entryState), [entryState]);
 
@@ -89,8 +113,21 @@ const Submit = () => {
 			defending_time: Number(entryCopy.defending_time),
 			hang_time: Number(entryCopy.hang_time)
 		};
-		console.log(formattedEntry);
-		router.push('/');
+
+		fetch('/api/entry', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(formattedEntry)
+		}).then(resp => {
+			if (resp.ok) {
+				router.push({pathname: '/', query: {submit: true}});
+			} else {
+				console.error(resp);
+				setSubmitError(true);
+			}
+		});
 	};
 
 	return (
@@ -243,9 +280,9 @@ const Submit = () => {
 								/>
 								<FormControlLabel
 									control={<Checkbox />}
-									checked={entryCopy.hang_suceeded}
+									checked={entryCopy.hang_succeeded}
 									label='Hang Suceeded'
-									onChange={handleCheckboxChange('hang_suceeded')}
+									onChange={handleCheckboxChange('hang_succeeded')}
 								/>
 								<FormControlLabel control={<Checkbox />} checked={entryCopy.hang_level} label='Hang Level' onChange={handleCheckboxChange('hang_level')} />
 							</div>
@@ -271,11 +308,32 @@ const Submit = () => {
 
 					<Box ml={1} />
 
-					<Link passHref href='/'>
-						<Button>Cancel</Button>
-					</Link>
+					<Button onClick={handleToggleExit(true)}>Cancel</Button>
 				</Box>
 			</form>
+
+			<Dialog open={openExit} onClose={handleToggleExit(false)}>
+				<DialogTitle>Discard this scout entry?</DialogTitle>
+				<DialogContent>
+					<DialogContentText>Your changes will be deleted.</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Grid container direction='row' justify='space-between' alignItems='flex-start'>
+						<Grid item>
+							<Link passHref href='/'>
+								<Button>Leave</Button>
+							</Link>
+						</Grid>
+						<Grid item>
+							<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
+								Stay
+							</Button>
+						</Grid>
+					</Grid>
+				</DialogActions>
+			</Dialog>
+
+			<Alert error open={submitError} message='An error occurred. Please try again.' onClose={handleToggleError(false)} />
 		</Layout>
 	);
 };

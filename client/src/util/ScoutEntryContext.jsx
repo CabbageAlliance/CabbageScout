@@ -24,7 +24,7 @@ const initialState = {
 
 	// Endgame
 	hang_attempted: false,
-	hang_suceeded: false,
+	hang_succeeded: false,
 	hang_time: 0,
 	hang_level: false,
 

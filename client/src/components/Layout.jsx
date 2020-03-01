@@ -13,31 +13,41 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-	Divider
+	Divider,
+	Menu,
+	MenuItem
 } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
-import MenuButton from '@material-ui/icons/Menu';
-import HomeButton from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import Base from './Base';
 import Link from 'next/link';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	spacing: {
 		flexGrow: 1
 	},
 	drawerList: {
 		width: 200
+	},
+	nestedMenu: {
+		paddingLeft: theme.spacing(4)
 	}
-});
+}));
 
 const Layout = props => {
 	const classes = useStyles();
 
 	const [drawer, setDrawer] = useState(false);
-
 	const toggleDrawer = open => () => setDrawer(open);
+
+	const [dataAnchor, setDataAnchor] = useState(null);
+	const handleDataMenuOpen = event => setDataAnchor(event.currentTarget);
+	const handleDataMenuClose = () => setDataAnchor(null);
 
 	return (
 		<Base title={props.title}>
@@ -46,11 +56,25 @@ const Layout = props => {
 					<Link passHref href='/'>
 						<ListItem button>
 							<ListItemIcon>
-								<HomeButton />
+								<HomeIcon />
 							</ListItemIcon>
 							<ListItemText primary='Home' />
 						</ListItem>
 					</Link>
+
+					<ListItem>
+						<ListItemIcon>
+							<AssessmentIcon />
+						</ListItemIcon>
+						<ListItemText primary='Data' />
+					</ListItem>
+					<List className={classes.nestedMenu}>
+						<Link passHref href='/data/download'>
+							<ListItem button>
+								<ListItemText primary='Download' />
+							</ListItem>
+						</Link>
+					</List>
 				</List>
 
 				<Divider />
@@ -72,7 +96,7 @@ const Layout = props => {
 					<Hidden smUp>
 						<Box mr={2}>
 							<IconButton color='inherit' onClick={toggleDrawer(true)}>
-								<MenuButton />
+								<MenuIcon />
 							</IconButton>
 						</Box>
 					</Hidden>
@@ -85,11 +109,26 @@ const Layout = props => {
 
 					<div className={classes.spacing} />
 
-					<Link passHref href='/scout/new'>
-						<Button variant='outlined' color='inherit' size='large'>
-							New
-						</Button>
-					</Link>
+					<Hidden xsDown>
+						<Box ml={2}>
+							<Button size='large' onClick={handleDataMenuOpen}>
+								Data
+							</Button>
+						</Box>
+						<Menu keepMounted anchorEl={dataAnchor} open={dataAnchor} onClose={handleDataMenuClose}>
+							<Link passHref href='/data/download'>
+								<MenuItem>Download</MenuItem>
+							</Link>
+						</Menu>
+					</Hidden>
+
+					<Box ml={2}>
+						<Link passHref href='/scout/new'>
+							<Button variant='outlined' color='inherit' size='large'>
+								New
+							</Button>
+						</Link>
+					</Box>
 
 					<Hidden xsDown>
 						<Box ml={2}>

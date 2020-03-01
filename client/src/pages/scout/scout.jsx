@@ -150,7 +150,7 @@ const Endgame = props => {
 	const setValue = field => value => entryDispatch({type: 'input', data: {[field]: value}});
 
 	const setHangSuccess = success => {
-		entryDispatch({type: 'input', data: {hang_suceeded: success}});
+		entryDispatch({type: 'input', data: {hang_succeeded: success}});
 		if (!success) entryDispatch({type: 'input', data: {hang_level: false}});
 	};
 
@@ -174,11 +174,17 @@ const Endgame = props => {
 				<ToggleCard
 					title='Hang Successful?'
 					disabled={!entryState.hang_attempted}
-					value={entryState.hang_suceeded}
+					value={entryState.hang_succeeded}
 					setValue={setHangSuccess}
 					gridArea='success'
 				/>
-				<ToggleCard title='Hang Level?' disabled={!entryState.hang_suceeded} value={entryState.hang_level} setValue={setValue('hang_level')} gridArea='level' />
+				<ToggleCard
+					title='Hang Level?'
+					disabled={!entryState.hang_succeeded}
+					value={entryState.hang_level}
+					setValue={setValue('hang_level')}
+					gridArea='level'
+				/>
 			</Box>
 		</ScoutLayout>
 	);
