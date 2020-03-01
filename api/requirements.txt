@@ -10,7 +10,7 @@ httptools==0.1.1
 idna==2.9
 multidict==4.7.5
 pydantic==1.4
-starlette==0.12.9
+starlette==0.13.2
 uvicorn==0.11.3
 uvloop==0.14.0
 websockets==8.1
