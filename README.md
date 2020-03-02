@@ -9,15 +9,15 @@ If you want to keep track of development join our [Discord server](https://disco
 
 ---
 
-[![LICENSE](https://img.shields.io/github/license/CabbageAlliance/CabbageScout?style=flat)](https://github.com/CabbageAlliance/CabbageScout/blob/master/LICENSE)
+[![LICENSE](https://img.shields.io/github/license/CabbageAlliance/CabbageScout?&style=flat)](https://github.com/CabbageAlliance/CabbageScout/blob/master/LICENSE)
 [![Discord](https://img.shields.io/discord/676130006124068878?color=%237289DA&logo=discord)](https://discord.gg/dcrVQmQ)
 
 [![API CI](https://github.com/CabbageAlliance/CabbageScout/workflows/API%20CI/badge.svg)](https://github.com/CabbageAlliance/CabbageScout/actions?query=workflow%3A%API+CI%22)
-[![made-with-python](https://img.shields.io/badge/made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![made-with-python](https://img.shields.io/badge/made%20with-Python-1f425f.svg?logo=python)](https://www.python.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 [![Client CI](https://github.com/CabbageAlliance/CabbageScout/workflows/Client%20CI/badge.svg)](https://github.com/CabbageAlliance/CabbageScout/actions?query=workflow%3A%22Client+CI%22)
-[![made with Next.js](https://img.shields.io/badge/made%20with-Next.js-000)](https://nextjs.org/)
+[![made with Next.js](https://img.shields.io/badge/made%20with-Next.js-000?logo=Next.js)](https://nextjs.org/)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 
 ## Running
