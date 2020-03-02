@@ -22,6 +22,10 @@ const Settings = () => {
 					<>Development build</>
 				)}
 			</Typography>
+			<Typography>
+				URL: {process.env.url ||  '(no URl was defined)'}
+			</Typography>
+			<Typography>{process.env.netlify ? 'Running on' : 'Not running on'} Netlify</Typography>
 		</Layout>
 	);
 };
