@@ -14,11 +14,13 @@ DownloadAnchor.propTypes = {
 
 const Download = () => {
 	const [errorMsg, setErrorMsg] = useState();
+	const [loading, setLoadState] = useState(false);
 	const handleToggleError = open => () => setErrorMsg(open);
 
 	const downloadCSV = async () => {
 		let blob;
 
+		setLoadState(true);
 		try {
 			const res = await fetch(`${process.env.url}/api/csv`);
 			if (res.ok) {
@@ -29,6 +31,8 @@ const Download = () => {
 		} catch (error) {
 			console.error(error);
 			setErrorMsg('Error while downloading CSV from the API');
+		} finally {
+			setLoadState(false);
 		}
 
 		if (blob) {
@@ -41,7 +45,7 @@ const Download = () => {
 
 	return (
 		<Layout title='Download'>
-			<Button variant='contained' color='secondary' size='large' onClick={downloadCSV}>
+			<Button variant='contained' color='secondary' size='large' onClick={downloadCSV} disabled={loading}>
 				Download All Data (CSV)
 			</Button>
 			<Alert
