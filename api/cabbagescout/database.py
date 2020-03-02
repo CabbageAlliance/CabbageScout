@@ -47,10 +47,10 @@ class PostgresDatabase(ABCDatabase):
 
         metadata.create_all(engine)
 
-    async def connect(self):
+    async def connect(self) -> None:
         await self._connection.connect()
 
-    async def close(self):
+    async def close(self) -> None:
         await self._connection.disconnect()
 
     async def add_entry(self, entry: ScoutEntry) -> None:
@@ -93,10 +93,10 @@ class DictDatabase(ABCDatabase):  # for testing purposes
         super().__init__()
         self.db: DefaultDict[ScoutEntryKey, List[ScoutEntry]] = defaultdict(List)
 
-    async def connect(self):
+    async def connect(self) -> None:
         pass
 
-    async def close(self):
+    async def close(self) -> None:
         pass
 
     async def get_entries(
@@ -115,7 +115,7 @@ class DictDatabase(ABCDatabase):  # for testing purposes
 
         return list(chain.from_iterable(entries))
 
-    async def add_entry(self, entry: ScoutEntry):
+    async def add_entry(self, entry: ScoutEntry) -> ScoutEntryKey:
         key = ScoutEntryKey.from_scoutentry(entry)
         self.db[key].append(entry)
 

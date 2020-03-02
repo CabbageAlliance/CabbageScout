@@ -1,5 +1,5 @@
 import abc
-from typing import List
+from typing import Any, List, Optional
 
 from cabbagescout.schemas import ScoutEntry
 
@@ -10,7 +10,7 @@ class Database(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @abc.abstractmethod
-    async def add_entry(self, entry: ScoutEntry) -> None:
+    async def add_entry(self, entry: ScoutEntry) -> Optional[Any]:
         raise NotImplementedError(
             f"{self.__class__.__name__}.add_entry() not implemented."
         )
@@ -30,11 +30,11 @@ class Database(metaclass=abc.ABCMeta):
         )
 
     @abc.abstractmethod
-    async def connect(self):
+    async def connect(self) -> None:
         raise NotImplementedError(
             f"{self.__class__.__name__}.connect() not implemented"
         )
 
     @abc.abstractmethod
-    async def close(self):
+    async def close(self) -> None:
         raise NotImplementedError(f"{self.__class__.__name__}.close() not implemented")
