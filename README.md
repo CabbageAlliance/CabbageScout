@@ -10,6 +10,7 @@ If you want to keep track of development join our [Discord server](https://disco
 ---
 
 [![LICENSE](https://img.shields.io/github/license/CabbageAlliance/CabbageScout?style=flat)](https://github.com/CabbageAlliance/CabbageScout/blob/master/LICENSE)
+[![Discord](https://img.shields.io/discord/676130006124068878?color=%237289DA&logo=discord)](https://discord.gg/dcrVQmQ)
 
 [![API CI](https://github.com/CabbageAlliance/CabbageScout/workflows/API%20CI/badge.svg)](https://github.com/CabbageAlliance/CabbageScout/actions?query=workflow%3A%API+CI%22)
 [![made-with-python](https://img.shields.io/badge/made%20with-Python-1f425f.svg)](https://www.python.org/)
