@@ -1,95 +1,84 @@
-from asyncio import get_event_loop
 from collections import defaultdict
 from itertools import chain
-from typing import DefaultDict, List
+from typing import DefaultDict, List, Mapping
 
-import asyncpg
+import sqlalchemy as sa
+from databases import Database
 
-from .abc import Database
-from .schemas import ScoutEntry, ScoutEntryKey
+from cabbagescout.abc import Database as ABCDatabase
+from cabbagescout.schemas import ScoutEntry, ScoutEntryKey
 
 
-class PostgresDatabase(Database):
-    __slots__ = ("_pool", "_uri")
+class PostgresDatabase(ABCDatabase):
+    __slots__ = ("_connection", "table", "_uri")
 
     def __init__(self, uri: str):
         self._uri = uri
-        get_event_loop().create_task(self._start())
+        self._connection = Database(uri)
+        self.table: sa.Table
 
-    async def _start(self) -> None:
-        self._pool = await asyncpg.create_pool(self._uri)
-        async with self._pool.acquire() as con:
-            make_table = """CREATE TABLE IF NOT EXISTS scout_entries (
-                    match int,
-                    team int,
+        metadata = sa.MetaData()
+        engine = sa.create_engine(uri)
 
-                    auto_crossed_line bool DEFAULT false,
-                    auto_uppergoal_scored int DEFAULT 0,
-                    auto_lowergoal_scored int DEFAULT 0,
-                    auto_uppergoal_missed int DEFAULT 0,
+        self.table = sa.Table(
+            "scout_entries",
+            metadata,
+            sa.Column("match", sa.SMALLINT),
+            sa.Column("team", sa.SMALLINT),
+            sa.Column("auto_crossed_line", sa.BOOLEAN),
+            sa.Column("auto_uppergoal_scored", sa.SMALLINT),
+            sa.Column("auto_lowergoal_scored", sa.SMALLINT),
+            sa.Column("auto_uppergoal_missed", sa.SMALLINT),
+            sa.Column("teleop_uppergoal_scored", sa.SMALLINT),
+            sa.Column("teleop_lowergoal_scored", sa.SMALLINT),
+            sa.Column("teleop_uppergoal_missed", sa.SMALLINT),
+            sa.Column("rotation_control_time", sa.FLOAT),
+            sa.Column("position_control_time", sa.FLOAT),
+            sa.Column("defending_time", sa.FLOAT),
+            sa.Column("hang_attempted", sa.BOOLEAN),
+            sa.Column("hang_succeeded", sa.BOOLEAN),
+            sa.Column("hang_time", sa.FLOAT),
+            sa.Column("hang_level", sa.BOOLEAN),
+            sa.Column("driver_rating", sa.SMALLINT),
+            sa.Column("down_time", sa.FLOAT),
+            sa.Column("comments", sa.String(512)),
+            sa.Column("received_foul", sa.BOOLEAN),
+        )
 
-                    teleop_lowergoal_scored int DEFAULT 0,
-                    teleop_uppergoal_scored int DEFAULT 0,
-                    teleop_uppergoal_missed int DEFAULT 0,
-                    rotation_control_time float8 DEFAULT 0,
-                    position_control_time float8 DEFAULT 0,
-                    defending_time float8 DEFAULT 0,
+        metadata.create_all(engine)
 
-                    hang_attempted bool DEFAULT false,
-                    hang_succeeded bool DEFAULT false,
-                    hang_time float DEFAULT 0,
-                    hang_level bool DEFAULT false,
+    async def connect(self):
+        await self._connection.connect()
 
-                    driver_rating int2 DEFAULT 3,
-                    down_time float8 DEFAULT 0,
-                    comments text DEFAULT '',
-                    received_foul bool DEFAULT false
-
-                    );"""
-
-            await con.execute(make_table)
+    async def close(self):
+        await self._connection.disconnect()
 
     async def add_entry(self, entry: ScoutEntry) -> None:
-        fields = entry.json()
-
-        async with self._pool.acquire() as con:
-            query = "INSERT INTO scout_entries ({k}) VALUES ({v})".format(
-                k=", ".join(fields.keys()),
-                v=", ".join(f"${i + 1}" for i in range(len(fields))),
-            )
-
-            await con.execute(query, *fields.values())
+        await self._connection.execute(self.table.insert(), entry.json())
 
     async def get_entries(
         self, match: int = None, team: int = None
     ) -> List[ScoutEntry]:
-        query = "SELECT * FROM scout_entries"
+        select = self.table.select()
 
-        if match is not None or team is not None:
-            query += " WHERE "
-            if match is not None:
-                query += "match = $1"
-                if team is not None:
-                    query += " AND team = $2"
-            else:
-                query += "team = $1"
+        if match:
+            select = select.where(self.table.c.match == match)
+        if team:
+            select = select.where(self.table.c.team == team)
 
-        _entries = await self._pool.fetch(query, match, team)
+        _entries = await self._connection.fetch_all(select)
         return [ScoutEntry(**data) for data in _entries]
 
     async def to_csv(self, delimiter: str = ",") -> str:
-        query = "SELECT * FROM scout_entries"
-        _entries: List[asyncpg.Record] = await self._pool.fetch(query)
+        _entries: List[Mapping] = await self._connection.fetch_all(self.table.select())
 
         header = delimiter.join(k.replace("_", " ").title() for k in _entries[0].keys())
         data = "\n".join(
             delimiter.join(
                 str(v).lower()  # cast to string, lowercase for javascript booleans
                 if not isinstance(v, str)
-                else f'"{v}"'
-                if "," in v  # only surround in quotes if the str contains commas
-                else v
-                for v in e
+                else f'"{v}"'.replace("\n", "\\n")  # sanitize strings
+                for v in e.values()
             )
             for e in _entries
         )
@@ -97,12 +86,18 @@ class PostgresDatabase(Database):
         return f"{header}\n{data}"
 
 
-class DictDatabase(Database):  # for testing purposes
+class DictDatabase(ABCDatabase):  # for testing purposes
     __slots__ = "db"
 
     def __init__(self):
         super().__init__()
         self.db: DefaultDict[ScoutEntryKey, List[ScoutEntry]] = defaultdict(List)
+
+    async def connect(self):
+        pass
+
+    async def close(self):
+        pass
 
     async def get_entries(
         self, match: int = None, team: int = None

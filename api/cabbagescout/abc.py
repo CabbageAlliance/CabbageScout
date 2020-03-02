@@ -4,7 +4,7 @@ from typing import List
 from cabbagescout.schemas import ScoutEntry
 
 
-class Database(metaclass=abc.ABCMeta):
+class Database:
     """An ABC representing a Database"""
 
     __slots__ = ()
@@ -28,3 +28,13 @@ class Database(metaclass=abc.ABCMeta):
         raise NotImplementedError(
             f"{self.__class__.__name__}.to_csv() not implemented."
         )
+
+    @abc.abstractmethod
+    async def connect(self):
+        raise NotImplementedError(
+            f"{self.__class__.__name__}.connect() not implemented"
+        )
+
+    @abc.abstractmethod
+    async def close(self):
+        raise NotImplementedError(f"{self.__class__.__name__}.close() not implemented")
