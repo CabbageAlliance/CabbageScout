@@ -4,6 +4,6 @@
 # Do not add starlette or pydantic:
 #   Get version required by fastapi to avoid conflicts
 aiohttp
-asyncpg
+databases[postgresql]
 fastapi
 uvicorn
