@@ -1,31 +1,27 @@
 import {
 	AppBar,
 	Box,
-	Container,
-	Toolbar,
 	Button,
-	Typography,
-	makeStyles,
-	IconButton,
-	Hidden,
+	Container,
+	Divider,
 	Drawer,
+	Hidden,
+	IconButton,
 	List,
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-	Divider,
+	makeStyles,
 	Menu,
-	MenuItem
+	MenuItem,
+	Toolbar,
+	Typography
 } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
-import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-
+import {Assessment, Home, Menu as MenuIcon, Settings} from '@material-ui/icons';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import Base from './Base';
-import Link from 'next/link';
 
 const useStyles = makeStyles(theme => ({
 	spacing: {
@@ -56,7 +52,7 @@ const Layout = props => {
 					<Link passHref href='/'>
 						<ListItem button>
 							<ListItemIcon>
-								<HomeIcon />
+								<Home />
 							</ListItemIcon>
 							<ListItemText primary='Home' />
 						</ListItem>
@@ -64,7 +60,7 @@ const Layout = props => {
 
 					<ListItem>
 						<ListItemIcon>
-							<AssessmentIcon />
+							<Assessment />
 						</ListItemIcon>
 						<ListItemText primary='Data' />
 					</ListItem>
@@ -83,7 +79,7 @@ const Layout = props => {
 					<Link passHref href='/settings'>
 						<ListItem button>
 							<ListItemIcon>
-								<SettingsIcon />
+								<Settings />
 							</ListItemIcon>
 							<ListItemText primary='Settings' />
 						</ListItem>
@@ -134,7 +130,7 @@ const Layout = props => {
 						<Box ml={2}>
 							<Link passHref href='/settings'>
 								<IconButton color='inherit'>
-									<SettingsIcon />
+									<Settings />
 								</IconButton>
 							</Link>
 						</Box>

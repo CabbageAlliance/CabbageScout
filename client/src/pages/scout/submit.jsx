@@ -1,31 +1,29 @@
-import React, {useContext, useState, useReducer, useEffect} from 'react';
 import {
-	Typography,
+	Box,
+	Button,
+	Checkbox,
+	Collapse,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Divider,
+	FormControlLabel,
+	Grid,
 	makeStyles,
 	Slider,
-	Box,
-	Checkbox,
-	FormControlLabel,
 	TextField,
-	Divider,
-	Collapse,
-	Button,
-	DialogTitle,
-	DialogContent,
-	DialogActions,
-	Grid,
-	Dialog,
-	DialogContentText
+	Typography
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import {useRouter} from 'next/router';
+import {ExpandLess, ExpandMore} from '@material-ui/icons';
 import Link from 'next/link';
-
-import ScoutEntryContext from '../../util/ScoutEntryContext';
-import DarkModeContext from '../../util/DarkModeContext';
-import Layout from '../../components/Layout';
+import {useRouter} from 'next/router';
+import React, {useContext, useEffect, useReducer, useState} from 'react';
 import Alert from '../../components/Alert';
+import Layout from '../../components/Layout';
+import DarkModeContext from '../../util/DarkModeContext';
+import ScoutEntryContext from '../../util/ScoutEntryContext';
 
 const useStyles = makeStyles({
 	bar: {
@@ -168,11 +166,11 @@ const Submit = () => {
 				<Box mt={1} mb={1}>
 					<Box display={showFields ? 'none' : 'flex'} alignItems='center' className={classes.expandToggle} onClick={toggleShowFields(true)}>
 						<Typography>Show All Fields</Typography>
-						<ExpandMoreIcon />
+						<ExpandMore />
 					</Box>
 					<Box display={showFields ? 'flex' : 'none'} alignItems='center' className={classes.expandToggle} onClick={toggleShowFields(false)}>
 						<Typography>Hide Fields</Typography>
-						<ExpandLessIcon />
+						<ExpandLess />
 					</Box>
 
 					<Collapse in={showFields}>

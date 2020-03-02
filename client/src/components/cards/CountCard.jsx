@@ -1,9 +1,8 @@
-import {IconButton, Typography, Box} from '@material-ui/core';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
+import {Box, IconButton, Typography} from '@material-ui/core';
+import {Add as AddIcon, Remove as RemoveIcon} from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import {GridCard} from './grid-card';
 import React from 'react';
+import {GridCard} from './grid-card';
 
 const CountCard = props => {
 	const handleSubtract = () => props.setValue(props.value - 1);
