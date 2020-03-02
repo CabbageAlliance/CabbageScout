@@ -14,6 +14,7 @@ module.exports = withPlugins([[withSourceMaps], [withOffline]], {
 		// ${url}/icons/icon-144x144.png
 		// Which results with
 		// /icons/icon-144x144.png
-		url: process.env.URL || ''
+		url: process.env.URL || '',
+		netlify: process.env.NETLIFY
 	}
 });
