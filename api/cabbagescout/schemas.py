@@ -16,12 +16,12 @@ class ScoutEntry(BaseModel):
 
     auto_crossed_line: bool = Field(
         ...,
-        description="Did the robot exit the initiation line during the autonomous period?",
+        description="The robot exited the initiation line during the autonomous period",
     )
     auto_uppergoal_scored: int = Field(
         ...,
         ge=0,
-        description="Total number of power cells scored in upper goal during autonomous period, both outer and inner",
+        description="The total number of power cells scored in upper goal during autonomous period, both outer and inner",
     )
     auto_lowergoal_scored: int = Field(
         ...,
@@ -39,7 +39,7 @@ class ScoutEntry(BaseModel):
     teleop_uppergoal_scored: int = Field(
         ...,
         ge=0,
-        description="Total number of power cells scored in upper goal during teleop period, both outer and inner",
+        description="The total number of power cells scored in upper goal during teleop period, both outer and inner",
     )
     teleop_lowergoal_scored: int = Field(
         ...,
