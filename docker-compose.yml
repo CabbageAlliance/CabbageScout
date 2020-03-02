@@ -44,10 +44,10 @@ services:
     env_file: ./client/client.env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.discoin.rule=Path(`/`) || PathPrefix(`/`)"
-      - "traefik.http.routers.discoin.entrypoints=web"
-      - "traefik.http.middlewares.discoin-compress.compress=true"
-      - "traefik.http.services.discoin.loadbalancer.server.port=3000"
+      - "traefik.http.routers.client.rule=Path(`/`) || PathPrefix(`/`)"
+      - "traefik.http.routers.client.entrypoints=web"
+      - "traefik.http.middlewares.client-compress.compress=true"
+      - "traefik.http.services.client.loadbalancer.server.port=3000"
     depends_on:
       - api
     networks:
