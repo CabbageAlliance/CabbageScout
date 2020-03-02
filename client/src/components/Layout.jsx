@@ -111,7 +111,7 @@ const Layout = props => {
 
 					<Hidden xsDown>
 						<Box ml={2}>
-							<Button size='large' onClick={handleDataMenuOpen}>
+							<Button size='large' color='inherit' onClick={handleDataMenuOpen}>
 								Data
 							</Button>
 						</Box>
