@@ -333,7 +333,16 @@ const Submit = () => {
 				</DialogActions>
 			</Dialog>
 
-			<Alert error open={submitError} message='An error occurred. Please try again.' onClose={handleToggleError(false)} />
+			<Alert
+				error
+				open={submitError}
+				message={
+					process.env.netlify
+						? 'You are running a static version of the site. The API is not running, so all requests will fail.'
+						: 'An error occurred. Please try again.'
+				}
+				onClose={handleToggleError(false)}
+			/>
 		</Layout>
 	);
 };

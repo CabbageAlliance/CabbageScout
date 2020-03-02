@@ -35,7 +35,16 @@ const Download = () => {
 			<Button variant='contained' color='secondary' size='large' onClick={handleDownload}>
 				Download All Data (CSV)
 			</Button>
-			<Alert error open={error} message='An error occurred. Please try again.' onClose={handleToggleError(false)} />
+			<Alert
+				error
+				open={error}
+				message={
+					process.env.netlify
+						? 'You are running a static version of the site. The API is not running, so all requests will fail.'
+						: 'An error occurred. Please try again.'
+				}
+				onClose={handleToggleError(false)}
+			/>
 		</Layout>
 	);
 };
