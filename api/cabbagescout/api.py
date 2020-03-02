@@ -21,7 +21,9 @@ class Api:
         )
 
         self.app.get("/entry", response_model=List[ScoutEntry])(self.get_entries)
-        self.app.get("/csv", response_model=str, response_class=PlainTextResponse)(self.to_csv)
+        self.app.get("/csv", response_model=str, response_class=PlainTextResponse)(
+            self.to_csv
+        )
         self.app.post("/entry")(self.set_entry)
 
         parent_app.mount(prefix, self.app)
