@@ -4,7 +4,7 @@ from typing import List
 from cabbagescout.schemas import ScoutEntry
 
 
-class Database:
+class Database(metaclass=abc.ABCMeta):
     """An ABC representing a Database"""
 
     __slots__ = ()
