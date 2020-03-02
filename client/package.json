@@ -53,6 +53,7 @@
 		"swr": "^0.1.18"
 	},
 	"devDependencies": {
+		"babel-eslint": "^10.1.0",
 		"eslint-config-xo-react": "^0.23.0",
 		"eslint-plugin-react": "^7.18.3",
 		"eslint-plugin-react-hooks": "^2.5.0",
@@ -60,6 +61,7 @@
 		"xo": "^0.27.2"
 	},
 	"xo": {
+		"parser": "babel-eslint",
 		"extends": [
 			"xo/esnext",
 			"xo/browser",

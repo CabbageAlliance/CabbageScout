@@ -45,7 +45,7 @@ const Download = () => {
 
 	return (
 		<Layout title='Download'>
-			<Button variant='contained' color='secondary' size='large' onClick={downloadCSV} disabled={loading}>
+			<Button variant='contained' color='secondary' size='large' disabled={loading} onClick={downloadCSV}>
 				Download All Data (CSV)
 			</Button>
 			<Alert

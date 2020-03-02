@@ -47,14 +47,13 @@ const TeamPicker = props => {
 
 	return (
 		<Autocomplete
+			freeSolo
 			open={open}
 			getOptionSelected={(option, value) => option.num === value.num}
 			getOptionLabel={option => option.num?.toString()}
 			options={teams}
 			loading={loading}
-			freeSolo
 			filterOptions={filterOptions}
-			onInputChange={props.onInputChange}
 			renderInput={params => (
 				<TextField
 					{...params}
@@ -82,6 +81,7 @@ const TeamPicker = props => {
 					</Grid>
 				</Grid>
 			)}
+			onInputChange={props.onInputChange}
 			onOpen={useOpen(true)}
 			onClose={useOpen(false)}
 		/>
