@@ -13,8 +13,8 @@ DownloadAnchor.propTypes = {
 };
 
 const Download = () => {
-	const [errorStatus, setErrorStatus] = useState(false);
-	const handleToggleError = open => () => setErrorStatus(open);
+	const [errorMsg, setErrorMsg] = useState();
+	const handleToggleError = open => () => setErrorMsg(open);
 
 	const downloadCSV = async () => {
 		let blob;
@@ -28,10 +28,15 @@ const Download = () => {
 			}
 		} catch (error) {
 			console.error(error);
-			setErrorStatus(true);
+			setErrorMsg('Error while downloading CSV from the API');
 		}
 
-		return download(blob, 'scout-data.csv', 'text/csv');
+		if (blob) {
+			return download(blob, 'scout-data.csv', 'text/csv');
+		}
+
+		console.error('Blob was not properly defined, is the database empty?');
+		setErrorMsg('The data was empty, is the database empty?');
 	};
 
 	return (
@@ -41,12 +46,8 @@ const Download = () => {
 			</Button>
 			<Alert
 				error
-				open={errorStatus}
-				message={
-					process.env.netlify
-						? 'You are running a static version of the site. The API is not running, so all requests will fail.'
-						: 'An error occurred. Please try again.'
-				}
+				open={Boolean(errorMsg)}
+				message={process.env.netlify ? 'You are running a static version of the site. The API is not running, so all requests will fail.' : errorMsg}
 				onClose={handleToggleError(false)}
 			/>
 		</Layout>
