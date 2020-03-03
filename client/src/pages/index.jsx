@@ -8,7 +8,7 @@ import Alert from '../components/Alert';
 
 const Home = () => {
 	const router = useRouter();
-	const [snackbar, setSnackbar] = useState(router.query.submit);
+	const [snackbar, setSnackbar] = useState(Boolean(router.query.submit));
 	const handleSnackbarClose = () => setSnackbar(false);
 
 	return (
