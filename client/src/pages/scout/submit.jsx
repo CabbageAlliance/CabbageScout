@@ -26,10 +26,6 @@ import DarkModeContext from '../../util/DarkModeContext';
 import ScoutEntryContext from '../../util/ScoutEntryContext';
 
 const useStyles = makeStyles({
-	bar: {
-		width: '100%',
-		backgroundColor: props => props.barColor
-	},
 	textField: {
 		marginRight: 20,
 		marginTop: 10,
@@ -42,6 +38,13 @@ const useStyles = makeStyles({
 		cursor: 'pointer'
 	}
 });
+
+/** @type {import('@material-ui/core').InputProps} */
+const numericInputProps = {
+	type: 'text',
+	inputMode: 'numeric',
+	pattern: '[0-9]+'
+};
 
 const driverRatingMarks = [
 	{
@@ -176,8 +179,8 @@ const Submit = () => {
 					<Collapse in={showFields}>
 						<Box m={1}>
 							<div>
-								<TextField label='Team' type='number' className={classes.textField} value={entryCopy.team} onChange={handleTextChange('team')} />
-								<TextField label='Match' type='number' className={classes.textField} value={entryCopy.match} onChange={handleTextChange('match')} />
+								<TextField label='Team' {...numericInputProps} className={classes.textField} value={entryCopy.team} onChange={handleTextChange('team')} />
+								<TextField label='Match' {...numericInputProps} className={classes.textField} value={entryCopy.match} onChange={handleTextChange('match')} />
 							</div>
 
 							<Typography variant='h6' className={classes.textFieldTitle}>
@@ -194,21 +197,21 @@ const Submit = () => {
 							<div>
 								<TextField
 									label='Upper Goal Scored'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.auto_uppergoal_scored}
 									onChange={handleTextChange('auto_uppergoal_scored')}
 								/>
 								<TextField
 									label='Upper Goal Missed'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.auto_uppergoal_missed}
 									onChange={handleTextChange('auto_uppergoal_missed')}
 								/>
 								<TextField
 									label='Lower Goal Scored'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.auto_lowergoal_scored}
 									onChange={handleTextChange('auto_lowergoal_scored')}
@@ -218,48 +221,54 @@ const Submit = () => {
 							<Typography variant='h6' className={classes.textFieldTitle}>
 								Teleop
 							</Typography>
-							<div>
+							<Box>
 								<TextField
 									label='Upper Goal Scored'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.teleop_uppergoal_scored}
 									onChange={handleTextChange('teleop_uppergoal_scored')}
 								/>
 								<TextField
 									label='Upper Goal Missed'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.teleop_uppergoal_missed}
 									onChange={handleTextChange('teleop_uppergoal_missed')}
 								/>
 								<TextField
 									label='Lower Goal Scored'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.teleop_lowergoal_scored}
 									onChange={handleTextChange('teleop_lowergoal_scored')}
 								/>
-							</div>
+							</Box>
 							<div>
 								<TextField
 									label='Rotation Ctrl Time'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.rotation_control_time}
 									onChange={handleTextChange('rotation_control_time')}
 								/>
 								<TextField
 									label='Position Ctrl Time'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.position_control_time}
 									onChange={handleTextChange('position_control_time')}
 								/>
-								<TextField label='Down Time' type='number' className={classes.textField} value={entryCopy.down_time} onChange={handleTextChange('down_time')} />
+								<TextField
+									label='Down Time'
+									{...numericInputProps}
+									className={classes.textField}
+									value={entryCopy.down_time}
+									onChange={handleTextChange('down_time')}
+								/>
 								<TextField
 									label='Defending Time'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.defending_time}
 									onChange={handleTextChange('defending_time')}
@@ -287,7 +296,7 @@ const Submit = () => {
 							<div>
 								<TextField
 									label='Climb Time'
-									type='number'
+									{...numericInputProps}
 									className={classes.textField}
 									value={entryCopy.hang_time}
 									onChange={handleTextChange('hang_time')}
@@ -313,7 +322,7 @@ const Submit = () => {
 			<Dialog open={openExit} onClose={handleToggleExit(false)}>
 				<DialogTitle>Discard this scout entry?</DialogTitle>
 				<DialogContent>
-					<DialogContentText>Your changes will be deleted.</DialogContentText>
+					<DialogContentText>Your changes will be {process.env.NODE_ENV === 'production' ? 'deleted' : 'beaten to death'}.</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Grid container direction='row' justify='space-between' alignItems='flex-start'>
@@ -323,7 +332,7 @@ const Submit = () => {
 							</Link>
 						</Grid>
 						<Grid item>
-							<Button variant='contained' color='secondary' onClick={handleToggleExit(false)}>
+							<Button variant='contained' color='secondary' onClick={handleToggleExit(false)} disableElevation>
 								Stay
 							</Button>
 						</Grid>
