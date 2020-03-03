@@ -332,7 +332,7 @@ const Submit = () => {
 							</Link>
 						</Grid>
 						<Grid item>
-							<Button variant='contained' color='secondary' onClick={handleToggleExit(false)} disableElevation>
+							<Button disableElevation variant='contained' color='secondary' onClick={handleToggleExit(false)}>
 								Stay
 							</Button>
 						</Grid>
