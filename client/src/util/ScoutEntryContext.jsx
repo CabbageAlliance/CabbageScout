@@ -17,8 +17,8 @@ const initialState = {
 	teleop_uppergoal_scored: 0,
 	teleop_lowergoal_scored: 0,
 	teleop_uppergoal_missed: 0,
-	rotation_control_time: 0,
-	position_control_time: 0,
+	rotation_control: false,
+	position_control: false,
 	down_time: 0,
 	defending_time: 0,
 

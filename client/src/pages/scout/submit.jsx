@@ -108,8 +108,6 @@ const Submit = () => {
 			teleop_uppergoal_scored: Number(entryCopy.teleop_uppergoal_scored),
 			teleop_lowergoal_scored: Number(entryCopy.teleop_lowergoal_scored),
 			teleop_uppergoal_missed: Number(entryCopy.teleop_uppergoal_missed),
-			rotation_control_time: Number(entryCopy.rotation_control_time),
-			position_control_time: Number(entryCopy.position_control_time),
 			down_time: Number(entryCopy.down_time),
 			defending_time: Number(entryCopy.defending_time),
 			hang_time: Number(entryCopy.hang_time)
@@ -221,7 +219,21 @@ const Submit = () => {
 							<Typography variant='h6' className={classes.textFieldTitle}>
 								Teleop
 							</Typography>
-							<Box>
+							<div>
+								<FormControlLabel
+									control={<Checkbox />}
+									checked={entryCopy.rotation_control}
+									label='Rotation Control'
+									onChange={handleCheckboxChange('rotation_control')}
+								/>
+								<FormControlLabel
+									control={<Checkbox />}
+									checked={entryCopy.position_control}
+									label='Position Control'
+									onChange={handleCheckboxChange('position_control')}
+								/>
+							</div>
+							<div>
 								<TextField
 									label='Upper Goal Scored'
 									{...numericInputProps}
@@ -243,22 +255,8 @@ const Submit = () => {
 									value={entryCopy.teleop_lowergoal_scored}
 									onChange={handleTextChange('teleop_lowergoal_scored')}
 								/>
-							</Box>
+							</div>
 							<div>
-								<TextField
-									label='Rotation Ctrl Time'
-									{...numericInputProps}
-									className={classes.textField}
-									value={entryCopy.rotation_control_time}
-									onChange={handleTextChange('rotation_control_time')}
-								/>
-								<TextField
-									label='Position Ctrl Time'
-									{...numericInputProps}
-									className={classes.textField}
-									value={entryCopy.position_control_time}
-									onChange={handleTextChange('position_control_time')}
-								/>
 								<TextField
 									label='Down Time'
 									{...numericInputProps}

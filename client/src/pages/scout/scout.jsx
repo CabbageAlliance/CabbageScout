@@ -128,8 +128,8 @@ const Teleop = props => {
 				<CountCard title='Upper Goal Missed' value={entryState.teleop_uppergoal_missed} setValue={setValue('teleop_uppergoal_missed')} gridArea='up-miss' />
 				<CountCard title='Lower Goal Scored' value={entryState.teleop_lowergoal_scored} setValue={setValue('teleop_lowergoal_scored')} gridArea='low-score' />
 
-				<TimerCard title='Rotation Control' gridArea='rotation' value={entryState.rotation_control_time * 1000} setValue={setTime('rotation_control_time')} />
-				<TimerCard title='Position Control' gridArea='position' value={entryState.position_control_time * 1000} setValue={setTime('position_control_time')} />
+				<ToggleCard title='Rotation Control' gridArea='rotation' value={entryState.rotation_control} setValue={setValue('rotation_control')} />
+				<ToggleCard title='Position Control' gridArea='position' value={entryState.position_control} setValue={setValue('position_control')} />
 				<TimerCard title='Down Time' gridArea='down' value={entryState.down_time * 1000} setValue={setTime('down_time')} />
 				<TimerCard title='Defending Time' gridArea='defense' value={entryState.defending_time * 1000} setValue={setTime('defending_time')} />
 			</Box>
