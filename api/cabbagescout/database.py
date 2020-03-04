@@ -112,6 +112,5 @@ class DictDatabase(ABCDatabase):  # for testing purposes
         return key
 
     async def to_csv(self, delimiter: str = ",") -> str:
-        _entries: ValuesView[List[ScoutEntry]] = self.db.values()
-        entries = [entry.json() for l in _entries for entry in l]
+        entries = list(e.json() for e in chain.from_iterable(self.db.values()))
         return util.data_to_csv(entries, delimiter)
