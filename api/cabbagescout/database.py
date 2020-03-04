@@ -21,7 +21,7 @@ class PostgresDatabase(ABCDatabase):
         metadata = sa.MetaData()
         engine = sa.create_engine(uri)
 
-        self.table = sa.Table(
+        self.table = sa.Table(  # Changes to ScoutEntry should be reflected here as well
             "scout_entries",
             metadata,
             sa.Column("match", sa.SMALLINT),
@@ -33,8 +33,8 @@ class PostgresDatabase(ABCDatabase):
             sa.Column("teleop_uppergoal_scored", sa.SMALLINT),
             sa.Column("teleop_lowergoal_scored", sa.SMALLINT),
             sa.Column("teleop_uppergoal_missed", sa.SMALLINT),
-            sa.Column("rotation_control_time", sa.FLOAT),
-            sa.Column("position_control_time", sa.FLOAT),
+            sa.Column("rotation_control", sa.BOOLEAN),
+            sa.Column("position_control", sa.BOOLEAN),
             sa.Column("defending_time", sa.FLOAT),
             sa.Column("hang_attempted", sa.BOOLEAN),
             sa.Column("hang_succeeded", sa.BOOLEAN),

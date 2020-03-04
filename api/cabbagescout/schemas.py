@@ -54,15 +54,11 @@ class ScoutEntry(BaseModel):
 
     # Teleop Control Panel
 
-    rotation_control_time: float = Field(
-        ...,
-        ge=0,
-        description="The amount of time (in seconds) spent rotating the control panel for ROTATION CONTROL",
+    rotation_control: bool = Field(
+        ..., description="The robot rotated the control panel for ROTATION CONTROL"
     )
-    position_control_time: float = Field(
-        ...,
-        ge=0,
-        description="The amount of time (in seconds) spent rotating the control panel for POSITION CONTROL",
+    position_control: bool = Field(
+        ..., description="The robot rotated the control panel for POSITION CONTROL"
     )
     defending_time: float = Field(
         ...,
