@@ -1,10 +1,11 @@
 from collections import defaultdict
 from itertools import chain
-from typing import DefaultDict, List, Mapping
+from typing import DefaultDict, List, Mapping, ValuesView
 
 import sqlalchemy as sa
 from databases import Database
 
+from cabbagescout import util
 from cabbagescout.abc import Database as ABCDatabase
 from cabbagescout.schemas import ScoutEntry, ScoutEntryKey
 
@@ -71,19 +72,8 @@ class PostgresDatabase(ABCDatabase):
 
     async def to_csv(self, delimiter: str = ",") -> str:
         _entries: List[Mapping] = await self._connection.fetch_all(self.table.select())
-
-        header = delimiter.join(k.replace("_", " ").title() for k in _entries[0].keys())
-        data = "\n".join(
-            delimiter.join(
-                str(v).lower()  # cast to string, lowercase for javascript booleans
-                if not isinstance(v, str)
-                else f'"{v}"'.replace("\n", "\\n")  # sanitize strings
-                for v in e.values()
-            )
-            for e in _entries
-        )
-
-        return f"{header}\n{data}"
+        # we like duck typing
+        return util.data_to_csv(_entries, delimiter)
 
 
 class DictDatabase(ABCDatabase):  # for testing purposes
@@ -91,7 +81,7 @@ class DictDatabase(ABCDatabase):  # for testing purposes
 
     def __init__(self):
         super().__init__()
-        self.db: DefaultDict[ScoutEntryKey, List[ScoutEntry]] = defaultdict(List)
+        self.db: DefaultDict[ScoutEntryKey, List[ScoutEntry]] = defaultdict(list)
 
     async def connect(self) -> None:
         pass
@@ -122,5 +112,6 @@ class DictDatabase(ABCDatabase):  # for testing purposes
         return key
 
     async def to_csv(self, delimiter: str = ",") -> str:
-        # TODO: implement
-        return await super().to_csv()
+        _entries: ValuesView[List[ScoutEntry]] = self.db.values()
+        entries = [entry.json() for l in _entries for entry in l]
+        return util.data_to_csv(entries, delimiter)
