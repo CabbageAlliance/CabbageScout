@@ -1,18 +1,9 @@
-from typing import NamedTuple
-
 from pydantic import Field, constr
 
-from cabbagescout.abc import BaseModel
+from cabbagescout.abc import BaseRobot
 
 
-class ScoutEntry(BaseModel):
-    match: int = Field(
-        ..., ge=1, description="The match number of a single event of qualifiers"
-    )
-    team: int = Field(
-        ..., ge=1, le=9999, description="The team number of the scouted team"
-    )
-
+class ScoutEntry(BaseRobot):
     # Auto
 
     auto_crossed_line: bool = Field(
@@ -102,12 +93,3 @@ class ScoutEntry(BaseModel):
     received_foul: bool = Field(
         ..., description="The team received a foul during the match"
     )
-
-
-class ScoutEntryKey(NamedTuple):
-    @classmethod
-    def from_scoutentry(cls, entry: ScoutEntry):
-        return cls(match=entry.match, team=entry.team)
-
-    match: int
-    team: int

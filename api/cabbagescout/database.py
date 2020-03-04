@@ -1,16 +1,19 @@
 from collections import defaultdict
 from itertools import chain
-from typing import DefaultDict, List, Mapping
+from typing import DefaultDict, List, Mapping, NamedTuple
 
 import sqlalchemy as sa
 from databases import Database
 
 from cabbagescout import util
+from cabbagescout.abc import BaseRobot
 from cabbagescout.abc import Database as ABCDatabase
-from cabbagescout.schemas import ScoutEntry, ScoutEntryKey
+from cabbagescout.schemas import ScoutEntry
 
 
-class PostgresDatabase(ABCDatabase):
+class ScoutEntriesDatabase(ABCDatabase):
+    """Postgres Database for Scout Entries"""
+
     __slots__ = ("_connection", "table", "_uri")
 
     def __init__(self, uri: str):
@@ -76,12 +79,23 @@ class PostgresDatabase(ABCDatabase):
         return util.data_to_csv(_entries, delimiter)
 
 
-class DictDatabase(ABCDatabase):  # for testing purposes
+class RobotKey(NamedTuple):
+    """A key for DictDatabase"""
+
+    @classmethod
+    def from_base_robot(cls, entry: BaseRobot):
+        return cls(match=entry.match, team=entry.team)
+
+    match: int
+    team: int
+
+
+class DictDatabase(ABCDatabase):
     __slots__ = "db"
 
     def __init__(self):
         super().__init__()
-        self.db: DefaultDict[ScoutEntryKey, List[ScoutEntry]] = defaultdict(list)
+        self.db: DefaultDict[RobotKey, List[BaseRobot]] = defaultdict(list)
 
     async def connect(self) -> None:
         pass
@@ -89,9 +103,7 @@ class DictDatabase(ABCDatabase):  # for testing purposes
     async def close(self) -> None:
         pass
 
-    async def get_entries(
-        self, match: int = None, team: int = None
-    ) -> List[ScoutEntry]:
+    async def get_entries(self, match: int = None, team: int = None) -> List[BaseRobot]:
         if match is None:
             if team is None:
                 entries = self.db.values()
@@ -101,12 +113,12 @@ class DictDatabase(ABCDatabase):  # for testing purposes
             if team is None:
                 entries = (self.db[key] for key in self.db.keys() if key.match == match)
             else:
-                return self.db[ScoutEntryKey(match=match, team=team)]
+                return self.db[RobotKey(match=match, team=team)]
 
         return list(chain.from_iterable(entries))
 
-    async def add_entry(self, entry: ScoutEntry) -> ScoutEntryKey:
-        key = ScoutEntryKey.from_scoutentry(entry)
+    async def add_entry(self, entry: BaseRobot) -> RobotKey:
+        key = RobotKey.from_base_robot(entry)
         self.db[key].append(entry)
 
         return key
