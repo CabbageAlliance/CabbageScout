@@ -94,7 +94,6 @@ class DictDatabase(ABCDatabase):
     __slots__ = "db"
 
     def __init__(self):
-        super().__init__()
         self.db: DefaultDict[RobotKey, List[BaseRobot]] = defaultdict(list)
 
     async def connect(self) -> None:
