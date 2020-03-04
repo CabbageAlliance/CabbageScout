@@ -1,7 +1,8 @@
-import json
-from typing import Dict, NamedTuple
+from typing import NamedTuple
 
-from pydantic import BaseModel, Field, constr
+from pydantic import Field, constr
+
+from cabbagescout.abc import BaseModel
 
 
 class ScoutEntry(BaseModel):
@@ -101,9 +102,6 @@ class ScoutEntry(BaseModel):
     received_foul: bool = Field(
         ..., description="The team received a foul during the match"
     )
-
-    def json(self, **kwargs) -> Dict:
-        return json.loads(super().json(**kwargs))
 
 
 class ScoutEntryKey(NamedTuple):
