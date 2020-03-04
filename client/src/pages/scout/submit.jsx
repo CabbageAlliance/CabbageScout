@@ -132,7 +132,7 @@ const Submit = () => {
 	return (
 		<Layout title='Submit'>
 			<form autoComplete='off'>
-				<Typography variant='h2'>Submit</Typography>
+				<Typography variant='h2'>Review</Typography>
 
 				<Box mt={2} mb={1}>
 					<FormControlLabel control={<Checkbox />} checked={entryCopy.received_foul} label='Received Fouls?' onChange={handleCheckboxChange('received_foul')} />

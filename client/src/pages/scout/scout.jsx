@@ -163,7 +163,7 @@ const Endgame = props => {
 				</Button>,
 				<Link key='finish' passHref href='/scout/submit'>
 					<Button disableElevation variant='contained' endIcon={<Check />} color='primary'>
-						Finish
+						Review
 					</Button>
 				</Link>
 			]}
