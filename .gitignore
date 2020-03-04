@@ -85,5 +85,7 @@ $RECYCLE.BIN/
 
 # Environment variable configurations
 *.env
+!*.example.env
+
 # Not the example environment variables
 !*.example.env
