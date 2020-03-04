@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const siteMetadata = {
@@ -103,6 +103,6 @@ export const Seo = props => {
 };
 
 Seo.propTypes = {
-	pageTitle: propTypes.string.isRequired,
-	theme: propTypes.object.isRequired
+	pageTitle: PropTypes.string.isRequired,
+	theme: PropTypes.object.isRequired
 };

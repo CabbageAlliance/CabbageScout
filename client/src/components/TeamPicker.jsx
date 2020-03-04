@@ -1,7 +1,7 @@
 import {CircularProgress, TextField, Typography, Grid} from '@material-ui/core';
 import {Autocomplete} from '@material-ui/lab';
 import {createFilterOptions} from '@material-ui/lab/Autocomplete';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import useSWR from 'swr';
 import {json} from '../util/data-fetching';
@@ -89,8 +89,8 @@ const TeamPicker = props => {
 };
 
 TeamPicker.propTypes = {
-	onInputChange: propTypes.func.isRequired,
-	textFieldProps: propTypes.object
+	onInputChange: PropTypes.func.isRequired,
+	textFieldProps: PropTypes.object
 };
 
 export default TeamPicker;

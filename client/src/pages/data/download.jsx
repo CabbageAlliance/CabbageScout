@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 import Layout from '../../components/Layout';
 import {Button} from '@material-ui/core';
 import Alert from '../../components/Alert';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import download from 'js-file-download';
 
 const DownloadAnchor = props => <a href={props.href} download={props.download} />;
 
 DownloadAnchor.propTypes = {
-	href: propTypes.string.isRequired,
-	download: propTypes.string.isRequired
+	href: PropTypes.string.isRequired,
+	download: PropTypes.string.isRequired
 };
 
 const Download = () => {
