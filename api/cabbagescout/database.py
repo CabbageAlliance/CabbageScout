@@ -1,6 +1,6 @@
 from collections import defaultdict
 from itertools import chain
-from typing import DefaultDict, List, Mapping, ValuesView
+from typing import DefaultDict, List, Mapping
 
 import sqlalchemy as sa
 from databases import Database
