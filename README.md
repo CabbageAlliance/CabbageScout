@@ -82,8 +82,8 @@ If you change any of the other information, like the database name or user make 
 #   - port
 #   - database name
 # make sure to update this
--POSTGRES_URI=postgres://cabbage-scout-admin:YOUR_PASSWORD_GOES_HERE@database:5432/cabbage-scout-2020
-+POSTGRES_URI=postgres://cabbage-scout-admin:my_password@database:5432/cabbage-scout-2020
+-POSTGRES_URI=postgresql://cabbage-scout-admin:YOUR_PASSWORD_GOES_HERE@database:5432/cabbage-scout-2020
++POSTGRES_URI=postgresql://cabbage-scout-admin:my_password@database:5432/cabbage-scout-2020
 ```
 
 #### `client.example.env`
