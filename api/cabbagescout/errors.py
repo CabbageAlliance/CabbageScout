@@ -59,11 +59,16 @@ class HTTPException(CabbageException):
         self.status: int = response.status
         if isinstance(message, dict):
             try:
-                errors = message["Error"]
+                errors = message["Errors"]
                 errors = flatten_error_dict(errors)
                 self.text = "\n".join("In %s: %s" % t for t in errors.items())
             except KeyError:
-                self.text = ""
+                try:
+                    errors = message["Error"]
+                    errors = flatten_error_dict(errors)
+                    self.text = "\n".join("In %s: %s" % t for t in errors.items())
+                except KeyError:
+                    self.text = ""
         else:
             self.text = message
 
