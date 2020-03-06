@@ -112,11 +112,11 @@ const Layout = props => {
 							</Button>
 						</Box>
 						<Menu keepMounted anchorEl={dataAnchor} open={Boolean(dataAnchor)} onClose={handleDataMenuClose}>
-								<MenuItem>
-									<Link passHref href='/data/download'>
-										<div>Download</div>
-									</Link>
-								</MenuItem>
+							<MenuItem>
+								<Link passHref href='/data/download'>
+									<div>Download</div>
+								</Link>
+							</MenuItem>
 						</Menu>
 					</Hidden>
 
