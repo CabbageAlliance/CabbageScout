@@ -33,30 +33,22 @@ class Database(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     async def add_entry(self, entry: "ScoutEntry") -> Optional[Any]:
-        raise NotImplementedError(
-            f"{self.__class__.__name__}.add_entry() not implemented."
-        )
+        raise NotImplementedError()
 
     @abc.abstractmethod
     async def get_entries(
         self, match: int = None, team: int = None
     ) -> List["ScoutEntry"]:
-        raise NotImplementedError(
-            f"{self.__class__.__name__}.get_entries() not implemented."
-        )
+        raise NotImplementedError()
 
     @abc.abstractmethod
     async def to_csv(self, delimiter: str = ",") -> str:
-        raise NotImplementedError(
-            f"{self.__class__.__name__}.to_csv() not implemented."
-        )
+        raise NotImplementedError()
 
     @abc.abstractmethod
     async def connect(self) -> None:
-        raise NotImplementedError(
-            f"{self.__class__.__name__}.connect() not implemented"
-        )
+        raise NotImplementedError()
 
     @abc.abstractmethod
     async def close(self) -> None:
-        raise NotImplementedError(f"{self.__class__.__name__}.close() not implemented")
+        raise NotImplementedError()
