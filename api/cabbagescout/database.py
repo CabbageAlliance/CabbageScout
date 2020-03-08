@@ -1,12 +1,9 @@
-from collections import defaultdict
-from itertools import chain
-from typing import DefaultDict, List, Mapping, NamedTuple
+from typing import List, Mapping, Optional
 
 import sqlalchemy as sa
 from databases import Database
 
 from cabbagescout import util
-from cabbagescout.abc import BaseRobot
 from cabbagescout.abc import Database as ABCDatabase
 from cabbagescout.schemas import ScoutEntry
 
@@ -77,51 +74,3 @@ class ScoutEntriesDatabase(ABCDatabase):
         _entries: List[Mapping] = await self._connection.fetch_all(self.table.select())
         # we like duck typing
         return util.data_to_csv(_entries, delimiter)
-
-
-class RobotKey(NamedTuple):
-    """A key for DictDatabase"""
-
-    @classmethod
-    def from_base_robot(cls, entry: BaseRobot):
-        return cls(match=entry.match, team=entry.team)
-
-    match: int
-    team: int
-
-
-class DictDatabase(ABCDatabase):
-    __slots__ = "db"
-
-    def __init__(self):
-        self.db: DefaultDict[RobotKey, List[BaseRobot]] = defaultdict(list)
-
-    async def connect(self) -> None:
-        pass
-
-    async def close(self) -> None:
-        pass
-
-    async def get_entries(self, match: int = None, team: int = None) -> List[BaseRobot]:
-        if match is None:
-            if team is None:
-                entries = self.db.values()
-            else:
-                entries = (self.db[key] for key in self.db.keys() if key.team == team)
-        else:
-            if team is None:
-                entries = (self.db[key] for key in self.db.keys() if key.match == match)
-            else:
-                return self.db[RobotKey(match=match, team=team)]
-
-        return list(chain.from_iterable(entries))
-
-    async def add_entry(self, entry: BaseRobot) -> RobotKey:
-        key = RobotKey.from_base_robot(entry)
-        self.db[key].append(entry)
-
-        return key
-
-    async def to_csv(self, delimiter: str = ",") -> str:
-        entries = list(e.json() for e in chain.from_iterable(self.db.values()))
-        return util.data_to_csv(entries, delimiter)
