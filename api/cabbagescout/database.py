@@ -4,11 +4,10 @@ import sqlalchemy as sa
 from databases import Database
 
 from cabbagescout import util
-from cabbagescout.abc import Database as ABCDatabase
-from cabbagescout.schemas import ScoutEntry
+from cabbagescout.schemas import ScoutEntry, ScoutEntryID
 
 
-class ScoutEntriesDatabase(ABCDatabase):
+class ScoutEntriesDatabase:
     """Postgres Database for Scout Entries"""
 
     __slots__ = ("_connection", "table", "_uri")

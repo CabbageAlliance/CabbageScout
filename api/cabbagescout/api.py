@@ -5,14 +5,14 @@ from starlette.responses import PlainTextResponse
 
 import cabbagescout
 
-from .abc import Database
+from .database import ScoutEntriesDatabase
 from .schemas import ScoutEntry
 
 
 class Api:
     __slots__ = ("database", "app")
 
-    def __init__(self, database: Database, parent_app, prefix="/api"):
+    def __init__(self, database: ScoutEntriesDatabase, parent_app, prefix="/api"):
         self.database = database
         self.app = FastAPI(
             title="CabbageScout API",
