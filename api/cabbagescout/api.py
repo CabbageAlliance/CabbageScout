@@ -1,3 +1,5 @@
+import asyncio
+import datetime
 from typing import List
 
 from fastapi import FastAPI, Query
@@ -10,10 +12,22 @@ from .schemas import ScoutEntry
 
 
 class Api:
-    __slots__ = ("database", "app")
+    __slots__ = ("database", "app", "_snowflake_lock")
+
+    async def generate_snowflake(self, entry: ScoutEntry) -> int:
+        """For identifying scout entries"""
+
+        if not self._snowflake_lock:
+            self._snowflake_lock = asyncio.Lock()
+
+        async with self._snowflake_lock:
+            n = bin(int(datetime.datetime.utcnow().timestamp() * 100))
+            h = bin(abs(hash(frozenset(entry))))[2:]
+            return int(f"{n}{h[:10] if len(h) >= 10 else h.zfill(10)}", 2)
 
     def __init__(self, database: ScoutEntriesDatabase, parent_app, prefix="/api"):
         self.database = database
+        self._snowflake_lock = asyncio.Lock()
         self.app = FastAPI(
             title="CabbageScout API",
             version=cabbagescout.__version__,
