@@ -36,7 +36,7 @@ class Api:
         ),
         team: int = Query(
             None, ge=1, le=9999, title="The team number of the scouted team"
-        )
+        ),
     ):
         return await self.database.get_entries(match=match, team=team)
 
