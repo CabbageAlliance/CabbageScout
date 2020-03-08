@@ -1,7 +1,29 @@
 import abc
-from typing import Any, List, Optional
+import json
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from cabbagescout.schemas import ScoutEntry
+from pydantic import BaseModel as _BaseModel
+from pydantic import Field
+from pydantic.main import ModelMetaclass
+
+if TYPE_CHECKING:
+    from .schemas import ScoutEntry
+
+
+class BaseModel(_BaseModel, metaclass=ModelMetaclass):
+    def json(self, **kwargs) -> Dict:
+        return json.loads(super().json(**kwargs))
+
+
+class BaseRobot(BaseModel):
+    """Base class for models representing robots in a match"""
+
+    match: int = Field(
+        ..., ge=1, description="The match number of a single event of qualifiers"
+    )
+    team: int = Field(
+        ..., ge=1, le=9999, description="The team number of the scouted team"
+    )
 
 
 class Database(metaclass=abc.ABCMeta):
@@ -10,7 +32,7 @@ class Database(metaclass=abc.ABCMeta):
     __slots__ = ()
 
     @abc.abstractmethod
-    async def add_entry(self, entry: ScoutEntry) -> Optional[Any]:
+    async def add_entry(self, entry: "ScoutEntry") -> Optional[Any]:
         raise NotImplementedError(
             f"{self.__class__.__name__}.add_entry() not implemented."
         )
@@ -18,7 +40,7 @@ class Database(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def get_entries(
         self, match: int = None, team: int = None
-    ) -> List[ScoutEntry]:
+    ) -> List["ScoutEntry"]:
         raise NotImplementedError(
             f"{self.__class__.__name__}.get_entries() not implemented."
         )

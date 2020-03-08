@@ -13,7 +13,7 @@ DownloadAnchor.propTypes = {
 };
 
 const Download = () => {
-	const [errorMsg, setErrorMsg] = useState();
+	const [errorMsg, setErrorMsg] = useState('');
 	const [loading, setLoadState] = useState(false);
 	const handleToggleError = open => () => setErrorMsg(open);
 
@@ -52,7 +52,7 @@ const Download = () => {
 				error
 				open={Boolean(errorMsg)}
 				message={process.env.netlify ? 'You are running a static version of the site. The API is not running, so all requests will fail.' : errorMsg}
-				onClose={handleToggleError(false)}
+				onClose={handleToggleError('')}
 			/>
 		</Layout>
 	);
