@@ -76,4 +76,8 @@ class ScoutEntriesDatabase:
     async def to_csv(self, delimiter: str = ",") -> str:
         _entries: List[Mapping] = await self._connection.fetch_all(self.table.select())
         # we like duck typing
-        return util.data_to_csv(_entries, delimiter)
+        csv_data = util.data_to_csv(_entries, delimiter)
+        if not csv_data:
+            raise HTTPException(status_code=404, detail="No data in database")
+
+        return csv_data
