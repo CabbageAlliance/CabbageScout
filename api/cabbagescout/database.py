@@ -1,7 +1,8 @@
-from typing import List, Mapping, Optional
+from typing import List, Mapping
 
 import sqlalchemy as sa
 from databases import Database
+from fastapi import HTTPException
 
 from cabbagescout import util
 from cabbagescout.schemas import ScoutEntry, ScoutEntryID
@@ -53,17 +54,68 @@ class ScoutEntriesDatabase:
 
     async def connect(self) -> None:
         await self._connection.connect()
+        await self._connection.fetch_one(self.table.select())  # please don't error
 
     async def close(self) -> None:
         await self._connection.disconnect()
 
-    async def add_entry(self, entry: ScoutEntry) -> None:
+    async def add_entry(self, entry: ScoutEntryID) -> None:
         await self._connection.execute(self.table.insert(), entry.json())
 
+    async def get_entry(self, _id: int) -> ScoutEntryID:
+        select = self.table.select().where(self.table.c.entry_id == _id)
+        entry = await self._connection.fetch_one(select)
+        print(entry)
+
+        if entry is None:
+            raise HTTPException(
+                status_code=404, detail=f"Entry with ID {_id} not found"
+            )
+
+        return ScoutEntryID(**entry)
+
+    async def assert_entry_exists(self, _id) -> None:
+        exists = await self._connection.fetch_one(
+            self.table.select(whereclause=self.table.c.entry_id == _id)
+        )
+
+        if not exists:
+            raise HTTPException(
+                status_code=404, detail=f"Entry with ID {_id} not found"
+            )
+
+    async def edit_entry(self, _id: int, entry: ScoutEntry):
+        await self.assert_entry_exists(_id)
+        update = self.table.update(
+            whereclause=self.table.c.entry_id == _id, values=entry.json()
+        )
+
+        await self._connection.execute(update)
+
+    async def delete_entry(self, _id) -> None:
+        await self.assert_entry_exists(_id)
+        delete = self.table.delete(whereclause=self.table.c.entry_id == _id)
+        await self._connection.execute(delete)
+
+    async def count_rows(self, match: int = None, team: int = None) -> int:
+        count = self.table.count()
+
+        if match:
+            count = count.where(self.table.c.match == match)
+        if team:
+            count = count.where(self.table.c.team == team)
+
+        return await self._connection.execute(count)
+
     async def get_entries(
-        self, match: int = None, team: int = None
-    ) -> List[ScoutEntry]:
-        select = self.table.select()
+        self, match: int = None, team: int = None, offset: int = 0, limit: int = 20
+    ) -> List[ScoutEntryID]:
+        select = (
+            self.table.select()
+            .order_by(self.table.c.timestamp)
+            .limit(limit)
+            .offset(offset)
+        )
 
         if match:
             select = select.where(self.table.c.match == match)
@@ -71,7 +123,7 @@ class ScoutEntriesDatabase:
             select = select.where(self.table.c.team == team)
 
         _entries = await self._connection.fetch_all(select)
-        return [ScoutEntry(**data) for data in _entries]
+        return [ScoutEntryID(**data) for data in _entries]
 
     async def to_csv(self, delimiter: str = ",") -> str:
         _entries: List[Mapping] = await self._connection.fetch_all(self.table.select())
