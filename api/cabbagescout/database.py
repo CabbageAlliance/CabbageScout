@@ -23,6 +23,10 @@ class ScoutEntriesDatabase:
         self.table = sa.Table(  # Changes to ScoutEntry should be reflected here as well
             "scout_entries",
             metadata,
+            sa.Column("scout_name", sa.String(64)),
+            sa.Column("scout_team", sa.SMALLINT),
+            sa.Column("timestamp", sa.BIGINT),
+            sa.Column("entry_id", sa.BIGINT),
             sa.Column("match", sa.SMALLINT),
             sa.Column("team", sa.SMALLINT),
             sa.Column("auto_crossed_line", sa.BOOLEAN),
