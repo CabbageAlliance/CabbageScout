@@ -1,5 +1,7 @@
 import asyncio
 import datetime
+import logging
+import os
 from math import ceil
 
 from fastapi import FastAPI, HTTPException, Path, Query
@@ -9,11 +11,14 @@ from starlette.responses import PlainTextResponse
 import cabbagescout
 
 from .database import ScoutEntriesDatabase
-from .schemas import EntryPage, ScoutEntry, ScoutEntryID
+from .schemas import EntryPage, ScoutEntry, ScoutEntryID, TeamData
+from .tba import *
+
+log = logging.getLogger(__name__)
 
 
 class Api:
-    __slots__ = ("database", "app", "_snowflake_lock")
+    __slots__ = ("database", "app", "_snowflake_lock", "tba_client")
 
     async def generate_snowflake(self, entry: ScoutEntry) -> int:
         """For identifying scout entries"""
@@ -30,6 +35,13 @@ class Api:
         self, database: ScoutEntriesDatabase, parent_app: Starlette, prefix="/api"
     ):
         self.database = database
+        try:
+            self.tba_client = TBAClient(token=os.environ["X-TBA-Auth-Key"])
+        except KeyError:
+            log.warning(
+                "TBA Authorization Key not provided. Some endpoints will be unavailable"
+            )
+
         self._snowflake_lock = asyncio.Lock()
         self.app = FastAPI(
             title="CabbageScout API",
@@ -48,7 +60,16 @@ class Api:
         self.app.delete("/entry/{entry_id}")(self.delete_entry)
         self.app.get("/list", response_model=EntryPage)(self.get_entries)
 
+        if self.tba_client is not None:
+            self.app.get("team/{team}", response_model=TeamData)(self.get_team_data)
+
         parent_app.mount(prefix, self.app)
+
+    async def get_team_data(
+        self, team: int = Path(..., title="The team to fetch data on")
+    ) -> TeamData:
+        # TODO: implement
+        ...
 
     async def get_entry(
         self,

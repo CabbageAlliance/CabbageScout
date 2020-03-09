@@ -122,3 +122,45 @@ class EntryPage(BaseModel):
     entries: List[ScoutEntryID] = Field(
         ..., description="The list of scout entries on this page"
     )
+
+
+class TeamData(BaseModel):
+    class Scoring(BaseModel):
+        """Average scoring during a part of the match"""
+
+        uppergoal_scored: float = Field(
+            ..., description="Average upper goal scored during the period"
+        )
+        uppergoal_rate: float = Field(
+            ..., description="Average upper goal success rate as a percentage [0, 1]"
+        )
+        lowergoal_scored: float = Field(
+            ..., description="Average lower goal scored during the period"
+        )
+
+    opr: float = Field(-1, description="OPR from TBA. -1 if TBA is unavailable.")
+    average_score: float = Field(..., description="Average score across matches")
+    auto_line_rate: float = Field(
+        ...,
+        description="The rate of crossing the initiation line during auto as a percentage [0, 1]",
+    )
+    climb_success_rate: float = Field(
+        ...,
+        description="The success rate (successes over attempts) of climb during endgame",
+    )
+    climb_speed: float = Field(
+        ...,
+        description="The average climb speed when climb is successful during endgame",
+    )
+    auto: Scoring = Field(..., description="Scoring rates during the autonomous period")
+    teleop: Scoring = Field(..., description="Scoring rates during the teleop period")
+    down_rate: float = Field(
+        ..., description="Percentage of the time the robot dies during a match [0, 1]"
+    )
+    foul_rate: float = Field(
+        ..., description="Percentage of the time the robot fouls during a match [0, 1]"
+    )
+    defense_rate: float = Field(
+        ...,
+        description="Percentage of the time the robot defends during a match [0, 1]",
+    )
