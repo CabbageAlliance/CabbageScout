@@ -108,15 +108,12 @@ class ScoutEntriesDatabase:
         return await self._connection.execute(count)
 
     async def get_entries(
-        self, match: int = None, team: int = None, offset: int = 0, limit: int = 20
+        self, match: int = None, team: int = None, offset: int = 0, limit: int = None
     ) -> List[ScoutEntryID]:
-        select = (
-            self.table.select()
-            .order_by(self.table.c.timestamp)
-            .limit(limit)
-            .offset(offset)
-        )
+        select = self.table.select().order_by(self.table.c.timestamp).offset(offset)
 
+        if limit:
+            select = select.limit(limit)
         if match:
             select = select.where(self.table.c.match == match)
         if team:
