@@ -1,9 +1,17 @@
+from typing import List
+
 from pydantic import Field, constr
 
-from cabbagescout.abc import BaseRobot
+from cabbagescout.abc import BaseModel, BaseRobot
 
 
 class ScoutEntry(BaseRobot):
+    scout_name: constr(strip_whitespace=True, min_length=2, max_length=64) = Field(
+        ..., description="The name of the scouter"
+    )
+
+    scout_team: int = Field(..., ge=1, le=9999, description="The team of the scouter")
+
     # Auto
 
     auto_crossed_line: bool = Field(
@@ -92,4 +100,25 @@ class ScoutEntry(BaseRobot):
     )
     received_foul: bool = Field(
         ..., description="The team received a foul during the match"
+    )
+
+    timestamp: int = Field(
+        ...,
+        description="The exact unix timestamp the unique identifier was generated at",
+    )
+
+
+class ScoutEntryID(ScoutEntry):
+    """Model of how scout entries are stored in the database"""
+
+    entry_id: int = Field(..., description="The unique identifier for the scout entry")
+
+
+class EntryPage(BaseModel):
+    """One page of scout entries"""
+
+    pages: int = Field(..., description="The total number of pages that can be queried")
+    lastPage: bool = Field(..., description="Whether or not this page is the last page")
+    entries: List[ScoutEntryID] = Field(
+        ..., description="The list of scout entries on this page"
     )
