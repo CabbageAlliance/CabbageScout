@@ -61,8 +61,10 @@ const New = () => {
 						variant='outlined'
 						label='Match'
 						type='text'
-						inputMode='numeric'
-						pattern='[0-9]+'
+						inputProps={{
+							inputMode: 'numeric',
+							pattern: '[0-9]*'
+						}}
 						value={match}
 						helperText={!validMatch && 'Please provide a valid match number'}
 						error={!validMatch} // This fixes some edge cases
@@ -75,7 +77,7 @@ const New = () => {
 							id: 'team-number',
 							type: 'text',
 							inputMode: 'numeric',
-							pattern: '[0-9]+',
+							pattern: '[0-9]*',
 							error: !validTeam,
 							helperText: !validTeam && 'Please provide a valid team number'
 						}}
