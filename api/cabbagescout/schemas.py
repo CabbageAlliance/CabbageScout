@@ -139,7 +139,6 @@ class TeamData(BaseModel):
         )
 
     opr: float = Field(-1, description="OPR from TBA. -1 if TBA is unavailable.")
-    average_score: float = Field(..., description="Average score across matches")
     auto_line_rate: float = Field(
         ...,
         description="The rate of crossing the initiation line during auto as a percentage [0, 1]",
