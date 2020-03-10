@@ -32,7 +32,7 @@ class TeamKey(str):
 
 
 class EventKey(str):
-    """An event_key for tba. Ex: '2019CCC' or '2019CVR'"""
+    """An event_key for tba. Ex: '2019casj' or '2019nytr'"""
 
     def __new__(cls, content):
         return str.__new__(cls, str(content).lower())
