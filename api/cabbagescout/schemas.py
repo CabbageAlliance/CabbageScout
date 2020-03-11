@@ -138,7 +138,9 @@ class TeamData(BaseModel):
             ..., description="Average lower goal scored during the period"
         )
 
-    opr: float = Field(-32767, description="OPR from TBA. -32767 if TBA is unavailable.")
+    opr: float = Field(
+        -32767, description="OPR from TBA. -32767 if TBA is unavailable."
+    )
     auto_line_rate: float = Field(
         ...,
         description="The rate of crossing the initiation line during auto as a percentage [0, 1]",

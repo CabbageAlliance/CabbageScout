@@ -2,7 +2,7 @@ import asyncio
 import json
 import sys
 import weakref
-from typing import Coroutine, Dict, Optional, Union
+from typing import Coroutine, Dict, Union
 from urllib.parse import quote as _uri_quote
 
 import aiohttp
