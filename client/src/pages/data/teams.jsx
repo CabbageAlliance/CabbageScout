@@ -105,10 +105,6 @@ const Teams = () => {
 										<TableCell align='right'>{data.opr}</TableCell>
 									</TableRow>
 									<TableRow>
-										<TableCell>Average Score</TableCell>
-										<TableCell align='right'>{data.average_score}</TableCell>
-									</TableRow>
-									<TableRow>
 										<TableCell>Auto Line Rate</TableCell>
 										<TableCell align='right'>{formatPercent(data.auto_line_rate)}</TableCell>
 									</TableRow>
