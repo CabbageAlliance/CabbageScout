@@ -16,7 +16,7 @@ from .models import *
 async def json_or_text(response: aiohttp.ClientResponse) -> Union[Dict, str]:
     text = await response.text(encoding="utf-8")
     try:
-        if response.headers["content-type"] == "application/json":
+        if "application/json" in response.headers["content-type"]:
             return json.loads(text)
     except KeyError:
         pass
@@ -74,7 +74,7 @@ class TBAClient:
         self.session: aiohttp.ClientSession = aiohttp.ClientSession(
             loop=self.loop
         ) if session is None else session
-        self._locks = weakref.WeakKeyDictionary()
+        self._locks = weakref.WeakValueDictionary()
 
         user_agent = "CabbageScout (https://github.com/CabbageAlliance/CabbageScout {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent = user_agent.format(
@@ -132,5 +132,5 @@ class TBAClient:
             event_key = EventKey.from_year_event(year, name)
 
         return self.request(
-            Route("GET", "/event/{event_key}/oprs"), event_key=event_key
+            Route("GET", "/event/{event_key}/oprs", event_key=event_key)
         )
