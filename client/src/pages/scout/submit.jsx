@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 const numericInputProps = {
 	type: 'text',
 	inputMode: 'numeric',
-	pattern: '[0-9]+'
+	pattern: '[0-9]*'
 };
 
 const driverRatingMarks = [
@@ -177,8 +177,20 @@ const Submit = () => {
 					<Collapse in={showFields}>
 						<Box m={1}>
 							<div>
-								<TextField label='Team' {...numericInputProps} className={classes.textField} value={entryCopy.team} onChange={handleTextChange('team')} />
-								<TextField label='Match' {...numericInputProps} className={classes.textField} value={entryCopy.match} onChange={handleTextChange('match')} />
+								<TextField
+									label='Team'
+									inputProps={numericInputProps}
+									className={classes.textField}
+									value={entryCopy.team}
+									onChange={handleTextChange('team')}
+								/>
+								<TextField
+									label='Match'
+									inputProps={numericInputProps}
+									className={classes.textField}
+									value={entryCopy.match}
+									onChange={handleTextChange('match')}
+								/>
 							</div>
 
 							<Typography variant='h6' className={classes.textFieldTitle}>
@@ -195,21 +207,21 @@ const Submit = () => {
 							<div>
 								<TextField
 									label='Upper Goal Scored'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.auto_uppergoal_scored}
 									onChange={handleTextChange('auto_uppergoal_scored')}
 								/>
 								<TextField
 									label='Upper Goal Missed'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.auto_uppergoal_missed}
 									onChange={handleTextChange('auto_uppergoal_missed')}
 								/>
 								<TextField
 									label='Lower Goal Scored'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.auto_lowergoal_scored}
 									onChange={handleTextChange('auto_lowergoal_scored')}
@@ -236,21 +248,21 @@ const Submit = () => {
 							<div>
 								<TextField
 									label='Upper Goal Scored'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.teleop_uppergoal_scored}
 									onChange={handleTextChange('teleop_uppergoal_scored')}
 								/>
 								<TextField
 									label='Upper Goal Missed'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.teleop_uppergoal_missed}
 									onChange={handleTextChange('teleop_uppergoal_missed')}
 								/>
 								<TextField
 									label='Lower Goal Scored'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.teleop_lowergoal_scored}
 									onChange={handleTextChange('teleop_lowergoal_scored')}
@@ -259,14 +271,14 @@ const Submit = () => {
 							<div>
 								<TextField
 									label='Down Time'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.down_time}
 									onChange={handleTextChange('down_time')}
 								/>
 								<TextField
 									label='Defending Time'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.defending_time}
 									onChange={handleTextChange('defending_time')}
@@ -294,7 +306,7 @@ const Submit = () => {
 							<div>
 								<TextField
 									label='Climb Time'
-									{...numericInputProps}
+									inputProps={numericInputProps}
 									className={classes.textField}
 									value={entryCopy.hang_time}
 									onChange={handleTextChange('hang_time')}
