@@ -1,7 +1,8 @@
 import App from 'next/app';
 import React from 'react';
-import {DarkModeProvider} from '../util/DarkModeContext';
-import {ScoutEntryProvider} from '../util/ScoutEntryContext';
+import { DarkModeProvider } from '../util/DarkModeContext';
+import { ScoutEntryProvider } from '../util/ScoutEntryContext';
+import { LoginProvider } from '../util/LoginContext';
 
 /**
  * A custom Next.js App component that fixes Material-UI server-side rendered stylesheets.
@@ -18,14 +19,16 @@ export default class CabbageApp extends App {
 	}
 
 	render() {
-		const {Component, pageProps} = this.props;
+		const { Component, pageProps } = this.props;
 
 		return (
-			<DarkModeProvider>
-				<ScoutEntryProvider>
-					<Component {...pageProps} />
-				</ScoutEntryProvider>
-			</DarkModeProvider>
+			<LoginProvider>
+				<DarkModeProvider>
+					<ScoutEntryProvider>
+						<Component {...pageProps} />
+					</ScoutEntryProvider>
+				</DarkModeProvider>
+			</LoginProvider>
 		);
 	}
 }

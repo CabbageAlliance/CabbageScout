@@ -5,9 +5,21 @@ import PropTypes from 'prop-types';
 import React, {useMemo, useContext} from 'react';
 import DarkModeContext from '../util/DarkModeContext';
 import {Seo} from './seo';
+import { useRouter } from 'next/router';
+import LoginContext from '../util/LoginContext';
+import { useEffect } from 'react';
 
 // All pages should have this as their root component
 const Base = props => {
+	const router = useRouter()
+	const {login} = useContext(LoginContext)
+
+	useEffect(() => {
+		if (router.pathname !== '/login' && !login) {
+			router.push('/login')
+		}
+	}, [])
+
 	const {theme} = useContext(DarkModeContext);
 
 	const muiTheme = useMemo(() => {
