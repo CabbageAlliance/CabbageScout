@@ -58,7 +58,7 @@
 		"eslint-plugin-react": "^7.19.0",
 		"eslint-plugin-react-hooks": "^2.5.0",
 		"prettier": "^1.19.1",
-		"xo": "^0.27.2"
+		"xo": "^0.28.0"
 	},
 	"xo": {
 		"parser": "babel-eslint",
