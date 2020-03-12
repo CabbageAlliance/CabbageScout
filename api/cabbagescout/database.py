@@ -3,6 +3,7 @@ from typing import List, Mapping
 import sqlalchemy as sa
 from databases import Database
 from fastapi import HTTPException
+from sqlalchemy.sql import Select
 
 from cabbagescout import util
 from cabbagescout.schemas import ScoutEntry, ScoutEntryID
@@ -121,6 +122,11 @@ class ScoutEntriesDatabase:
 
         _entries = await self._connection.fetch_all(select)
         return [ScoutEntryID(**data) for data in _entries]
+
+    async def get_teams(self) -> List[int]:
+        select = Select([self.table.c.team], distinct=True)
+        teams = await self._connection.fetch_all(select)
+        return [n for team in teams for n in team.values()]
 
     async def to_csv(self, delimiter: str = ",") -> str:
         _entries: List[Mapping] = await self._connection.fetch_all(self.table.select())

@@ -64,9 +64,8 @@ class Api:
         self.app.put("/entry/{entry_id")(self.edit_entry)
         self.app.delete("/entry/{entry_id}")(self.delete_entry)
         self.app.get("/list", response_model=EntryPage)(self.get_entries)
-
-        if self.tba_client is not None:
-            self.app.get("/teams/{team}", response_model=TeamData)(self.get_team_data)
+        self.app.get("/teams", response_model=List[int])(self.get_teams)
+        self.app.get("/teams/{team}", response_model=TeamData)(self.get_team_data)
 
         parent_app.mount(prefix, self.app)
 
@@ -200,6 +199,9 @@ class Api:
         )
 
         return EntryPage(pages=pages, entries=entries, lastPage=page == pages)
+
+    async def get_teams(self) -> List[int]:
+        return await self.database.get_teams()
 
     async def add_entry(self, entry: ScoutEntry) -> int:
         await self.assert_timestamp_valid(entry.timestamp)
