@@ -65,6 +65,11 @@ const Layout = props => {
 						<ListItemText primary='Data' />
 					</ListItem>
 					<List className={classes.nestedMenu}>
+						<Link passHref href='/data/teams'>
+							<ListItem button>
+								<ListItemText primary='Team Search' />
+							</ListItem>
+						</Link>
 						<Link passHref href='/data/download'>
 							<ListItem button>
 								<ListItemText primary='Download' />
@@ -112,6 +117,11 @@ const Layout = props => {
 							</Button>
 						</Box>
 						<Menu keepMounted anchorEl={dataAnchor} open={Boolean(dataAnchor)} onClose={handleDataMenuClose}>
+							<MenuItem>
+								<Link passHref href='/data/teams'>
+									<div>Team Search</div>
+								</Link>
+							</MenuItem>
 							<MenuItem>
 								<Link passHref href='/data/download'>
 									<div>Download</div>

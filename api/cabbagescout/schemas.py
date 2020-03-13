@@ -1,9 +1,17 @@
+from typing import List
+
 from pydantic import Field, constr
 
-from cabbagescout.abc import BaseRobot
+from cabbagescout.abc import BaseModel, BaseRobot
 
 
 class ScoutEntry(BaseRobot):
+    scout_name: constr(strip_whitespace=True, min_length=2, max_length=64) = Field(
+        ..., description="The name of the scouter"
+    )
+
+    scout_team: int = Field(..., ge=1, le=9999, description="The team of the scouter")
+
     # Auto
 
     auto_crossed_line: bool = Field(
@@ -92,4 +100,68 @@ class ScoutEntry(BaseRobot):
     )
     received_foul: bool = Field(
         ..., description="The team received a foul during the match"
+    )
+
+    timestamp: int = Field(
+        ...,
+        description="The exact unix timestamp the unique identifier was generated at",
+    )
+
+
+class ScoutEntryID(ScoutEntry):
+    """Model of how scout entries are stored in the database"""
+
+    entry_id: int = Field(..., description="The unique identifier for the scout entry")
+
+
+class EntryPage(BaseModel):
+    """One page of scout entries"""
+
+    pages: int = Field(..., description="The total number of pages that can be queried")
+    lastPage: bool = Field(..., description="Whether or not this page is the last page")
+    entries: List[ScoutEntryID] = Field(
+        ..., description="The list of scout entries on this page"
+    )
+
+
+class TeamData(BaseModel):
+    class Scoring(BaseModel):
+        """Average scoring during a part of the match"""
+
+        uppergoal_scored: float = Field(
+            ..., description="Average upper goal scored during the period"
+        )
+        uppergoal_rate: float = Field(
+            ..., description="Average upper goal success rate as a percentage [0, 1]"
+        )
+        lowergoal_scored: float = Field(
+            ..., description="Average lower goal scored during the period"
+        )
+
+    opr: float = Field(
+        -32767, description="OPR from TBA. -32767 if TBA is unavailable."
+    )
+    auto_line_rate: float = Field(
+        ...,
+        description="The rate of crossing the initiation line during auto as a percentage [0, 1]",
+    )
+    climb_success_rate: float = Field(
+        ...,
+        description="The success rate (successes over attempts) of climb during endgame",
+    )
+    climb_speed: float = Field(
+        ...,
+        description="The average climb speed when climb is successful during endgame",
+    )
+    auto: Scoring = Field(..., description="Scoring rates during the autonomous period")
+    teleop: Scoring = Field(..., description="Scoring rates during the teleop period")
+    down_rate: float = Field(
+        ..., description="Percentage of the time the robot dies during a match [0, 1]"
+    )
+    foul_rate: float = Field(
+        ..., description="Percentage of the time the robot fouls during a match [0, 1]"
+    )
+    defense_rate: float = Field(
+        ...,
+        description="Percentage of the time the robot defends during a match [0, 1]",
     )

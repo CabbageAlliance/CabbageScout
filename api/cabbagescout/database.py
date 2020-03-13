@@ -1,17 +1,15 @@
-from collections import defaultdict
-from itertools import chain
-from typing import DefaultDict, List, Mapping, NamedTuple
+from typing import List, Mapping
 
 import sqlalchemy as sa
 from databases import Database
+from fastapi import HTTPException
+from sqlalchemy.sql import Select
 
 from cabbagescout import util
-from cabbagescout.abc import BaseRobot
-from cabbagescout.abc import Database as ABCDatabase
-from cabbagescout.schemas import ScoutEntry
+from cabbagescout.schemas import ScoutEntry, ScoutEntryID
 
 
-class ScoutEntriesDatabase(ABCDatabase):
+class ScoutEntriesDatabase:
     """Postgres Database for Scout Entries"""
 
     __slots__ = ("_connection", "table", "_uri")
@@ -27,6 +25,10 @@ class ScoutEntriesDatabase(ABCDatabase):
         self.table = sa.Table(  # Changes to ScoutEntry should be reflected here as well
             "scout_entries",
             metadata,
+            sa.Column("scout_name", sa.String(64)),
+            sa.Column("scout_team", sa.SMALLINT),
+            sa.Column("timestamp", sa.BIGINT),
+            sa.Column("entry_id", sa.BIGINT),
             sa.Column("match", sa.SMALLINT),
             sa.Column("team", sa.SMALLINT),
             sa.Column("auto_crossed_line", sa.BOOLEAN),
@@ -53,75 +55,84 @@ class ScoutEntriesDatabase(ABCDatabase):
 
     async def connect(self) -> None:
         await self._connection.connect()
+        await self._connection.fetch_one(self.table.select())  # please don't error
 
     async def close(self) -> None:
         await self._connection.disconnect()
 
-    async def add_entry(self, entry: ScoutEntry) -> None:
+    async def add_entry(self, entry: ScoutEntryID) -> None:
         await self._connection.execute(self.table.insert(), entry.json())
 
-    async def get_entries(
-        self, match: int = None, team: int = None
-    ) -> List[ScoutEntry]:
-        select = self.table.select()
+    async def get_entry(self, _id: int) -> ScoutEntryID:
+        select = self.table.select().where(self.table.c.entry_id == _id)
+        entry = await self._connection.fetch_one(select)
+        print(entry)
 
+        if entry is None:
+            raise HTTPException(
+                status_code=404, detail=f"Entry with ID {_id} not found"
+            )
+
+        return ScoutEntryID(**entry)
+
+    async def assert_entry_exists(self, _id) -> None:
+        exists = await self._connection.fetch_one(
+            self.table.select(whereclause=self.table.c.entry_id == _id)
+        )
+
+        if not exists:
+            raise HTTPException(
+                status_code=404, detail=f"Entry with ID {_id} not found"
+            )
+
+    async def edit_entry(self, _id: int, entry: ScoutEntry):
+        await self.assert_entry_exists(_id)
+        update = self.table.update(
+            whereclause=self.table.c.entry_id == _id, values=entry.json()
+        )
+
+        await self._connection.execute(update)
+
+    async def delete_entry(self, _id) -> None:
+        await self.assert_entry_exists(_id)
+        delete = self.table.delete(whereclause=self.table.c.entry_id == _id)
+        await self._connection.execute(delete)
+
+    async def count_rows(self, match: int = None, team: int = None) -> int:
+        count = self.table.count()
+
+        if match:
+            count = count.where(self.table.c.match == match)
+        if team:
+            count = count.where(self.table.c.team == team)
+
+        return await self._connection.execute(count)
+
+    async def get_entries(
+        self, match: int = None, team: int = None, offset: int = 0, limit: int = None
+    ) -> List[ScoutEntryID]:
+        select = self.table.select().order_by(self.table.c.timestamp).offset(offset)
+
+        if limit:
+            select = select.limit(limit)
         if match:
             select = select.where(self.table.c.match == match)
         if team:
             select = select.where(self.table.c.team == team)
 
         _entries = await self._connection.fetch_all(select)
-        return [ScoutEntry(**data) for data in _entries]
+        return [ScoutEntryID(**data) for data in _entries]
+
+    async def get_teams(self) -> List[int]:
+        select = Select([self.table.c.team], distinct=True)
+        teams = await self._connection.fetch_all(select)
+        return [n for team in teams for n in team.values()]
 
     async def to_csv(self, delimiter: str = ",") -> str:
         _entries: List[Mapping] = await self._connection.fetch_all(self.table.select())
         # we like duck typing
-        return util.data_to_csv(_entries, delimiter)
+        csv_data = util.data_to_csv(_entries, delimiter)
+        if not csv_data:
+            raise HTTPException(status_code=404, detail="No data in database")
 
-
-class RobotKey(NamedTuple):
-    """A key for DictDatabase"""
-
-    @classmethod
-    def from_base_robot(cls, entry: BaseRobot):
-        return cls(match=entry.match, team=entry.team)
-
-    match: int
-    team: int
-
-
-class DictDatabase(ABCDatabase):
-    __slots__ = "db"
-
-    def __init__(self):
-        self.db: DefaultDict[RobotKey, List[BaseRobot]] = defaultdict(list)
-
-    async def connect(self) -> None:
-        pass
-
-    async def close(self) -> None:
-        pass
-
-    async def get_entries(self, match: int = None, team: int = None) -> List[BaseRobot]:
-        if match is None:
-            if team is None:
-                entries = self.db.values()
-            else:
-                entries = (self.db[key] for key in self.db.keys() if key.team == team)
-        else:
-            if team is None:
-                entries = (self.db[key] for key in self.db.keys() if key.match == match)
-            else:
-                return self.db[RobotKey(match=match, team=team)]
-
-        return list(chain.from_iterable(entries))
-
-    async def add_entry(self, entry: BaseRobot) -> RobotKey:
-        key = RobotKey.from_base_robot(entry)
-        self.db[key].append(entry)
-
-        return key
-
-    async def to_csv(self, delimiter: str = ",") -> str:
-        entries = list(e.json() for e in chain.from_iterable(self.db.values()))
-        return util.data_to_csv(entries, delimiter)
+        return csv_data

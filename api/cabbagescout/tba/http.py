@@ -2,7 +2,7 @@ import asyncio
 import json
 import sys
 import weakref
-from typing import Coroutine, Dict, Optional, Union
+from typing import Coroutine, Dict, Union
 from urllib.parse import quote as _uri_quote
 
 import aiohttp
@@ -16,7 +16,7 @@ from .models import *
 async def json_or_text(response: aiohttp.ClientResponse) -> Union[Dict, str]:
     text = await response.text(encoding="utf-8")
     try:
-        if response.headers["content-type"] == "application/json":
+        if "application/json" in response.headers["content-type"]:
             return json.loads(text)
     except KeyError:
         pass
@@ -68,13 +68,13 @@ class TBAClient:
 
     __slots__ = ("_api_key", "_locks", "loop", "session", "user_agent")
 
-    def __init__(self, token: str, *, loop=None, session=None):
+    def __init__(self, token: str = None, *, loop=None, session=None):
         self._api_key: str = token
         self.loop = asyncio.get_event_loop() if loop is None else loop
         self.session: aiohttp.ClientSession = aiohttp.ClientSession(
             loop=self.loop
         ) if session is None else session
-        self._locks = weakref.WeakKeyDictionary()
+        self._locks = weakref.WeakValueDictionary()
 
         user_agent = "CabbageScout (https://github.com/CabbageAlliance/CabbageScout {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent = user_agent.format(
@@ -98,7 +98,9 @@ class TBAClient:
                 self._locks[url] = lock
 
         # header creation
-        headers = {"User-Agent": self.user_agent, "X-TBA-Auth-Key": self._api_key}
+        headers = {"User-Agent": self.user_agent}
+        if self._api_key is not None:
+            headers["X-TBA-Auth-Key"] = self._api_key
         # TODO: implement last-modified headers
 
         kwargs["headers"] = headers
@@ -124,11 +126,11 @@ class TBAClient:
         return self.request(Route("GET", "/status"))
 
     def get_event_oprs(
-        self, event_key: Optional[EventKey], year: int, name: str
+        self, *, event_key: EventKey = None, year: int = None, name: str = None
     ) -> Coroutine:
         if not event_key:
             event_key = EventKey.from_year_event(year, name)
 
         return self.request(
-            Route("GET", "/event/{event_key}/oprs"), event_key=event_key
+            Route("GET", "/event/{event_key}/oprs", event_key=event_key)
         )
