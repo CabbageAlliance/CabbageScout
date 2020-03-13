@@ -2,10 +2,9 @@
 
 ---
 
-## WARNING - CabbageScout is not ready for use yet
+## WARNING - CabbageScout v1 is deprecated.
 
-CabbageScout is still under development, and isn't ready for teams to use it yet.
-If you want to keep track of development join our [Discord server](https://discord.gg/dcrVQmQ) or watch the repository for changes.
+Support will not be provided. Use at your own risk.
 
 ---
 
